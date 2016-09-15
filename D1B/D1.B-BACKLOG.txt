@@ -1,0 +1,33 @@
+﻿Meet a Sweedt - “Fika and Speaka”
+Group UNTITLED
+
+VISION
+Our vision is to create a tool that helps immigrants who recently moved to Sweden integrate into its local society. Our application provides an opportunity for the foreigner to meet new people, make contacts, and use the Swedish language in social situations.
+
+
+INITIAL PROJECT BACKLOG
+Profile:
+As a user, I want to be able to create a profile.
+As a user, I want to be able to edit my profile.
+As a user, I want my profile to include my language knowledge/level.
+As a user, I want to be able to list my interests and see others interests. 
+
+
+Matching System:
+As an newly arrived, I want to be able to match with someone who speaks Swedish.
+As a swede, I want to be able to match with an newly arrived.
+As a user, I want to be able to set up a meeting with the person I matched with.
+
+
+Chat:
+As a user, I want to be able to chat with people I matched with.
+As a user, I want to be able to send emojis.
+As a user, I want to be able to send pictures.
+As a user, I want to be able to translate the messages.
+
+
+Event planner: 
+As a user, I want to have a possibility to arrange events for a group. 
+As a user, I want to see a list of nearest fika places near me and possible discount. 
+As a user, I want to be able to quickly look up places on a map.
+As a user, I want to be able invite my friends to my event.
