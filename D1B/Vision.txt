@@ -1,4 +1,3 @@
 Meet the Sweedt - “Fika and Speaka”
 
-Vår vision är att skapa ett verktyg som hjälper nyanlända integreras i det svenska samhället.
-En möjlighet att träffa nya människor, skapa kontakter och använda det svenska språket i vardagliga sammanhang. 
+Our vision is to create a tool that helps immigrants who recently moved to Sweden integrate into its local society. Our application provides an opportunity for the foreigner to meet new people, make contacts, and use the Swedish language in social situations.
