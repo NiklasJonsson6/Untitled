@@ -1,0 +1,27 @@
+﻿Three insights from the lego exercise
+
+
+The exercise began with us estimating a work velocity and how much work it would take to complete different parts of a lego city ordered by a customer. Both the work velocity and the amount of work required to finish a part of the city was represented by velocity points (VPs). Because of the lack of experience this process initially was quite chaotic. We did not fully understand the concept of velocity, so the first step, choosing the velocity, was just a wild guess. When the time came for the estimation it was clear that some members thought that the velocity referred to the work one person could do during a sprint while others thought that it was what the entire team could do, resulting in a difference of a factor of six. When these misunderstandings were resolved the process continued in a much smoother fashion. 
+
+
+1-Communication with the customer is vital for the end-result to satisfy their need.
+After the first sprint, we presented the final products to the customer. We managed to finish a two floor condo, a house with a garden, and a tractor; they were quite colorful. We were proud of our products, especially the tractor. However, when Daniel (the customer) saw the products he immediately pointed out a number of flaws, the house was not high enough to fit a lego person and the tractor was too colorful. We also misunderstood the instructions as we didn’t actually have a contract to build any of the objects we presented, thus not getting paid at all. The main problem here was that we didn’t understand or try to find out more information regarding our instructions. We only assumed that all we had to do was written on the piece of paper we received at the beginning. In reality, he had more expectations as to what was to be considered “done” in his standards. Our definition of a tractor was actually very different compared to Daniel’s. 
+
+2-Estimating the workload and time needed for each task should be kept at a flexible level in case of incorrect estimations or unforeseen and unforeseeable events
+With regards to the time estimation process, we quickly noticed during the first sprint that the actual workload was more than what we predicted. As mentioned before, we chose to build a two floor condo (13 VPs), a house with a garden (5 VPs), and a tractor (3 VPs). Together they added up to 21 VPs, which was fairly close to our estimated 20 VPs per sprint. Even though we managed to finish the products, we worked fairly fast and without much management or attention to detail. The given resources - the lego blocks - was always in a pile of mess in the middle of our table; it was impossible to quickly and effectively find the necessary lego block for our figures. After the first sprint and the harsh complaints from our customer, we went back to our table and discussed our errors in the time estimation. We decided to decrease the work velocity of 20 VPs to 13 VPs. We also decided to sort the lego blocks by its color so that each member could find the blocks they needed faster. 
+
+
+
+
+3-Excess work on a more detailed level is still excess, do the required and keep it at that level. 
+As for the park and the restroom that we built in the second sprint, they were all satisfactory to the customer. However, we had a bit of extra time and decided to give our product, the park, a little extra feature by adding a wheelchair with a lego figure inside it. We initially thought that it would showcase the park-accessibility for handicapped people, but it ended up doing the opposite. Even though the park was indeed handicap-friendly, Daniel noticed that the restroom was not. He asked us if the toilet was accessible by the handicapped lego figure, and we responded no (as it was clearly not). What we first thought would be a good aspect turned out to give us more problems in the end. Not only did we do extra work to add this feature, it also gave the customer an idea that wasn’t originally in his requirements. 
+
+
+
+Conclusion and reflection
+
+
+The Lego exercise gave good insight into some problems that may occur during a project. The main lesson here is to effectively plan and organize what to do and sometimes be cautious with what you say to the customer. Make sure you understand what the customer wants as it’s not always specified. Extra work can sometimes present itself or circumstances can change. Therefore, don’t be too generous with time estimates, or you might feel like you didn’t fulfill what the customer expected in the time frame specified. Don’t do extra/unnecessary work not specified by the customer. There is a great chance the extra feature is not wanted or will add complexity to the project. Lastly, don’t ever work for free. Make sure the contract is secured first. 
+
+
+For our future work we should try keep these insights in mind. The exercise seemed pretty realistic in the sense of the occurring obstacles, presumably most of what we learned here can be the applied in a real world scenario. The scrum model worked out well for for the exercise and should work in our project too, it’s good for prioritising and making sure the work is as efficient as possible. It’s a good model to give a clear picture of the end goal, work process and what is required to get there.
