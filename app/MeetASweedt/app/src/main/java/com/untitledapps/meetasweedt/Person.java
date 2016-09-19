@@ -123,7 +123,7 @@ public class Person {
     }
 
     public float getMatchScore(Person other){
-        if(other.isFromSweden() == this.isFromSweden()){
+        if(other.isLearner() == this.isLearner()){
             return 0;
         } else if(getDistanceTo(other) > matchingRadius || getDistanceTo(other) > other.getMatchingRadius()){
             return 0;
