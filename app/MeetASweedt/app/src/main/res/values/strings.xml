@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Meet A  Sweedt</string>
+    <string name="match_topbar_text">Matches</string>
 </resources>

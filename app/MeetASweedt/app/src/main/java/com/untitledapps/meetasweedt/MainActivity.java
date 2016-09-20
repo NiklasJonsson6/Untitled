@@ -12,6 +12,13 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    // list of layout ids, found in R.java, after creating layout. Add when new are created!
+    final static int[] SCREENS = {
+            R.layout.activity_main, R.layout.activity_matching
+    };
+
+    private int currentScreen = R.layout.activity_main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,5 +42,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
 
+    }
+
+    public void switchToScreen(int layoutId) {
+        // show screen from arg, hide the rest
+        for (int id : SCREENS) {
+            if (findViewById(id) != null) {
+                findViewById(id).setVisibility(layoutId == id ? View.VISIBLE : View.GONE);
+            }
+        }
+        currentScreen = layoutId;
     }
 }
