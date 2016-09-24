@@ -1,5 +1,13 @@
 package com.untitledapps.meetasweedt;
 
+import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 public class Person {
     private boolean isLearner;
 
@@ -12,7 +20,9 @@ public class Person {
 
     private float matchingRadius;
 
-    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, float matchingRadius) {
+    private List<String> interests = new ArrayList<>();
+
+    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, float matchingRadius, List<String> interests) {
         this.isLearner = isLearner;
         this.age = age;
         this.name = name;
@@ -20,6 +30,7 @@ public class Person {
         this.longitude = longitude;
         this.latitude = latitude;
         this.matchingRadius = matchingRadius;
+        this.interests = interests;
     }
 
     public void setLearner(boolean learner) {
@@ -87,6 +98,28 @@ public class Person {
         this.matchingRadius = matchingRadius;
     }
 
+    public List<String> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<String> interests) {
+        this.interests = interests;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "isLearner=" + isLearner +
+                ", age=" + age +
+                ", name='" + name + '\'' +
+                ", orginCountry='" + orginCountry + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", matchingRadius=" + matchingRadius +
+                ", interests=" + interests +
+                '}';
+    }
+
     public boolean isInMatchingRadiusOf(Person other){
         return getDistanceTo(other) <= matchingRadius;
     }
@@ -123,13 +156,40 @@ public class Person {
     }
 
     public float getMatchScore(Person other){
+        final int matchingTests = 2;
+        float matchingScore = 0;
         if(other.isLearner() == this.isLearner()){
             return 0;
         } else if(getDistanceTo(other) > matchingRadius || getDistanceTo(other) > other.getMatchingRadius()){
             return 0;
         } else {
-            //todo matching criteria and score
-            return 1;
+
+            int interestMatches = 0;
+            for(String personsInterest: interests) {
+                for(String othersInterest: other.getInterests()) {
+                    if(personsInterest.toLowerCase().equals(othersInterest.toLowerCase())){
+                        matchingScore += 1f / Math.pow(2, interestMatches++ + 1);
+                    }
+                }
+            }
+
+            //enter preference ?
+            matchingScore += 1f - Math.min(1, Math.pow(Math.abs(this.getAge()-other.getAge()), 1.1f)/25);
+
+            //slightly sqrt to bring score up, looks better
+            return (float)Math.pow((matchingScore / matchingTests), 1/1.2f);
         }
+    }
+
+    public List<String> getCommonInterests(Person other) {
+        List<String> commonIntersts = new ArrayList<>();
+        for (String personsInterest : interests) {
+            for (String othersInterest : other.getInterests()) {
+                if (personsInterest.toLowerCase().equals(othersInterest.toLowerCase())) {
+                    commonIntersts.add(personsInterest.toLowerCase());
+                }
+            }
+        }
+        return commonIntersts;
     }
 }
