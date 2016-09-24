@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="140dp"
+    android:layout_height="170dp"
+    android:clickable="true">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:background="@android:color/holo_blue_light"
+        android:clickable="true"
+        android:id="@+id/cardMain"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="99%"
+            android:id="@+id/matchProcent"
+            android:textSize="50sp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:text="Namn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:layout_above="@+id/matchProcent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:text="5km"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/distance"
+            android:layout_below="@+id/matchProcent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
