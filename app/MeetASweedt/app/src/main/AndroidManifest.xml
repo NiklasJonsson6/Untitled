@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".MatchingActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
