@@ -51,7 +51,7 @@ public class MatchingActivity extends AppCompatActivity{
 
     public void populateMatchingView(ArrayList<Person> personArrayList, Person person){
         gridView = (GridView) this.findViewById(R.id.gridView);
-        gridView.setAdapter(new MatchViewAdapter(this, this, personArrayList, person));
+        gridView.setAdapter(new MatchViewAdapter(this, personArrayList, person));
     }
 
     public static void viewMatchingProfile(Person person, Person matchingPerson){

@@ -8,12 +8,13 @@
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="120dp"
-        android:background="@android:color/holo_blue_light"
+        android:background="#cfbdb6"
         android:clickable="true"
         android:id="@+id/cardMain"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        android:layout_margin="5dp">
 
         <TextView
             android:layout_width="wrap_content"

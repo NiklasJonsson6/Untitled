@@ -18,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.zip.Inflater;
 
 public class MatchViewAdapter extends BaseAdapter {
@@ -30,13 +33,19 @@ public class MatchViewAdapter extends BaseAdapter {
     ArrayList<Boolean> isClicked;
     ArrayList<View> rowView;
     ArrayList<Integer> selectedView;
-    Activity activity;
 
-    public MatchViewAdapter(Activity activity, Context matchingActivity, ArrayList<Person> personList, Person matchingPerson) {
+    public MatchViewAdapter(Context matchingActivity, ArrayList<Person> personList, final Person matchingPerson) {
         // TODO Auto-generated constructor stub
         result = personList;
+        //Sorting
+        Collections.sort(result, new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return (int) ((o2.getMatchScore(matchingPerson)-o1.getMatchScore(matchingPerson))*100);
+            }
+        });
+
         context = matchingActivity;
-        this.activity = activity;
         this.matchingPerson = matchingPerson;
         rowView = new ArrayList<View>();
         selectedView = new ArrayList<Integer>();
@@ -71,7 +80,6 @@ public class MatchViewAdapter extends BaseAdapter {
         TextView name;
         TextView matchProcent;
         TextView distance;
-        //RelativeLayout rv;
     }
 
     @Override
@@ -94,7 +102,11 @@ public class MatchViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Add show profile
-                MatchingActivity.viewMatchingProfile(matchingPerson,result.get(position));
+                RelativeLayout temp = (RelativeLayout)inflater.inflate(R.layout.activity_matching_profile, null);
+                ((Activity) context).setContentView(temp);
+                ((TextView) temp.getChildAt(4)).setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)) + "%");
+                ((TextView) temp.getChildAt(1)).setText(Float.toString(result.get(position).getDistanceTo(matchingPerson)) + "Km");
+                ((TextView) temp.getChildAt(3)).setText(result.get(position).getName());
             }
 
         });
