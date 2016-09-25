@@ -44,20 +44,11 @@ public class MainActivity extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToSignInActivity();
+                //goToSignInActivity();
+                goToMatchingActivity();
             }
         });
 
-        Person p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")));
-        Person p2 = new Person(false, 20, "Niklas Jonsson", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "speakers", "wasting money", "code", "chillin")));
-        Person p3 = new Person(false, 21, "Ajla Cano", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "learning android studio", "code", "unknown")));
-        Person p4 = new Person(true, 20, "Fredrik Lindevall", "Syria", 58, 13, 1500, new ArrayList<String>(Arrays.asList("computers", "code", "ida", "stocks", "chillin")));
-        Person p5 = new Person(true, 20, "Daniel Hesslow", "usa", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "climbing", "code", "not chilling")));
-        Person p6 = new Person(true, 20, "Eric Shao", "russia", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "djing", "code", "unknown")));
-
-        float matchingScore = p1.getMatchScore(p4);
-
-        Log.d("mainactivity oncreate", "matching percentage:" + Float.toString(matchingScore));
     };
 
 
@@ -73,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
 
+    }
+
+    private void goToMatchingActivity() {
+        Intent intent = new Intent(this, MatchingActivity.class);
+        startActivity(intent);
     }
 
 

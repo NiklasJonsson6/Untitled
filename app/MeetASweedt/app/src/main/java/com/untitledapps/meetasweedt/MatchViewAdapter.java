@@ -4,6 +4,7 @@ package com.untitledapps.meetasweedt;
  * Created by fredr on 2016-09-24.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class MatchViewAdapter extends BaseAdapter {
 
@@ -28,11 +30,13 @@ public class MatchViewAdapter extends BaseAdapter {
     ArrayList<Boolean> isClicked;
     ArrayList<View> rowView;
     ArrayList<Integer> selectedView;
+    Activity activity;
 
-    public MatchViewAdapter(Context mainActivity, ArrayList<Person> personList, Person matchingPerson) {
+    public MatchViewAdapter(Activity activity, Context matchingActivity, ArrayList<Person> personList, Person matchingPerson) {
         // TODO Auto-generated constructor stub
         result = personList;
-        context = mainActivity;
+        context = matchingActivity;
+        this.activity = activity;
         this.matchingPerson = matchingPerson;
         rowView = new ArrayList<View>();
         selectedView = new ArrayList<Integer>();
@@ -76,13 +80,12 @@ public class MatchViewAdapter extends BaseAdapter {
         Holder holder = new Holder();
         View temp = inflater.inflate(R.layout.activity_matching_card, null);
         rowView.add(temp);
-        isClicked.add(false);
         holder.name = (TextView) rowView.get(position).findViewById(R.id.name);
         holder.matchProcent = (TextView) rowView.get(position).findViewById(R.id.matchProcent);
         holder.distance = (TextView) rowView.get(position).findViewById(R.id.distance);
         holder.name.setText(result.get(position).getName());
-        holder.matchProcent.setText(Float.toString(result.get(position).getMatchScore(matchingPerson)*100) + "%");
-        holder.distance.setText(Float.toString(result.get(position).getMatchScore(matchingPerson)) + "Km");
+        holder.matchProcent.setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)) + "%");
+        holder.distance.setText(Float.toString(result.get(position).getDistanceTo(matchingPerson)) + "Km");
 
 
 
@@ -91,7 +94,7 @@ public class MatchViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Add show profile
-
+                MatchingActivity.viewMatchingProfile(matchingPerson,result.get(position));
             }
 
         });
