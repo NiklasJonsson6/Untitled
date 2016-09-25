@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -107,6 +108,8 @@ public class MatchViewAdapter extends BaseAdapter {
                 ((TextView) temp.getChildAt(4)).setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)) + "%");
                 ((TextView) temp.getChildAt(1)).setText(Float.toString(result.get(position).getDistanceTo(matchingPerson)) + "Km");
                 ((TextView) temp.getChildAt(3)).setText(result.get(position).getName());
+                ListView listView = (ListView) temp.getChildAt(2);
+                listView.setAdapter(new InterestListAdapter(context, result.get(position).getInterests(), matchingPerson.getInterests()));
             }
 
         });

@@ -20,9 +20,9 @@ public class Person {
 
     private float matchingRadius;
 
-    private List<String> interests = new ArrayList<>();
+    private ArrayList<String> interests = new ArrayList<>();
 
-    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, float matchingRadius, List<String> interests) {
+    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, float matchingRadius, ArrayList<String> interests) {
         this.isLearner = isLearner;
         this.age = age;
         this.name = name;
@@ -98,11 +98,11 @@ public class Person {
         this.matchingRadius = matchingRadius;
     }
 
-    public List<String> getInterests() {
+    public ArrayList<String> getInterests() {
         return interests;
     }
 
-    public void setInterests(List<String> interests) {
+    public void setInterests(ArrayList<String> interests) {
         this.interests = interests;
     }
 
