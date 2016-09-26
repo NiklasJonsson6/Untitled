@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MeetASweedt.iml" filepath="$PROJECT_DIR$/MeetASweedt.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/networkserver/networkserver.iml" filepath="$PROJECT_DIR$/networkserver/networkserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/networkshared/networkshared.iml" filepath="$PROJECT_DIR$/networkshared/networkshared.iml" />
     </modules>
   </component>
 </project>
