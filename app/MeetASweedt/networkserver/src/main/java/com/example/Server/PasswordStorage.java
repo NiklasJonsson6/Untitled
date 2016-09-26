@@ -10,7 +10,7 @@ import javax.xml.bind.DatatypeConverter;
 
 
 //
-// NOTE THIS IS NOT CREATE BY A THIRD PARTY
+// NOTE THIS IS CREATED BY A THIRD PARTY
 
 /* LICENSE
 
