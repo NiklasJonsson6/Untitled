@@ -7,6 +7,9 @@
 /build
 /captures
 
+##remove .idea
+/.idea/
+
 # Created by https://www.gitignore.io/api/android,gradle,intellij,java,osx,windows
 
 ### Android ###
