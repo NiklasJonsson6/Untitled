@@ -1,9 +1,7 @@
 package com.example.Server;
 
 
-import com.example.NetworkShared.Request;
-import com.example.NetworkShared.RequestCreateUser;
-import com.example.NetworkShared.ResponseCreateUser;
+import com.example.NetworkShared.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -22,8 +20,8 @@ public class ConnectionHandler implements Runnable
             Class.forName("org.mariadb.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test");
 
-            BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
-            ObjectInputStream ois = new ObjectInputStream(bis);
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             ResultSet res;
 
             System.out.println("connection started");
@@ -32,6 +30,7 @@ public class ConnectionHandler implements Runnable
             while (running)
             {
                 Request msg = (Request) ois.readObject();
+                System.out.println("server got message: " + msg.type);
                 switch (msg.type)
                 {
                     case CreateUser:
@@ -55,7 +54,7 @@ public class ConnectionHandler implements Runnable
 
                         res = conn.createStatement().executeQuery("SELECT @@IDENTITY");
                         res.next();
-                        new ObjectOutputStream(socket.getOutputStream()).writeObject(new ResponseCreateUser(true,res.getInt(1)));
+                        oos.writeObject(new ResponseCreateUser(true,res.getInt(1)));
                         break;
                     case TerminateConnection:
                         running = false;

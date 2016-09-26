@@ -10,8 +10,16 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.NetworkShared.RequestConnectionTermination;
+import com.example.NetworkShared.RequestCreateUser;
+import com.example.NetworkShared.Response;
+import com.example.NetworkShared.ResponseCreateUser;
+import com.untitledapps.Client.RequestBuilder;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +35,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        RequestBuilder requestBuilder = new RequestBuilder();
+        RequestCreateUser req = new RequestCreateUser("prog", "Daniel", "Hesslow", "hunter2", true, "I'm cool yoo");
+        requestBuilder.addRequest(req);
+        try
+        {
+            requestBuilder.execute().get();
+            System.out.println(req.response.user_id);
+        }
+        catch (InterruptedException|ExecutionException ex)
+        {
+            ex.printStackTrace();
+        }
+
+
 
         Button signup, signin;
         signup = (Button) findViewById(R.id.button);
