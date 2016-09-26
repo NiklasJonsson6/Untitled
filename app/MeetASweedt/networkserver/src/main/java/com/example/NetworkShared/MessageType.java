@@ -11,4 +11,5 @@ public enum MessageType
     CreateUser,
     UpdateLocation,
     TerminateConnection,
+    SendMessage,
 }

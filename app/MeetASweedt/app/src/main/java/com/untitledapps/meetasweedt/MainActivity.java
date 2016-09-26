@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RequestBuilder requestBuilder = new RequestBuilder();
-        RequestCreateUser req = new RequestCreateUser("prog", "Daniel", "Hesslow", "hunter2", true, "I'm cool yoo");
+        RequestCreateUser req = new RequestCreateUser("prog", "Daniel", "Hesslow", "hunter2", true, "I'm cool yoo",20,21);
         requestBuilder.addRequest(req);
         try
         {
