@@ -21,16 +21,16 @@ import java.util.ArrayList;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
 
-public class InterestListAdapter extends BaseAdapter {
-    ArrayList<String> interest;
-    ArrayList<String> matchingInterest;
+public class ChatListAdapter extends BaseAdapter {
+    ArrayList<Message> messageList;
+    Person loggedIn;
     Context context;
     private static LayoutInflater inflater = null;
 
-    public InterestListAdapter(Context mainActivity, ArrayList<String> interest, ArrayList<String> matchingInterest) {
+    public ChatListAdapter(Context mainActivity, ArrayList<Message> messageList, Person loggedIn) {
         // TODO Auto-generated constructor stub
-        this.interest = interest;
-        this.matchingInterest = matchingInterest;
+        this.messageList = messageList;
+        this.loggedIn = loggedIn;
         context = mainActivity;
         inflater = (LayoutInflater) context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -39,7 +39,7 @@ public class InterestListAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return interest.size();
+        return messageList.size();
     }
 
     @Override
@@ -64,19 +64,21 @@ public class InterestListAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         Holder holder = new Holder();
         View rowView;
-        rowView = inflater.inflate(R.layout.activity_interests_list, null);
-        holder.tv = (TextView) rowView.findViewById(R.id.interest);
-        holder.tv.setText(interest.get(position));
-        holder.tv = (TextView) rowView.findViewById(R.id.colourHax);
-        if (matchingInterest.contains(interest.get(position))) {
-            holder.tv.setBackgroundColor(GREEN);
+
+        if(messageList.get(position).getSender() == loggedIn) {
+            rowView = inflater.inflate(R.layout.activity_chat_this_message, null);
+            holder.tv = (TextView) rowView.findViewById(R.id.chat_this);
         } else {
-            holder.tv.setBackgroundColor(RED);
+            rowView = inflater.inflate(R.layout.activity_chat_other_message, null);
+            holder.tv = (TextView) rowView.findViewById(R.id.chat_other);
         }
+
+
+        holder.tv.setText(messageList.get(position).getMessage());
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+                //
             }
         });
         return rowView;
