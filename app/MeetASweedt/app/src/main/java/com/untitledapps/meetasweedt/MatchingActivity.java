@@ -27,7 +27,7 @@ public class MatchingActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("MatchingActivity");
-        setContentView(R.layout.activity_matching);
+        this.setContentView(R.layout.activity_matching);
         Person p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")));
         Person p2 = new Person(false, 20, "Niklas Jonsson", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "speakers", "wasting money", "code", "chillin")));
         Person p3 = new Person(false, 21, "Ajla Cano", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "learning android studio", "code", "unknown")));

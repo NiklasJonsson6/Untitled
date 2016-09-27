@@ -69,9 +69,10 @@ public class InterestListAdapter extends BaseAdapter {
         holder.tv.setText(interest.get(position));
         holder.tv = (TextView) rowView.findViewById(R.id.colourHax);
         if (matchingInterest.contains(interest.get(position))) {
-            holder.tv.setBackgroundColor(GREEN);
+            holder.tv.setBackgroundResource(R.drawable.green_rounded);
         } else {
-            holder.tv.setBackgroundColor(RED);
+            holder.tv.setBackgroundResource(R.drawable.red_rounded);
+            //holder.tv.setBackgroundColor(RED);
         }
         rowView.setOnClickListener(new OnClickListener() {
             @Override
