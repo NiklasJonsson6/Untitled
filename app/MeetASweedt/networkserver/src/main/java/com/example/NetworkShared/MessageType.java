@@ -12,4 +12,5 @@ public enum MessageType
     UpdateLocation,
     TerminateConnection,
     SendMessage,
+    Error,
 }

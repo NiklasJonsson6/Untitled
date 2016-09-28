@@ -14,19 +14,52 @@ public abstract class Request<T extends Response> implements Serializable
     }
 
     public MessageType type;
-    public transient T response;
-
+    private transient Response response;
     public void sendRequest(ObjectInputStream ois, ObjectOutputStream oos) throws IOException
     {
         oos.writeObject(this);
         try
         {
-           response = (T)ois.readObject();
+            response = (Response)(ois.readObject());
         }
         catch (ClassNotFoundException ex)
         {
             ex.printStackTrace();
             response = null;
         }
+    }
+
+    public boolean was_successfull()
+    {
+        return response != null && response.success;
+    }
+
+    public String getError()
+    {
+        return response.errorMessage;
+    }
+
+    public T getResponse()
+    {
+        return (T)response;
+    }
+
+    public boolean majorError()
+    {
+        //OMG JAVA is this seriously the only way to do it??
+        try
+        {
+            T r = (T)response;
+            return false;
+        }
+        catch (ClassCastException ex)
+        {
+            return true;
+        }
+    }
+
+    public void setRespone(Response response)
+    {
+        this.response = response;
     }
 }

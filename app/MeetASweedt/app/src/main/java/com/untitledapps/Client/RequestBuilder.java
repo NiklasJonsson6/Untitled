@@ -1,5 +1,6 @@
 package com.untitledapps.Client;
 
+import android.app.DownloadManager;
 import android.os.AsyncTask;
 
 
@@ -17,6 +18,10 @@ import com.example.NetworkShared.*;
 public class RequestBuilder extends AsyncTask<Void,Void,Void>{
     public List<Request> requests = new ArrayList<>(10);
 
+    public void executeSync()
+    {
+        doInBackground();
+    }
     @Override
     protected Void doInBackground(Void... params) {
         List<Response> ret=null;
@@ -26,15 +31,22 @@ public class RequestBuilder extends AsyncTask<Void,Void,Void>{
             ObjectOutputStream oos =new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
-            for(int i = 0; i<requests.size();i++)
-            {
-                requests.get(i).sendRequest(ois,oos);
-            }
+            for(Request request : requests)
+                request.sendRequest(ois,oos);
+
             new RequestConnectionTermination().sendRequest(ois,oos);
             socket.close();
         }
         catch (IOException ex)
         {
+            for(Request request : requests)
+            {
+                if(request.majorError())
+                {
+                    request.setRespone(new Response("clientside: "+ex.toString()));
+                }
+            }
+
             ex.printStackTrace();
         }
         return null;
