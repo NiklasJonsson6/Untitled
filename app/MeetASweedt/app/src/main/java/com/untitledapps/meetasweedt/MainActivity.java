@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.view.View;
 
 import com.example.NetworkShared.RequestCreateUser;
+import com.example.NetworkShared.RequestVerifyPassword;
 import com.untitledapps.Client.RequestBuilder;
 
 import java.util.concurrent.ExecutionException;
@@ -26,6 +27,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+               How to request for stuff.
+        RequestBuilder requestBuilder = new RequestBuilder();
+        RequestCreateUser req = new RequestCreateUser("asdasdlkjb", "Daniel", "Hesslow", "hunter2", true, "I'm cool yoo. And I've got this sick bio.",20,21);
+        RequestVerifyPassword req_v = new RequestVerifyPassword("asdasdlkjb","hunter2");
+        requestBuilder.addRequest(req);
+        requestBuilder.addRequest(req_v);
+        try
+        {
+            // NOTE this blocks thread
+            // You can also continue do stuff and check in if it's completed
+            requestBuilder.execute().get();
+            if(req_v.was_successfull())
+                System.out.println(" user_id = "+req_v.getResponse().user_id);
+            else
+                System.out.println("invalid user_name and stuff");
+        }
+        catch (InterruptedException|ExecutionException ex)
+        {
+            ex.printStackTrace();
+        }
+        */
 
         Button signup, signin;
         signup = (Button) findViewById(R.id.buttonSignUp);

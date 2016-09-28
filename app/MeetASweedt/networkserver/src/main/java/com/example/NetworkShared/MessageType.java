@@ -13,4 +13,5 @@ public enum MessageType
     TerminateConnection,
     SendMessage,
     Error,
+    VerifyPassword,
 }
