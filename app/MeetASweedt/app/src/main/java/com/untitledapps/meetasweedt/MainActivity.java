@@ -26,25 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RequestBuilder requestBuilder = new RequestBuilder();
-        RequestCreateUser req = new RequestCreateUser("prog", "Daniel", "Hesslow", "hunter2", true, "I'm cool yoo",20,21);
-        requestBuilder.addRequest(req);
-        try
-        {
-            requestBuilder.execute().get();
-            if(req.was_successfull())
-                System.out.println(req.getResponse().user_id);
-            else
-            {
-                System.out.println("mother fucking error: " + req.getError());
-                int q = 0;
-            }
-        }
-        catch (InterruptedException|ExecutionException ex)
-        {
-            ex.printStackTrace();
-        }
-
 
         Button signup, signin;
         signup = (Button) findViewById(R.id.buttonSignUp);
