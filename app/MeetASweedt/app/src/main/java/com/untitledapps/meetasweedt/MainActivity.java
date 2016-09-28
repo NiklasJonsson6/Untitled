@@ -1,4 +1,4 @@
-package com.untitledapps.meetasweedt;
+package  com.untitledapps.meetasweedt;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             // NOTE this blocks thread
-            // You can also continue do stuff and check in if it's completed
+            // You can also continue do stuff and check in if it's completed if .get() is omitted
             requestBuilder.execute().get();
             if(req_v.was_successfull())
                 System.out.println(" user_id = "+req_v.getResponse().user_id);
@@ -47,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
         catch (InterruptedException|ExecutionException ex)
         {
             ex.printStackTrace();
-        }
-        */
+
+        }*/
+
+
 
         Button signup, signin;
         signup = (Button) findViewById(R.id.buttonSignUp);
