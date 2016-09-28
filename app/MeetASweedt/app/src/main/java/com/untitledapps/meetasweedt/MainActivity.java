@@ -42,13 +42,18 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             requestBuilder.execute().get();
-            System.out.println(req.response.user_id);
+            if(req.was_successfull())
+                System.out.println(req.getResponse().user_id);
+            else
+            {
+                System.out.println("mother fucking error: " + req.getError());
+                int q = 0;
+            }
         }
         catch (InterruptedException|ExecutionException ex)
         {
             ex.printStackTrace();
         }
-
 
 
         Button signup, signin;

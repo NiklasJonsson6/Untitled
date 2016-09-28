@@ -10,8 +10,8 @@ public abstract class SecureRequest<T extends Response> extends Request<T>
         this.user_id = user_id;
         this.password = password;
     }
-    int user_id;
-    String password;
+    public int user_id;
+    public String password;
 }
 
 
