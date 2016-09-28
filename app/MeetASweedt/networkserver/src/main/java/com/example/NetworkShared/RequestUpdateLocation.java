@@ -6,6 +6,6 @@ public class RequestUpdateLocation extends SecureRequest<ResponseUpdateLocation>
     {
         super(MessageType.UpdateLocation,user_id, password);
     }
-    int longitude;
-    int latitude;
+    public int longitude;
+    public int latitude;
 }
