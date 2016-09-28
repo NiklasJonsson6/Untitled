@@ -52,6 +52,20 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
 
+        /*RequestBuilder requestBuilder = new RequestBuilder();
+        RequestCreateUser req = new RequestCreateUser("prog", "Daniel", "Hesslow", "hunter2", true, "I'm cool yoo",20,21);
+        requestBuilder.addRequest(req);
+        try
+        {
+            requestBuilder.execute().get();
+            //System.out.println(req.response.user_id);
+        }
+        catch (InterruptedException|ExecutionException ex)
+        {
+            ex.printStackTrace();
+        }*/
+
+
         Button signup, signin;
         signup = (Button) findViewById(R.id.buttonSignUp);
         signin = (Button) findViewById(R.id.buttonSignIn);
