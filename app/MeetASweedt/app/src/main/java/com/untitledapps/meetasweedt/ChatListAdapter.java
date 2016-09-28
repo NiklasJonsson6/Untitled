@@ -73,8 +73,13 @@ public class ChatListAdapter extends BaseAdapter {
             holder.tv = (TextView) rowView.findViewById(R.id.chat_other);
         }
 
-
-        holder.tv.setText(messageList.get(position).getMessage());
+        if(messageList.get(position).getMessage() != null && messageList.get(position).getMessage().toString() != "") {
+            System.out.println("IN IF: " + messageList.get(position).getMessage());
+            holder.tv.setText(messageList.get(position).getMessage());
+        } else {
+            System.out.printf("IN ELSE");
+            holder.tv.setText(" ");
+        }
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
