@@ -3,22 +3,12 @@ package com.untitledapps.meetasweedt;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.*;
 import android.widget.Button;
-import android.content.Intent;
 import android.view.View;
-import android.widget.TextView;
 
-import com.example.NetworkShared.RequestConnectionTermination;
 import com.example.NetworkShared.RequestCreateUser;
-import com.example.NetworkShared.Response;
-import com.example.NetworkShared.ResponseCreateUser;
 import com.untitledapps.Client.RequestBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -52,15 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button signup, signin;
-        signup = (Button) findViewById(R.id.button);
-        signin = (Button) findViewById(R.id.button);
+        signup = (Button) findViewById(R.id.buttonSignUp);
+        signin = (Button) findViewById(R.id.buttonSignIn);
 
         // signup button and clicklistener
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //goToSignUpActivity();
-                goToMatchingActivity();
             }
         });
 
@@ -68,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //goToSignInActivity();
-                goToMatchingActivity();
+                goToSignInActivity();
+                //goToMatchingActivity();
             }
         });
 
@@ -90,10 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void goToMatchingActivity() {
-        Intent intent = new Intent(this, MatchingActivity.class);
-        startActivity(intent);
-    }
+
 
 
 

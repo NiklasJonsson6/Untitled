@@ -25,23 +25,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SIGN IN"
-        android:id="@+id/button"
+        android:id="@+id/buttonSignIn"
         android:layout_below="@+id/editText"
         android:layout_marginTop="88dp"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
-        android:backgroundTint="#cd85e3" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SIGN UP"
-        android:id="@+id/button2"
-        android:layout_marginTop="19dp"
-        android:layout_below="@+id/button"
-        android:layout_centerHorizontal="true"
         android:backgroundTint="#cd85e3" />
 
     <TextView
@@ -52,6 +42,16 @@
         android:id="@+id/textView"
         android:layout_marginTop="26dp"
         android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIGN UP"
+        android:id="@+id/buttonSignUp"
+        android:layout_marginTop="29dp"
+        android:backgroundTint="#cd85e3"
+        android:layout_below="@+id/buttonSignIn"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

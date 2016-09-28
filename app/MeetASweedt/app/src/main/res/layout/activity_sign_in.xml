@@ -9,69 +9,79 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.untitledapps.meetasweedt.SignInActivity">
 
+    <!-- TITLE -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Meet a Sweedt"
         android:layout_marginTop="86dp"
-        android:id="@+id/editText"
+        android:id="@+id/textView"
         android:textColor="#ba02ed"
         android:textIsSelectable="false"
         android:textSize="@dimen/abc_text_size_display_2_material"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <!-- QUOTE -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="&quot;Fika and Speaka&quot;"
-        android:id="@+id/textView"
-        android:layout_marginTop="26dp"
-        android:layout_below="@+id/editText"
+        android:id="@+id/textView2"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
 
+
+    <!-- E-MAIL -->
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:hint="Enter E-mail"
+        android:id="@+id/etUsername"
+        android:hint="Enter Username"
         android:focusable="true"
         android:textColorHighlight="#be72f1"
-        android:textColorHint="#ffffff"
+        android:textColorHint="#000000"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+
+    <!-- PASSWORD -->
+
+
+    <!-- LOG IN BUTTON -->
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText3"
-        android:textColorHint="#ffffff"
+        android:id="@+id/etPassword"
+        android:textColorHint="#000000"
         android:hint="Password"
-        android:layout_below="@+id/editText2"
+        android:textColorHighlight="#be72f1"
+        android:layout_below="@+id/etUsername"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_alignEnd="@+id/editText2"
-        android:textColorHighlight="#be72f1" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign in"
-        android:id="@+id/button"
-        android:layout_below="@+id/editText3"
-        android:layout_marginTop="45dp"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
-        android:background="#cd85e3" />
+        android:id="@+id/buttonSignIn"
+        android:background="#cd85e3"
+        android:layout_below="@+id/etPassword"
+        android:layout_marginTop="37dp"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2" />
 
 
 </RelativeLayout>
