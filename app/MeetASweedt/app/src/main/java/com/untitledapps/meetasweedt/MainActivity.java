@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     // list of layout ids, found in R.java, after creating layout. Add when new are created!
     final static int[] SCREENS = {
-            R.layout.activity_main, R.layout.activity_matching, R.layout.activity_sign_in, R.layout.activity_sign_up
+            R.layout.activity_main, R.layout.activity_matching, R.layout.activity_sign_in, R.layout.activity_sign_up, R.layout.activity_profile
     };
 
     private int currentScreen = R.layout.activity_main;
