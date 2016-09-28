@@ -8,20 +8,22 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:padding="1dp"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/otherdate_and_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="10dp">
+        android:layout_centerVertical="true">
 
         <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:background="@drawable/chat_background_this"
-            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentEnd="true"
+            android:id="@+id/chat_this_background"
+            android:layout_marginLeft="77dp"
+            android:layout_marginRight="7dp">
 
             <TextView
                 android:layout_height="wrap_content"
@@ -35,11 +37,12 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
-                android:text="test"
+                android:text="testhbdaiubsiudbasiubdasbiudbuasbduibausbduibiusabuidusaibdiasubd"
                 android:textSize="18dp"
                 android:textColor="@android:color/background_light"
                 android:layout_marginEnd="13dp"
                 android:layout_marginRight="13dp" />
+
         </RelativeLayout>
     </RelativeLayout>
 
