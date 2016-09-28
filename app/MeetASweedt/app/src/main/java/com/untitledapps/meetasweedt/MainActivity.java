@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         RequestBuilder requestBuilder = new RequestBuilder();
         RequestCreateUser req = new RequestCreateUser("asdasdlkjb", "Daniel", "Hesslow", "hunter2", true, "I'm cool yoo. And I've got this sick bio.",20,21);
         RequestVerifyPassword req_v = new RequestVerifyPassword("asdasdlkjb","hunter2");
+
         requestBuilder.addRequest(req);
         requestBuilder.addRequest(req_v);
         try
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
 
         }*/
-
 
 
         Button signup, signin;
