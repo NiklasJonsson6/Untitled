@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
+
         /*RequestBuilder requestBuilder = new RequestBuilder();
         RequestCreateUser req = new RequestCreateUser("prog", "Daniel", "Hesslow", "hunter2", true, "I'm cool yoo",20,21);
         requestBuilder.addRequest(req);
@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }*/
 
-
-=======
->>>>>>> f41f6431ef3c5f08b2570c0f4d2fc0a059f96972
 
         Button signup, signin;
         signup = (Button) findViewById(R.id.buttonSignUp);
