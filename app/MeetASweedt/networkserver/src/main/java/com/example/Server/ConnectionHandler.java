@@ -93,8 +93,27 @@ public class ConnectionHandler implements Runnable
                                 preparedStatement.setInt(2,updateLocation.latitude);
                                 preparedStatement.setInt(3,updateLocation.user_id);
                                 boolean success = preparedStatement.executeUpdate() == 1;
-                                oos.writeObject(new Response(MessageType.UpdateLocation, success));
-                            }
+                                oos.writeObject(new ResponseUpdateLocation(success));
+                            } break;
+                            case VerifyPassword:
+                            {
+                                RequestVerifyPassword verifyPassword = (RequestVerifyPassword) msg;
+                                String sql = "Select hashed_password, user_id from user_table where user_name = ?";
+                                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                                preparedStatement.setString(1, verifyPassword.user_name);
+
+                                try
+                                {
+                                    ResultSet resultSet = preparedStatement.executeQuery();
+                                    resultSet.next();
+                                    boolean success = PasswordStorage.verifyPassword(verifyPassword.password,resultSet.getString(1));
+                                    oos.writeObject(new ResponsVerifyPassword(success,resultSet.getInt(2)));
+                                }
+                                catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException ex)
+                                {
+                                    oos.writeObject(new Response(ex.toString()));
+                                }
+                            }break;
 
                             case SendMessage: {
                                 RequestSendMessage sendMessage = (RequestSendMessage) msg;

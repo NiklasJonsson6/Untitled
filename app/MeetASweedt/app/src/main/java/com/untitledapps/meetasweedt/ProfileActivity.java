@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -13,6 +15,11 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        final EditText etUsername = (EditText) findViewById(R.id.etUsername);
+        final EditText etAge = (EditText) findViewById(R.id.etAge);
+        final EditText etCountry = (EditText) findViewById(R.id.etCountry);
+        final TextView titleMsg = (TextView) findViewById(R.id.twWelcome2);
+        final TextView titleMsg2 = (TextView) findViewById(R.id.twWelcome2);
 
         final Button buttonMatches = (Button) findViewById(R.id.buttonMatches);
         final Button buttonChat = (Button) findViewById(R.id.buttonChat);

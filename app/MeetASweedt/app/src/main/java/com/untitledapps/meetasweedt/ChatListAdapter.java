@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class ChatListAdapter extends BaseAdapter {
 
     public class Holder {
         TextView tv;
+        RelativeLayout rl;
         ImageView img;
     }
 
@@ -68,13 +70,27 @@ public class ChatListAdapter extends BaseAdapter {
         if(messageList.get(position).getSender() == loggedIn) {
             rowView = inflater.inflate(R.layout.activity_chat_this_message, null);
             holder.tv = (TextView) rowView.findViewById(R.id.chat_this);
+            holder.rl = (RelativeLayout) rowView.findViewById(R.id.chat_this_background);
+            if((position < getCount()-1 && position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender()
+                    && messageList.get(position).getSender() == messageList.get(position + 1).getSender())){
+                holder.rl.setBackgroundResource(R.drawable.chat_background_this_both);
+            } else if((position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender())){
+                holder.rl.setBackgroundResource(R.drawable.chat_background_this_top);
+            } else {
+                holder.rl.setBackgroundResource(R.drawable.chat_background_this);
+            }
         } else {
             rowView = inflater.inflate(R.layout.activity_chat_other_message, null);
             holder.tv = (TextView) rowView.findViewById(R.id.chat_other);
         }
 
-
-        holder.tv.setText(messageList.get(position).getMessage());
+        if(messageList.get(position).getMessage() != null && messageList.get(position).getMessage().toString() != "") {
+            System.out.println("IN IF: " + messageList.get(position).getMessage());
+            holder.tv.setText(messageList.get(position).getMessage());
+        } else {
+            System.out.printf("IN ELSE");
+            holder.tv.setText(" ");
+        }
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
