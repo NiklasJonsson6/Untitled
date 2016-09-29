@@ -18,6 +18,7 @@ public class Person {
     private float longitude;
     private float latitude;
 
+    //in meters
     private float matchingRadius;
 
     private ArrayList<String> interests = new ArrayList<>();
