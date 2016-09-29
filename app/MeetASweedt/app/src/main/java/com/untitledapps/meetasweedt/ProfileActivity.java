@@ -23,6 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         final Button buttonMatches = (Button) findViewById(R.id.buttonMatches);
         final Button buttonChat = (Button) findViewById(R.id.buttonChat);
+        final Button mapButton = (Button) findViewById(R.id.mapButton);
 
         //////MATCHES
         buttonMatches.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +41,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        mapButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                goToMapActivity();
+            }
+        });
+
     }
 
     private void goToMatchingActivity() {
@@ -49,6 +57,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void goToChatActivity() {
         Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToMapActivity(){
+        Intent intent = new Intent(this, FikaMapActivity.class);
         startActivity(intent);
     }
 }

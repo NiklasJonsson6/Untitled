@@ -16,4 +16,5 @@
         completions."
     </string>
     <string name="title_activity_chat">ChatActivity</string>
+    <string name="title_activity_fika_map">Fika Map</string>
 </resources>
