@@ -1,5 +1,8 @@
 package com.untitledapps.meetasweedt;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by fredr on 2016-09-27.
  */
@@ -7,10 +10,12 @@ package com.untitledapps.meetasweedt;
 public class Message {
     String message;
     Person sender;
+    Calendar calendar;
 
-    public Message(String message, Person sender) {
+    public Message(String message, Person sender, Calendar calendar) {
         this.message = message;
         this.sender = sender;
+        this.calendar = calendar;
     }
 
     public Person getSender() {
@@ -19,5 +24,9 @@ public class Message {
 
     public String getMessage() {
         return message;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
     }
 }

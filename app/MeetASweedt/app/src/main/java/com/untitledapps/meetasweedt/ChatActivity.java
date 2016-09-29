@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -23,7 +26,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityView = getLayoutInflater().inflate(R.layout.activity_chat, null);
-        Person p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")));
+        p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")));
         //chatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         setContentView(activityView);
     }
@@ -34,7 +37,8 @@ public class ChatActivity extends AppCompatActivity {
         TextView textView = (TextView) activityView.findViewById(R.id.chatText);
         //TextView textView = (TextView) getParent().findViewById(R.id.chatText);
         System.out.println("Message: " + textView.getText().toString());
-        Message message = new Message(textView.getText().toString(), p1);
+        Calendar c = GregorianCalendar.getInstance();
+        Message message = new Message(textView.getText().toString(), p1, c);
         //String message = textView.getText().toString();
 
         //sets adapter if not already set
