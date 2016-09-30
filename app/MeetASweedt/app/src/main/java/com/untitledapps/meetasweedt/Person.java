@@ -3,6 +3,10 @@ package com.untitledapps.meetasweedt;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.NetworkShared.RequestCreateUser;
+import com.example.NetworkShared.RequestVerifyPassword;
+import com.untitledapps.Client.RequestBuilder;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -22,9 +26,13 @@ public class Person {
     //in meters
     private float matchingRadius;
 
+    //database request builder
+    private RequestBuilder requestBuilder;
+
     private ArrayList<String> interests = new ArrayList<>();
 
     public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, float matchingRadius, ArrayList<String> interests) {
+        requestBuilder = new RequestBuilder();
         this.isLearner = isLearner;
         this.age = age;
         this.name = name;
@@ -33,6 +41,17 @@ public class Person {
         this.latitude = latitude;
         this.matchingRadius = matchingRadius;
         this.interests = interests;
+    }
+
+    public void databaseCreateUser() {
+        //TODO Properties of the database person and the person object has to be the same!
+        /*RequestCreateUser req = new RequestCreateUser(this.username, this.name, this.surname, this.username, this.password, this.isSwedish, this.bio, this.longitude, this.latitude);
+        requestBuilder.addRequest(req);
+        try {
+            requestBuilder.execute().get();
+        } catch (InterruptedException|ExecutionException ex) {
+            ex.printStackTrace();
+        }*/
     }
 
     public void setLearner(boolean learner) {
