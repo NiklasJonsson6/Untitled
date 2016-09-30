@@ -94,8 +94,7 @@ public class MatchViewAdapter extends BaseAdapter {
         holder.distance = (TextView) rowView.get(position).findViewById(R.id.distance);
         holder.name.setText(result.get(position).getName());
         holder.matchProcent.setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)) + "%");
-        holder.distance.setText(Float.toString(result.get(position).getDistanceTo(matchingPerson)) + "Km");
-
+        holder.distance.setText(Float.toString(Math.round((10f * result.get(position).getDistanceTo(matchingPerson) / 1000)) / 10f) + " Km");
 
 
         rowView.get(position).findViewById(R.id.cardMain).setOnClickListener(new OnClickListener() {
@@ -106,7 +105,7 @@ public class MatchViewAdapter extends BaseAdapter {
                 RelativeLayout temp = (RelativeLayout)inflater.inflate(R.layout.activity_matching_profile, null);
                 ((Activity) context).setContentView(temp);
                 ((TextView) temp.getChildAt(4)).setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)) + "%");
-                ((TextView) temp.getChildAt(1)).setText(Float.toString(result.get(position).getDistanceTo(matchingPerson)) + "Km");
+                ((TextView) temp.getChildAt(1)).setText(Float.toString(Math.round((10f * result.get(position).getDistanceTo(matchingPerson) / 1000)) / 10f) + " Km");
                 ((TextView) temp.getChildAt(3)).setText(result.get(position).getName());
                 ListView listView = (ListView) temp.getChildAt(2);
                 listView.setAdapter(new InterestListAdapter(context, result.get(position).getInterests(), matchingPerson.getInterests()));

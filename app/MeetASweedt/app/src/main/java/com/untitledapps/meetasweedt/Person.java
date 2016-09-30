@@ -1,6 +1,7 @@
 package com.untitledapps.meetasweedt;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -133,8 +134,8 @@ public class Person {
 
         final float DEGREES_TO_RADIANS = 3.14159265f / 180f;
 
-        float deltaLongitude = (long2 - long1) * DEGREES_TO_RADIANS;
-        float deltaLatitude = (lat2 - lat1) * DEGREES_TO_RADIANS;
+        float deltaLongitude = (long2 - long1); //* DEGREES_TO_RADIANS;
+        float deltaLatitude = (lat2 - lat1);// * DEGREES_TO_RADIANS;
 
         float deltaLatitudeDividedBy2 = deltaLatitude / 2.0f;
         float deltaLongitudeDividedBy2 = deltaLongitude / 2.0f;
@@ -142,12 +143,13 @@ public class Person {
         double a = Math.sin((double)deltaLatitudeDividedBy2) * Math.sin(deltaLatitudeDividedBy2) +
                 Math.cos(lat1 * DEGREES_TO_RADIANS) * Math.cos(lat2 * DEGREES_TO_RADIANS) * Math.sin(deltaLongitudeDividedBy2) * Math.sin(deltaLongitudeDividedBy2);
 
+        Log.d("personClass", " a: " + a + " sqrt(q)" + Math.sqrt(a));
+
         double c = 2f * Math.atan2(Math.sqrt((float)a), (float)Math.sqrt(1.0f - a));
 
         //equator radius sweden = 6362351 metres (59.3293 lattitude for Stockholm):
         //TODO (hardcore) change depending on where you are (error is small but there ex. 300 meter differance Gothenburg, Stockholm ) https://en.wikipedia.org/wiki/Earth_radius
-        float distance = 6362351f * (float)c;
-
+        float distance = 6362351f * (float)c / 100f; //figure out 100 multiplier
         return distance;
     }
 
@@ -169,7 +171,7 @@ public class Person {
             for(String personsInterest: interests) {
                 for(String othersInterest: other.getInterests()) {
                     if(personsInterest.toLowerCase().equals(othersInterest.toLowerCase())){
-                        matchingScore += 1f / Math.pow(2, interestMatches++ + 1);
+                        matchingScore += 1f / Math.pow(2, ++interestMatches);
                     }
                 }
             }
