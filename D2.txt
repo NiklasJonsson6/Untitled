@@ -1,85 +1,67 @@
 ------------------------- Half-time evaluation -------------------------
 Group: Untitled
-Project: Meet a Sweedt - "Fika and Speaka" (Application)
+Project: Meet a Sweedt - "Fika and Speaka" (Android Application)
 
 
 --- Introduction ---
 After a lot of different lectures that introduced us to Scrum, how tasks breakdown works 
-and general project management, it was finally time for us to apply all this knowledge 
-to our project. 
+and general project management, it was finally time for us to apply these concepts
+to our project workflow. 
   
 --- Process ---
-	It took us a little while to start with the process. We talked a few time through 
-	our social media channels but that wasn't enough. It was after our 
-	first real scrum-meeting that we felt we had a clear plan that we would fullfill. 
+	It took us a little while to start with the process. We talked a bit through 
+	our social media channels but that wasn't enough. It was after our first real 
+	scrum-meeting that we felt we had a clear plan that we would fullfill. 
 
-	One thing that naturally happened was that we divided ourselves into unofficial smaller 
-	groups that processed and worked with different areas like database, IU, matching system, server etc. 
+	One thing that naturally happened was that we divided into smaller 
+	groups that worked with different areas like database, server, IU, matching system,etc. 
 	
-	* Challenge
-	A challenge we were facing at first was that everyone had alot of different ideas 
-	for the application and that lead to very long discussions that lead to us talking 
-	in circles without really deciding anything. 
+	* Challenges
+	Everyone had alot of different ideas for the application. This resulted in lengthy
+	discussions that lead to us talking in circles without really deciding anything. 
 	
-	Another challenge we were facing was to set up the work so that everyone had
-	something high-priority to do but still didn't conflict with someone else's work. 
+	To set up the work so that everyone had something high-priority to do but still didn't 
+	conflict with anyone else's work. This also made it pretty hard to work in vertical slices 
+	and that is definitely something we will have to improve for the remaining duration of the project. 
+	Since just finding a valueable task for everyone to do, was such a challange, we lost focus on making 
+	sure that everyone added customer value by the end of the sprint.
+	
 
-	// -------- [mer challenges???]
-	
 	* Solution
 	The solution to our first challenge was that everyone got their chance
 	to present their user-story and the group collectively decided priorities.
-	We wrote down commpromises and make a list of all the things that needed tp be done. 
-	After that we ranked every user-story after after the concluded importance. 
+	We wrote down compromises and make a list of all the things that needed to be done. 
+	After that we ranked every user-story after the concluded importance. 
 
-	It was a little bit harder to find the perfect solution to our other challenge....
-	// ------ [berätta hur vi försöker lösa]
+	It was a little bit harder to find the perfect solution to our second challenge, but we will 
+	try to ensure that every person has added direct customer value by the end of the sprint instead.
+	This will hopefully be made easier both by keeping it in mind and naturally with the backlog as the project progresses. 
 	
 
 --- Product ---
 	Like mentioned before, the smaller groups of our team worked with different areas, which
 	was needed because of the vertical workflow. Our team had a mix of members that was
 	familiar with different aspects while unfamiliar with others. This lead to variations in 
-	the progress of asigned tasks and affected the vertical work-flow negtively.   
+	the progress of asigned tasks in the end of the sprint and affected the vertical work-flow negatively.
 
-	
-	
-	The things that are done so far are; an initial layout of the app, the user profiles, the matching 
-	algorithm, a basic chat (not yet integrated with the server), and the server and database.
-
-skriva om detta stycke så det låter som vi är färdiga med något iaf? typ:
-
-	Tasks:
-	- The matching algorithm and User Interface is completely done.
-	- The server and database communication is done.
-	- Userinterfaces for logging in/creating a profile is practically done, but not completely linked to server and database
-	?- Chat interface is done and messages are stored locally
-	
-
+	The application is a very simple version of the end product, but is still functional. You can navigate 
+	the different views, create a profile (stored locally but not saved between sessions), and see 
+	how well you match with other hard-coded profiles and send chat messages. 
+	The server and database is also up and running and although it doesn't add any customer value yet,
+	we will move a lot of the locally stored things such as the profiles to the database and implement 
+	the server with the chat so that two real people will actually be able to find each other and chat.
 
 	What we have to do is add more planned features, make the app more easy to navigate and integrate a 
 	lot of stuff with the database and server.
 
-	After this sprint we have a few tasks that are unnfinnished. The last sprint we overestimated our
+	After this sprint we have a few tasks that are unnfinished. The last sprint we overestimated our
 	work velocity which resulted in that a big portion of the tasks worked on were not fully vertically integrated.
-	This sprint we will have fewer task, so that the fully vertically integrate the tasks in the sprint backlog.
+	This sprint we will have fewer task, so that we fully vertically integrate the tasks in the sprint backlog.
+	
 
-	We will complete unfinnished tasks from the previous sprint:
+	We will complete unfinished tasks from the previous sprint:
 	- Integrate signing in/ signing up with server
+	- Store chat messages in database
 	
 	We will start with new tasks:
-	- Add gps
-
-
-	// -------- [kanske nämna några problem och hur vi löste?]
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	- Add gps location
