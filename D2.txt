@@ -1,0 +1,62 @@
+------------------------- Half-time evaluation -------------------------
+Group: Untitled
+Project: Meet a Sweedt - "Fika and Speaka" (Application)
+
+
+--- Introduction ---
+After a lot of different lectures that introduced us to Scrum, how tasks breakdown works 
+and general project management, it was finally time for us to apply all this knowledge 
+to our project. 
+  
+--- Process ---
+	It took us a little while to start with the process. We talked a few time through 
+	our social media chanels but that wasn't really enough. It was first after our 
+	first real scrum-meeting that we felt we had a plan that we would try to fullfill. 
+
+	One thing that naturally happened was that we divided ourselves into unofficial smaller 
+	groups that processed and worked with different areas like database, IU, matching system etc. 
+	
+	* Challenge
+	A challenge we were facing at first was that everyone had alot of different ideas 
+	for the application and that lead to very long discussions that lead to us talking 
+	in circles without really deciding anything. 
+	
+	Another challenge we are facing is to set up the work so that everyone has 
+	something high-priority to do but still doesn't conflict with someone else's work. 
+
+	// -------- [mer challenges???]
+	
+	* Solution
+	The solution to our first challenge with the ideas was that everyone got their chance
+	to present their user-story one last time and together we decided that we need to 
+	compromise and make a list of all the things. After that we talked about every user-story
+	and ranked them after what the majority of us thought was important. 
+
+	It was a little bit harder to find the perfect solution to our other challenge....
+	// ------ [berätta hur vi försöker lösa]
+	
+
+--- Product ---
+	Like mentioned before, the smaller groups of our team worked with different areas which
+	was good because we need to work vertically. Our team has a mix of members that are
+	familiar with different stuff while unfamiliar with other which lead to variations in 
+	the progress and that somehow affected the vertical work-flow.   
+ 
+	The things that are done so far are; an initial layout of the app, the user profiles, the matching 
+	algorithm, a basic chat (not yet integrated with the server), and the server and database.
+
+	What we have to do is add more planned features, make the app more easy to navigate and integrate a 
+	lot of stuff with the database and server.
+
+	// -------- [kanske nämna några problem och hur vi löste?]
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
