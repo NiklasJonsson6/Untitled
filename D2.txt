@@ -10,43 +10,66 @@ to our project.
   
 --- Process ---
 	It took us a little while to start with the process. We talked a few time through 
-	our social media chanels but that wasn't really enough. It was first after our 
-	first real scrum-meeting that we felt we had a plan that we would try to fullfill. 
+	our social media channels but that wasn't enough. It was after our 
+	first real scrum-meeting that we felt we had a clear plan that we would fullfill. 
 
 	One thing that naturally happened was that we divided ourselves into unofficial smaller 
-	groups that processed and worked with different areas like database, IU, matching system etc. 
+	groups that processed and worked with different areas like database, IU, matching system, server etc. 
 	
 	* Challenge
 	A challenge we were facing at first was that everyone had alot of different ideas 
 	for the application and that lead to very long discussions that lead to us talking 
 	in circles without really deciding anything. 
 	
-	Another challenge we are facing is to set up the work so that everyone has 
-	something high-priority to do but still doesn't conflict with someone else's work. 
+	Another challenge we were facing was to set up the work so that everyone had
+	something high-priority to do but still didn't conflict with someone else's work. 
 
 	// -------- [mer challenges???]
 	
 	* Solution
-	The solution to our first challenge with the ideas was that everyone got their chance
-	to present their user-story one last time and together we decided that we need to 
-	compromise and make a list of all the things. After that we talked about every user-story
-	and ranked them after what the majority of us thought was important. 
+	The solution to our first challenge was that everyone got their chance
+	to present their user-story and the group collectively decided priorities.
+	We wrote down commpromises and make a list of all the things that needed tp be done. 
+	After that we ranked every user-story after after the concluded importance. 
 
 	It was a little bit harder to find the perfect solution to our other challenge....
 	// ------ [berätta hur vi försöker lösa]
 	
 
 --- Product ---
-	Like mentioned before, the smaller groups of our team worked with different areas which
-	was good because we need to work vertically. Our team has a mix of members that are
-	familiar with different stuff while unfamiliar with other which lead to variations in 
-	the progress and that somehow affected the vertical work-flow.   
- 
+	Like mentioned before, the smaller groups of our team worked with different areas, which
+	was needed because of the vertical workflow. Our team had a mix of members that was
+	familiar with different aspects while unfamiliar with others. This lead to variations in 
+	the progress of asigned tasks and affected the vertical work-flow negtively.   
+
+	
+	
 	The things that are done so far are; an initial layout of the app, the user profiles, the matching 
 	algorithm, a basic chat (not yet integrated with the server), and the server and database.
 
+skriva om detta stycke så det låter som vi är färdiga med något iaf? typ:
+
+	Tasks:
+	- The matching algorithm and User Interface is completely done.
+	- The server and database communication is done.
+	- Userinterfaces for logging in/creating a profile is practically done, but not completely linked to server and database
+	?- Chat interface is done and messages are stored locally
+	
+
+
 	What we have to do is add more planned features, make the app more easy to navigate and integrate a 
 	lot of stuff with the database and server.
+
+	After this sprint we have a few tasks that are unnfinnished. The last sprint we overestimated our
+	work velocity which resulted in that a big portion of the tasks worked on were not fully vertically integrated.
+	This sprint we will have fewer task, so that the fully vertically integrate the tasks in the sprint backlog.
+
+	We will complete unfinnished tasks from the previous sprint:
+	- Integrate signing in/ signing up with server
+	
+	We will start with new tasks:
+	- Add gps
+
 
 	// -------- [kanske nämna några problem och hur vi löste?]
 	
