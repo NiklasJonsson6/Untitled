@@ -10,8 +10,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/chat_this_name"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="17dp"
-        android:visibility="gone" />
+        android:layout_marginRight="9dp"
+        android:visibility="gone"
+        android:textSize="12sp" />
 
     <RelativeLayout
         android:layout_width="300dp"

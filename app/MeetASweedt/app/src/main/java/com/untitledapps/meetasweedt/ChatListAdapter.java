@@ -96,7 +96,28 @@ public class ChatListAdapter extends BaseAdapter {
             }
         } else {
             rowView = inflater.inflate(R.layout.activity_chat_other_message, null);
+
+            holder.tv = (TextView) rowView.findViewById(R.id.chat_other_time);
+            System.out.println(TimeZone.getDefault().getRawOffset());
+            holder.tv.setText(messageList.get(position).getCalendar().get(Calendar.HOUR_OF_DAY) + ":" +((messageList.get(position).getCalendar().get(Calendar.MINUTE)<10) ? "0" + messageList.get(position).getCalendar().get(Calendar.MINUTE) : messageList.get(position).getCalendar().get(Calendar.MINUTE)));
+
+            holder.tv = (TextView) rowView.findViewById(R.id.chat_other_date);
+            holder.tv.setText(messageList.get(position).getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + messageList.get(position).getCalendar().get(Calendar.MONTH) + "-" + messageList.get(position).getCalendar().get(Calendar.YEAR));
+
+
             holder.tv = (TextView) rowView.findViewById(R.id.chat_other);
+            holder.rl = (RelativeLayout) rowView.findViewById(R.id.chat_other_background);
+            if((position < getCount()-1 && position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender()
+                    && messageList.get(position).getSender() == messageList.get(position + 1).getSender())){
+                holder.rl.setBackgroundResource(R.drawable.chat_background_other_both);
+            } else if((position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender())){
+                holder.rl.setBackgroundResource(R.drawable.chat_background_other_top);
+            } else {
+                holder.name = (TextView) rowView.findViewById(R.id.chat_other_name);
+                holder.name.setVisibility(View.VISIBLE);
+                holder.name.setText(messageList.get(position).getSender().getName());
+                holder.rl.setBackgroundResource(R.drawable.chat_background_other);
+            }
         }
 
         if(messageList.get(position).getMessage() != null && messageList.get(position).getMessage().toString() != "") {
@@ -109,10 +130,18 @@ public class ChatListAdapter extends BaseAdapter {
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v.findViewById(R.id.chat_this_message_time).getVisibility() == View.VISIBLE) {
-                    v.findViewById(R.id.chat_this_message_time).setVisibility(View.INVISIBLE);
+                if(messageList.get(position).getSender() == loggedIn) {
+                    if (v.findViewById(R.id.chat_this_message_time).getVisibility() == View.VISIBLE) {
+                        v.findViewById(R.id.chat_this_message_time).setVisibility(View.INVISIBLE);
+                    } else {
+                        v.findViewById(R.id.chat_this_message_time).setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    v.findViewById(R.id.chat_this_message_time).setVisibility(View.VISIBLE);
+                    if (v.findViewById(R.id.chat_other_message_time).getVisibility() == View.VISIBLE) {
+                        v.findViewById(R.id.chat_other_message_time).setVisibility(View.INVISIBLE);
+                    } else {
+                        v.findViewById(R.id.chat_other_message_time).setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });

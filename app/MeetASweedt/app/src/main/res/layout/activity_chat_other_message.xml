@@ -4,24 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat_other_name"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="9dp"
+        android:visibility="gone"
+        android:textSize="12sp" />
+
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:padding="1dp"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/chat_other_name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="2dp">
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true">
 
         <RelativeLayout
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:background="@drawable/chat_background_other"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_width="wrap_content"
-            android:background="@drawable/chat_background_other">
+            android:id="@+id/chat_other_background"
+            android:layout_marginRight="77dp"
+            android:layout_marginLeft="7dp">
 
             <TextView
                 android:layout_height="wrap_content"
@@ -32,15 +44,49 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="13dp"
                 android:layout_marginStart="13dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
                 android:layout_width="wrap_content"
-                android:text="test"
-                android:textSize="18dp"
-                android:textColor="@android:color/black"
+                android:text="jhg"
+                android:textSize="20sp"
+                android:textColor="@android:color/background_dark"
                 android:layout_marginEnd="13dp"
-                android:layout_marginRight="13dp" />
+                android:layout_marginRight="13dp"
+                android:visibility="visible" />
+
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/chat_other_background"
+            android:layout_marginLeft="-70dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/chat_other_message_time"
+            android:visibility="invisible">
+
+            <TextView
+                android:text="08:15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chat_other_time"
+                android:layout_centerHorizontal="true"
+                android:textSize="13sp"
+                android:layout_marginBottom="-2dp" />
+
+            <TextView
+                android:text="14/5-2016"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chat_other_date"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/chat_other_time"
+                android:layout_centerHorizontal="true"
+                android:textSize="13sp"
+                android:layout_marginTop="-2dp" />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

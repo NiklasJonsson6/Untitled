@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -20,13 +21,14 @@ public class ChatActivity extends AppCompatActivity {
     private View activityView;
 
     //Temp Person
-    Person p1;
+    Person p1, p2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityView = getLayoutInflater().inflate(R.layout.activity_chat, null);
         p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")));
+        p2 = new Person(false, 20, "Fredrik Mast", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")));
         //chatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         setContentView(activityView);
     }
@@ -38,7 +40,13 @@ public class ChatActivity extends AppCompatActivity {
         //TextView textView = (TextView) getParent().findViewById(R.id.chatText);
         System.out.println("Message: " + textView.getText().toString());
         Calendar c = GregorianCalendar.getInstance();
-        Message message = new Message(textView.getText().toString(), p1, c);
+        Random r = new Random();
+        Message message;
+        if(r.nextBoolean()){
+            message = new Message(textView.getText().toString(), p1, c);
+        } else {
+            message = new Message(textView.getText().toString(), p2, c);
+        }
         //String message = textView.getText().toString();
 
         //sets adapter if not already set
