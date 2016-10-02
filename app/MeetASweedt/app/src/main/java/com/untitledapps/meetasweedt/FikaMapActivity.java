@@ -16,9 +16,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiActivity;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -32,8 +37,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import static android.R.attr.visible;
 import static android.os.Build.VERSION_CODES.M;
 import static android.view.View.Z;
+import static com.google.android.gms.fitness.data.zzs.Re;
 
 public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -41,19 +48,24 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
 
 
     private GoogleMap mMap;
-    GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient;
     private String mProviderName;
     private LocationManager mLocationManager;
-    private LocationListener mLocationListener;
     private LocationRequest mLocationRequest;
     private Location mLastLocation;
     private Marker mCurrLocationMarker;
-
+    private double latitude;
+    private double longitude;
+    private int PROXIMITY_RADIUS = 10000;
+    private Boolean visible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fika_map);
+
+
+
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
@@ -71,6 +83,11 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
 
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkLocationPermission();
+        }
+
+        if(!CheckGooglePlayServices()){
+            Log.d("onCreate", "Finishing test case since Google Play Services are not available");
+            finish();
         }
 
 
@@ -106,12 +123,39 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-    }
 
-    private void setUpMap(){
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0,0)).title("Maker"));
-        LatLng kevin = new LatLng(0,0);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(kevin));
+        Button buttonCafe = (Button) findViewById(R.id.btnCafe);
+
+        buttonCafe.setOnClickListener(new View.OnClickListener(){
+            String Cafe = "cafe";
+
+            @Override
+            public void onClick(View v){
+
+                if(!visible) {
+
+                    Log.d("onClick", "Button is Clicked");
+                    mMap.clear();
+                    String url = getUrl(latitude, longitude, Cafe);
+                    Object[] DataTransfer = new Object[2];
+                    DataTransfer[0] = mMap;
+                    DataTransfer[1] = url;
+                    Log.d("onClick", url);
+                    GetNearbyPlacesData gnpData = new GetNearbyPlacesData();
+                    gnpData.execute(DataTransfer);
+                    Toast.makeText(FikaMapActivity.this, "Nearby Cafes", Toast.LENGTH_LONG).show();
+                    visible = true;
+                }
+                else {
+                    
+                    mMap.clear();
+                    visible = false;
+                }
+            }
+        });
+
+
+
     }
 
     protected synchronized void buildGoogleApiClient(){
@@ -173,6 +217,8 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
                 mCurrLocationMarker.remove();
             }
 
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(latLng);
@@ -182,6 +228,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        Toast.makeText(FikaMapActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
         if(mGoogleApiClient!=null){
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -201,4 +248,27 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
                 return true;
             }
         }
+
+    private boolean CheckGooglePlayServices(){
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if(result != ConnectionResult.SUCCESS){
+            if(googleAPI.isUserResolvableError(result)){
+                googleAPI.getErrorDialog(this, result, 0).show();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private String getUrl(double latitude, double longitude, String nearbyPlace){
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/jason?");
+        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
+        googlePlacesUrl.append("&type=" + nearbyPlace);
+        googlePlacesUrl.append("&sensor=true");
+        googlePlacesUrl.append("&key=" + "AIzaSyDs0KiltK2H9aIbbiQ9lX3DtQMnSDgR8Q4");
+        Log.d("getUrl", googlePlacesUrl.toString());
+        return(googlePlacesUrl.toString());
+    }
 }
