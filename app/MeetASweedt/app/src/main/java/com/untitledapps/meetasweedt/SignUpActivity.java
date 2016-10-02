@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.NetworkShared.RequestCreateUser;
 import com.untitledapps.Client.RequestBuilder;
 
 import java.util.ArrayList;
@@ -38,15 +39,43 @@ public class SignUpActivity extends AppCompatActivity {
         final TextView titleSignUp = (TextView) findViewById(R.id.textSingUp);
         final TextView titleMeet = (TextView) findViewById(R.id.textTitle);
 
-
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerButtonPressed();
+            }
+        });
     }
 
-    public void registerButtonPressed(View v) {
-        person = new Person(true /*not yet implemented*/, Integer.parseInt(etAge.getText().toString()),
-                etName.getText().toString(), "Sweden" /*should maybe be swedish true/false?*/,
-                20, 20 /*get longitude/latitude somehow*/, 20 /*example*/, new ArrayList<String>());
 
-        person.databaseCreateUser();
+    public void registerButtonPressed() {
+        //person = new Person(true /*not yet implemented*/, Integer.parseInt(etAge.getText().toString()),
+        //        etName.getText().toString(), "Sweden" /*should maybe be swedish true/false?*/,
+        //        20, 20 /*get longitude/latitude somehow*/, 20 /*example*/, new ArrayList<String>());
+
+        RequestCreateUser req =
+                new RequestCreateUser(
+                        etUsername.getText().toString(),
+                        etName.getText().toString(),
+                        etName.getText().toString(),
+                        etPassword.getText().toString(),
+                        false,
+                        "not gotten",
+                        -1,
+                        -1
+                );
+        RequestBuilder builder = new RequestBuilder();
+        builder.addRequest(req);
+        try {
+            builder.execute().get();
+            // indicate to user that whether or not we succeeded?
+            System.out.println(req.was_successfull()?"successfully created account":"could not create");
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
     }
 }

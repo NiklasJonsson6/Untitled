@@ -105,9 +105,16 @@ public class ConnectionHandler implements Runnable
                                 try
                                 {
                                     ResultSet resultSet = preparedStatement.executeQuery();
-                                    resultSet.next();
-                                    boolean success = PasswordStorage.verifyPassword(verifyPassword.password,resultSet.getString(1));
-                                    oos.writeObject(new ResponsVerifyPassword(success,resultSet.getInt(2)));
+                                    if(resultSet.next())
+                                    {
+                                        boolean success = PasswordStorage.verifyPassword(verifyPassword.password,resultSet.getString(1));
+                                        System.out.println("pass hash: " + resultSet.getString(1) + "provided:" + verifyPassword.password+success);
+                                        oos.writeObject(new ResponsVerifyPassword(success,resultSet.getInt(2)));
+                                    }
+                                    else
+                                    {
+                                        oos.writeObject(new ResponsVerifyPassword(false,-1));
+                                    }
                                 }
                                 catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException ex)
                                 {
@@ -150,8 +157,7 @@ public class ConnectionHandler implements Runnable
                 socket.close();
             }
         }
-        catch (IOException ex)
-        {
+        catch (IOException ex) {
             ex.printStackTrace();
         }
     }

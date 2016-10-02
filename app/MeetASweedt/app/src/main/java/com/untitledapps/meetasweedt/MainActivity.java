@@ -26,9 +26,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         /*
-               How to request for stuff.
+          //     How to request for stuff.
         RequestBuilder requestBuilder = new RequestBuilder();
         RequestCreateUser req = new RequestCreateUser("asdasdlkjb", "Daniel", "Hesslow", "hunter2", true, "I'm cool yoo. And I've got this sick bio.",20,21);
         RequestVerifyPassword req_v = new RequestVerifyPassword("asdasdlkjb","hunter2");
@@ -49,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         {
             ex.printStackTrace();
 
-        }*/
+        }
+        */
 
 
         /*RequestBuilder requestBuilder = new RequestBuilder();
