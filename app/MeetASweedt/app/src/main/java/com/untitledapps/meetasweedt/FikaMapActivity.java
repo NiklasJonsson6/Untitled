@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +43,7 @@ import static android.os.Build.VERSION_CODES.M;
 import static android.view.View.Z;
 import static com.google.android.gms.fitness.data.zzs.Re;
 
-public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
+public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
@@ -58,6 +59,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
     private double longitude;
     private int PROXIMITY_RADIUS = 10000;
     private Boolean visible = false;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +98,24 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);
     }
 
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission to access the location is missing.
+            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        } else if (mMap != null) {
+            // Access to the location has been granted to the app.
+            mMap.setMyLocationEnabled(true);
+        }
+    }
 
-    //@Override
+
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        enableMyLocation();
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
@@ -159,7 +174,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
         }
 
 
-    //@Override
+    @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
             mLocationRequest.setInterval(1000);
@@ -180,7 +195,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
-    //@Override
+    @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults){
         switch (requestCode){
             case MY_PERMISSIONS_REQUEST_LOCATION:{
@@ -200,7 +215,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
         }
     }
 
-    //@Override
+    @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
             if(mCurrLocationMarker!=null){

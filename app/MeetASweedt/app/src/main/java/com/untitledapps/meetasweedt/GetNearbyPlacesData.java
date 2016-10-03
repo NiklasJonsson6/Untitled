@@ -29,12 +29,10 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
         try{
             Log.d("GetNearbyPlacesData", "doInBackground entered");
             mMap = (GoogleMap) params[0];
-            System.out.println("finished mMap");
             url = (String) params[1];
-            System.out.println("finished url");
             DownloadUrl downloadUrl = new DownloadUrl();
-            System.out.println("finished downloadUrl");
-            googlePlacesData = downloadUrl.readUrl(url);
+            System.out.println("");
+            googlePlacesData = downloadUrl.readUrl(url); //error here
             System.out.println("finished googlePlacesData");
             Log.d("GooglePlacesReadTask", "doInBackground Exit");
         } catch (Exception e){
