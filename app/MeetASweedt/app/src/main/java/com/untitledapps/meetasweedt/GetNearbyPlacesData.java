@@ -29,9 +29,13 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
         try{
             Log.d("GetNearbyPlacesData", "doInBackground entered");
             mMap = (GoogleMap) params[0];
+            System.out.println("finished mMap");
             url = (String) params[1];
+            System.out.println("finished url");
             DownloadUrl downloadUrl = new DownloadUrl();
+            System.out.println("finished downloadUrl");
             googlePlacesData = downloadUrl.readUrl(url);
+            System.out.println("finished googlePlacesData");
             Log.d("GooglePlacesReadTask", "doInBackground Exit");
         } catch (Exception e){
             Log.d("GooglePlacesReadTask", e.toString());
@@ -41,6 +45,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
 
     @Override
     protected void onPostExecute(String result) {
+        System.out.println(result); //result is null right now
         Log.d("GooglePlacesReadTask", "onPostExecute Entered");
         List<HashMap<String, String>> nearbyPlacesList = null;
         DataParser dataParser = new DataParser();
