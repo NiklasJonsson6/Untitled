@@ -17,35 +17,42 @@ public class DownloadUrl {
 
     public String readUrl(String strUrl) throws IOException{
         String data = "";
+
         InputStream iStream = null;
         HttpURLConnection urlConnection = null;
         try{
             URL url = new URL(strUrl);
-
+            System.out.println("new URL");
             urlConnection = (HttpURLConnection) url.openConnection();
-
+            System.out.println("HTTPURLCONNECTION");
             urlConnection.connect();
-
-            iStream = urlConnection.getInputStream();
-
+            System.out.println("urlconnection.connect");
+            iStream = urlConnection.getInputStream(); //error here
+            System.out.println("istream = getinputstream");
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-
+            System.out.println("new bufferedReader");
             StringBuffer sb = new StringBuffer();
-
+            System.out.println("new StringBuffer");
             String line = "";
             while((line = br.readLine())!=null){
+                System.out.println("***");
                 sb.append(line);
             }
-
+            System.out.println("finished while loop");
             data = sb.toString();
+            System.out.println("data to string");
             Log.d("downloadUrl", data.toString());
             br.close();
         } catch(Exception e){
+            System.out.println("ERROR");
             Log.d("Exception", e.toString());
         } finally {
-            iStream.close();
+            System.out.println("finally");
+            iStream.close(); //error here
+            System.out.println("stream.close");
             urlConnection.disconnect();
+            System.out.println("disconnect");
         }
-        return data;
+        return data; //data is null
     }
 }

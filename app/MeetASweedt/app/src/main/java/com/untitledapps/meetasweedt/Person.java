@@ -27,12 +27,10 @@ public class Person {
     private float matchingRadius;
 
     //database request builder
-    private RequestBuilder requestBuilder;
 
     private ArrayList<String> interests = new ArrayList<>();
 
     public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, float matchingRadius, ArrayList<String> interests) {
-        requestBuilder = new RequestBuilder();
         this.isLearner = isLearner;
         this.age = age;
         this.name = name;

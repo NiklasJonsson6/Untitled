@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +43,7 @@ import static android.os.Build.VERSION_CODES.M;
 import static android.view.View.Z;
 import static com.google.android.gms.fitness.data.zzs.Re;
 
-public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
+public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
@@ -58,6 +59,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
     private double longitude;
     private int PROXIMITY_RADIUS = 10000;
     private Boolean visible = false;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +67,11 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_fika_map);
 
 
-
-
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         mProviderName = mLocationManager.getBestProvider(criteria, true);
 
+        //checks to see if we have permission over the location services of the device, then checks to see if the provider name exists, if not then sends user to settings to change it
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if(mProviderName == null || mProviderName.equals("")){
@@ -97,24 +98,29 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);
     }
 
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission to access the location is missing.
+            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        } else if (mMap != null) {
+            // Access to the location has been granted to the app.
+            mMap.setMyLocationEnabled(true);
+        }
+    }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        enableMyLocation();
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED){
+
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
             }
@@ -125,7 +131,6 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
         }
 
         Button buttonCafe = (Button) findViewById(R.id.btnCafe);
-
         buttonCafe.setOnClickListener(new View.OnClickListener(){
             String Cafe = "cafe";
 
@@ -147,7 +152,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
                     visible = true;
                 }
                 else {
-                    
+
                     mMap.clear();
                     visible = false;
                 }

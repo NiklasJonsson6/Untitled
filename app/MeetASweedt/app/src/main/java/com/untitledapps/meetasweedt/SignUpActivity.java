@@ -58,14 +58,14 @@ public class SignUpActivity extends AppCompatActivity {
                 new RequestCreateUser(
                         etUsername.getText().toString(),
                         etName.getText().toString(),
-                        etName.getText().toString(),
                         etPassword.getText().toString(),
                         false,
                         "not gotten",
                         -1,
                         -1
                 );
-        RequestBuilder builder = new RequestBuilder(new RequestBuilder.Action() {
+
+        RequestBuilder builder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
                 System.out.println(req.was_successfull()?"successfully created account":"could not create");
