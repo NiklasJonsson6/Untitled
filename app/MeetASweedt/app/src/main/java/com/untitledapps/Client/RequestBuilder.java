@@ -1,6 +1,7 @@
 package com.untitledapps.Client;
 
 import android.app.DownloadManager;
+import android.app.Notification;
 import android.os.AsyncTask;
 
 
@@ -18,10 +19,21 @@ import com.example.NetworkShared.*;
 public class RequestBuilder extends AsyncTask<Void,Void,Void>{
     public List<Request> requests = new ArrayList<>(10);
 
-    public void executeSync()
+    public interface Action
     {
-        doInBackground();
+        void PostExecute();
     }
+    private Action action;
+    public RequestBuilder(Action action)
+    {
+        this.action = action;
+    }
+
+    public RequestBuilder()
+    {
+        action = null;
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
         List<Response> ret=null;
@@ -46,10 +58,16 @@ public class RequestBuilder extends AsyncTask<Void,Void,Void>{
                     request.setRespone(new Response("clientside: "+ex.toString()));
                 }
             }
-
             ex.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+        super.onPostExecute(result);
+        if(action!=null)
+            action.PostExecute();
     }
 
     public void addRequest(Request request)

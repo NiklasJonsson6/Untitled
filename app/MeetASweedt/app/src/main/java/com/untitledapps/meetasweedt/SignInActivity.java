@@ -37,29 +37,26 @@ public class SignInActivity extends AppCompatActivity {
 
     private void goToProfileActivity() {
 
+        final RequestVerifyPassword req = new RequestVerifyPassword(etUsername.getText().toString(),etPassword.getText().toString());
 
-        RequestBuilder requestBuilder = new RequestBuilder();
-        RequestVerifyPassword req = new RequestVerifyPassword(etUsername.getText().toString(),etPassword.getText().toString());
+        RequestBuilder requestBuilder = new RequestBuilder(new RequestBuilder.Action() {
+            @Override
+            public void PostExecute() {
+                if(req.was_successfull())
+                {
+                    Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    System.out.println("got:'"+etUsername.getText().toString() +"' '"+ etPassword.getText().toString()+"'");
+                    System.out.println("invalid password or username!");
+                }
+            }
+        });
 
         requestBuilder.addRequest(req);
-        try
-        {
-            requestBuilder.execute().get();
-            if(req.was_successfull())
-            {
-                Intent intent = new Intent(this, ProfileActivity.class);
-                startActivity(intent);
-            }
-            else
-            {
-                System.out.println("got:'"+etUsername.getText().toString() +"' '"+ etPassword.getText().toString()+"'");
-                System.out.println("invalid password or username!");
-            }
-        }
-        catch (InterruptedException|ExecutionException ex)
-        {
-            ex.printStackTrace();
-        }
+        requestBuilder.execute();
     }
 
 }

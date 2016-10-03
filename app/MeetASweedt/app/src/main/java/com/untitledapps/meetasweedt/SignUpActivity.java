@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         //        etName.getText().toString(), "Sweden" /*should maybe be swedish true/false?*/,
         //        20, 20 /*get longitude/latitude somehow*/, 20 /*example*/, new ArrayList<String>());
 
-        RequestCreateUser req =
+        final RequestCreateUser req =
                 new RequestCreateUser(
                         etUsername.getText().toString(),
                         etName.getText().toString(),
@@ -65,17 +65,14 @@ public class SignUpActivity extends AppCompatActivity {
                         -1,
                         -1
                 );
-        RequestBuilder builder = new RequestBuilder();
-        builder.addRequest(req);
-        try {
-            builder.execute().get();
-            // indicate to user that whether or not we succeeded?
-            System.out.println(req.was_successfull()?"successfully created account":"could not create");
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
+        RequestBuilder builder = new RequestBuilder(new RequestBuilder.Action() {
+            @Override
+            public void PostExecute() {
+                System.out.println(req.was_successfull()?"successfully created account":"could not create");
+            }
+        });
 
+        builder.addRequest(req);
+        builder.execute();
     }
 }
