@@ -39,7 +39,7 @@ public class SignInActivity extends AppCompatActivity {
 
         final RequestVerifyPassword req = new RequestVerifyPassword(etUsername.getText().toString(),etPassword.getText().toString());
 
-        RequestBuilder requestBuilder = new RequestBuilder(new RequestBuilder.Action() {
+        RequestBuilder requestBuilder = new RequestBuilder(this,new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
                 if(req.was_successfull())
