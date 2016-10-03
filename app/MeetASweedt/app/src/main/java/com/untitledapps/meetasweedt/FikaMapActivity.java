@@ -147,7 +147,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
                     visible = true;
                 }
                 else {
-                    
+
                     mMap.clear();
                     visible = false;
                 }
