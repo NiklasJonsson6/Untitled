@@ -1,18 +1,13 @@
 package com.example.NetworkShared;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-
 //CREATE USER
 public class RequestCreateUser extends Request<ResponseCreateUser>
 {
-    public RequestCreateUser(String userName, String firstName, String lastName, String password, boolean isSwedish, String bio, int latitude, int longitude)
+    public RequestCreateUser(String userName, String name, String lastName, String password, boolean isSwedish, String bio, float latitude, float longitude)
     {
         super(MessageType.CreateUser);
         this.userName = userName;
-        this.firstName = firstName;
+        this.name = name;
         this.lastName = lastName;
         this.password = password;
         this.isSwedish = isSwedish;
@@ -26,7 +21,7 @@ public class RequestCreateUser extends Request<ResponseCreateUser>
     public String toString() {
         return "RequestCreateUser{" +
                 "userName='" + userName + '\'' +
-                ", firstName='" + firstName + '\'' +
+                ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", isSwedish=" + isSwedish +
@@ -37,11 +32,11 @@ public class RequestCreateUser extends Request<ResponseCreateUser>
     }
 
     public String userName;
-    public String firstName;
+    public String name;
     public String lastName;
     public String password;
     public boolean isSwedish;
     public String bio;
-    public int longitude;
-    public int latitude;
+    public float longitude;
+    public float latitude;
 }

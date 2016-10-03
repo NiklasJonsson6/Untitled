@@ -2,11 +2,9 @@ package com.example.Server;
 
 
 import com.example.NetworkShared.*;
-import com.sun.org.apache.bcel.internal.generic.Select;
 
 import java.io.*;
 import java.net.Socket;
-import java.security.SecureRandom;
 import java.sql.*;
 /**
  * @author Daniel.
@@ -47,9 +45,9 @@ public class ConnectionHandler implements Runnable
                                 System.out.println(createUser);
 
                                 String insert_user_sql = "INSERT IGNORE into user_table " +
-                                        "(first_name,last_name,hashed_password,user_type,bio,user_name, longitude, latitude)" +
+                                        "(name,hashed_password,user_type,bio,user_name, longitude, latitude)" +
                                         " VALUES " +
-                                        "(?, ?, ?, ?, ?, ?, ?, ?)";
+                                        "(?, ?, ?, ?, ?, ?, ?)";
 
 
                                 String hashed_password;
@@ -61,14 +59,13 @@ public class ConnectionHandler implements Runnable
                                 }
 
                                 PreparedStatement preparedStatement = conn.prepareStatement(insert_user_sql);
-                                preparedStatement.setString(1, createUser.firstName);
-                                preparedStatement.setString(2, createUser.lastName);
-                                preparedStatement.setString(3, hashed_password);
-                                preparedStatement.setString(4, (createUser.isSwedish ? "swedish_speaker" : "swedish_learner"));
-                                preparedStatement.setString(5, createUser.bio);
-                                preparedStatement.setString(6, createUser.userName);
-                                preparedStatement.setInt(7, createUser.longitude);
-                                preparedStatement.setInt(8, createUser.latitude);
+                                preparedStatement.setString(1, createUser.name);
+                                preparedStatement.setString(2, hashed_password);
+                                preparedStatement.setString(3, (createUser.isSwedish ? "swedish_speaker" : "swedish_learner"));
+                                preparedStatement.setString(4, createUser.bio);
+                                preparedStatement.setString(5, createUser.userName);
+                                preparedStatement.setFloat(6, createUser.longitude);
+                                preparedStatement.setFloat(7, createUser.latitude);
 
                                 boolean success = 1 == preparedStatement.executeUpdate();
 
