@@ -1,5 +1,6 @@
 package com.untitledapps.meetasweedt;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +21,7 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayAdapter<String> chatAdapter;
     private View activityView;
 
-    //Temp Person
+    //Temp Person, should be currently logged in person?
     Person p1, p2;
 
     @Override
@@ -31,6 +32,18 @@ public class ChatActivity extends AppCompatActivity {
         p2 = new Person(false, 20, "Fredrik Mast", "sweden", 58, 13, 1500,  new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")));
         //chatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         setContentView(activityView);
+
+        /*
+        For receiving chat messages:
+         */
+        startService(new Intent(this, ChatService.class));
+    }
+
+    @Override
+    protected void onPause() {
+        //stops polling for messages when chat view is closed
+        stopService(new Intent(this, ChatService.class));
+        super.onPause();
     }
 
     public void sendMessage(View v) {

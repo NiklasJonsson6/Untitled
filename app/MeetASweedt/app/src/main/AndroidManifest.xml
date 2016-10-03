@@ -8,11 +8,9 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -56,7 +54,13 @@
 
         <activity
             android:name=".FikaMapActivity"
-            android:label="@string/title_activity_fika_map"></activity>
+            android:label="@string/title_activity_fika_map" />
+
+        <service
+            android:name=".ChatService"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
 </manifest>
