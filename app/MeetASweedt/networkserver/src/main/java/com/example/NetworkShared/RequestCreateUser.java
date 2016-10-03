@@ -3,18 +3,16 @@ package com.example.NetworkShared;
 //CREATE USER
 public class RequestCreateUser extends Request<ResponseCreateUser>
 {
-    public RequestCreateUser(String userName, String name, String lastName, String password, boolean isSwedish, String bio, float latitude, float longitude)
+    public RequestCreateUser(String userName, String name, String password, boolean isSwedish, String bio, float latitude, float longitude)
     {
         super(MessageType.CreateUser);
         this.userName = userName;
         this.name = name;
-        this.lastName = lastName;
         this.password = password;
         this.isSwedish = isSwedish;
         this.bio = bio;
         this.latitude= latitude;
         this.longitude = longitude;
-
     }
 
     @Override
@@ -22,7 +20,6 @@ public class RequestCreateUser extends Request<ResponseCreateUser>
         return "RequestCreateUser{" +
                 "userName='" + userName + '\'' +
                 ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", isSwedish=" + isSwedish +
                 ", bio='" + bio + '\'' +
@@ -33,7 +30,6 @@ public class RequestCreateUser extends Request<ResponseCreateUser>
 
     public String userName;
     public String name;
-    public String lastName;
     public String password;
     public boolean isSwedish;
     public String bio;

@@ -2,6 +2,8 @@ package com.untitledapps.Client;
 
 import android.app.DownloadManager;
 import android.app.Notification;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 
 
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.NetworkShared.*;
+import com.untitledapps.meetasweedt.MainActivity;
+
 /**
  * Created by Daniel on 26/09/2016.
  */
@@ -24,14 +28,12 @@ public class RequestBuilder extends AsyncTask<Void,Void,Void>{
         void PostExecute();
     }
     private Action action;
-    public RequestBuilder(Action action)
+    Context context;
+    public RequestBuilder(Context context, Action action)
     {
         this.action = action;
-    }
-
-    public RequestBuilder()
-    {
-        action = null;
+        this.context = context;
+        dialog = new ProgressDialog(context);
     }
 
     @Override
@@ -62,14 +64,20 @@ public class RequestBuilder extends AsyncTask<Void,Void,Void>{
         }
         return null;
     }
+    private ProgressDialog dialog;
 
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
+        if(dialog.isShowing())dialog.dismiss();
         if(action!=null)
             action.PostExecute();
     }
 
+    @Override
+    protected void onPreExecute() {
+        dialog.show();
+    }
     public void addRequest(Request request)
     {
         requests.add(request);
