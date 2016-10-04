@@ -81,6 +81,6 @@ public class InterestListAdapter extends BaseAdapter {
             }
         });
         return rowView;
-    }
 
+    }
 }
