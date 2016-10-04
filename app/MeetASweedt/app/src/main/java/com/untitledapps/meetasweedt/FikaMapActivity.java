@@ -272,7 +272,7 @@ public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCall
         googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
         googlePlacesUrl.append("&type=" + nearbyPlace);
         googlePlacesUrl.append("&sensor=true");
-        googlePlacesUrl.append("&key=" + "AIzaSyDs0KiltK2H9aIbbiQ9lX3DtQMnSDgR8Q4");
+        googlePlacesUrl.append("&key=" + "AIzaSyDZKyHNEvNYqi4kxnX4pAUu1xpqMh58itw");
         Log.d("getUrl", googlePlacesUrl.toString());
         return(googlePlacesUrl.toString());
     }
