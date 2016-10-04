@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.ExecutionException;
 
 public class Person {
     private boolean isLearner;
@@ -39,7 +40,8 @@ public class Person {
 
     public void databaseCreateUser() {
         //TODO Properties of the database person and the person object has to be the same!
-        /*RequestCreateUser req = new RequestCreateUser(this.username, this.name, this.surname, this.username, this.password, this.isSwedish, this.bio, this.longitude, this.latitude);
+        RequestCreateUser req = new RequestCreateUser(this.isLearner, this.age, this.name, this.orginCountry, this.longitude, this.latitude, this.interests, "password");
+        /*RequestBuilder requestBuilder = new RequestBuilder(this, RequestBuilder.Action());
         requestBuilder.addRequest(req);
         try {
             requestBuilder.execute().get();

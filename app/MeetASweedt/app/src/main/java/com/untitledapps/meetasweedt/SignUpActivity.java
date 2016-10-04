@@ -77,13 +77,15 @@ public class SignUpActivity extends AppCompatActivity {
 
         final RequestCreateUser req =
                 new RequestCreateUser(
-                        etUsername.getText().toString(),
-                        etName.getText().toString(),
-                        etPassword.getText().toString(),
                         false,
-                        "not gotten",
-                        -1,
-                        -1
+                        Integer.parseInt(etAge.getText().toString()),
+                        etName.getText().toString(),
+                        etCountry.getText().toString(),
+                        0,
+                        0,
+                        new ArrayList<String>(),
+                        "password"
+
                 );
 
         RequestBuilder builder = new RequestBuilder(this, new RequestBuilder.Action() {
