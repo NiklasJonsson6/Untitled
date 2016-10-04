@@ -28,7 +28,7 @@ public class MatchingActivity extends AppCompatActivity {
     static Activity context;
     static View matchingProfileView;
 
-    Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, 1500, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")));
+    Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")));
 
     ArrayList<Person> matchesList = new ArrayList<Person>();
 
@@ -38,11 +38,11 @@ public class MatchingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         System.out.println("MatchingActivity");
         this.setContentView(R.layout.activity_matching);
-        Person p2 = new Person(false, 20, "Niklas Jonsson", "sweden", 57.697724f, 11.988327f, 1500, new ArrayList<String>(Arrays.asList("computers", "speakers", "wasting money", "code", "chillin")));
-        Person p3 = new Person(false, 21, "Ajla Cano", "sweden", 57.677724f, 11.968327f, 1500, new ArrayList<String>(Arrays.asList("computers", "learning android studio", "code", "unknown")));
-        Person p4 = new Person(true, 20, "Fredrik Lindevall", "Syria", 57.72509804f, 11.77373512f, 1500, new ArrayList<String>(Arrays.asList("computers", "code", "ida", "stocks", "chillin")));
-        Person p5 = new Person(true, 20, "Daniel Hesslow", "usa", 57.687724f, 11.968327f, 1500, new ArrayList<String>(Arrays.asList("computers", "climbing", "code", "not chilling")));
-        Person p6 = new Person(true, 20, "Eric Shao", "russia", 57.697724f, 11.978327f, 1500, new ArrayList<String>(Arrays.asList("computers", "djing", "code", "unknown")));
+        Person p2 = new Person(false, 20, "Niklas Jonsson", "sweden", 57.697724f, 11.988327f, new ArrayList<String>(Arrays.asList("computers", "speakers", "wasting money", "code", "chillin")));
+        Person p3 = new Person(false, 21, "Ajla Cano", "sweden", 57.677724f, 11.968327f, new ArrayList<String>(Arrays.asList("computers", "learning android studio", "code", "unknown")));
+        Person p4 = new Person(true, 20, "Fredrik Lindevall", "Syria", 57.72509804f, 11.77373512f, new ArrayList<String>(Arrays.asList("computers", "code", "ida", "stocks", "chillin")));
+        Person p5 = new Person(true, 20, "Daniel Hesslow", "usa", 57.687724f, 11.968327f, new ArrayList<String>(Arrays.asList("computers", "climbing", "code", "not chilling")));
+        Person p6 = new Person(true, 20, "Eric Shao", "russia", 57.697724f, 11.978327f, new ArrayList<String>(Arrays.asList("computers", "djing", "code", "unknown")));
         context = this;
 
         matchesList.add(p2);

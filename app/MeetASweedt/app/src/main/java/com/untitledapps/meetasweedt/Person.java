@@ -23,21 +23,17 @@ public class Person {
     private float longitude;
     private float latitude;
 
-    //in meters
-    private float matchingRadius;
-
     //database request builder
 
     private ArrayList<String> interests = new ArrayList<>();
 
-    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, float matchingRadius, ArrayList<String> interests) {
+    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, ArrayList<String> interests) {
         this.isLearner = isLearner;
         this.age = age;
         this.name = name;
         this.orginCountry = orginCountry;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.matchingRadius = matchingRadius;
         this.interests = interests;
     }
 
@@ -109,14 +105,6 @@ public class Person {
         this.latitude = latitude;
     }
 
-    public float getMatchingRadius() {
-        return matchingRadius;
-    }
-
-    public void setMatchingRadius(float matchingRadius) {
-        this.matchingRadius = matchingRadius;
-    }
-
     public ArrayList<String> getInterests() {
         return interests;
     }
@@ -134,13 +122,8 @@ public class Person {
                 ", orginCountry='" + orginCountry + '\'' +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
-                ", matchingRadius=" + matchingRadius +
                 ", interests=" + interests +
                 '}';
-    }
-
-    public boolean isInMatchingRadiusOf(Person other){
-        return getDistanceTo(other) <= matchingRadius;
     }
 
     //TODO (hardcore) if someone want to be hardcore, include altitude differance: http://en.wikipedia.org/wiki/Vincenty%27s_formulae
@@ -179,8 +162,6 @@ public class Person {
         final int matchingTests = 2;
         float matchingScore = 0;
         if(other.isLearner() == this.isLearner()){
-            return 0;
-        } else if(getDistanceTo(other) > matchingRadius || getDistanceTo(other) > other.getMatchingRadius()){
             return 0;
         } else {
 
