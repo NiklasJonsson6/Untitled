@@ -3,8 +3,10 @@ package com.untitledapps.meetasweedt;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.NetworkShared.RequestCreateUser;
@@ -15,6 +17,7 @@ import java.util.Arrays;
 
 public class SignUpActivity extends AppCompatActivity {
     private Person person;
+    private int countryIndex;
 
     private EditText etName;
     private EditText etUsername;
@@ -22,6 +25,8 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etAge;
     private EditText etCountry;
     private Button buttonRegister;
+    private Spinner spCountry;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +38,6 @@ public class SignUpActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         etAge = (EditText) findViewById(R.id.etAge);
 
-        //should be swedish true/false?
-        etCountry = (EditText) findViewById(R.id.etCountry);
-
         final TextView titleSignUp = (TextView) findViewById(R.id.textSingUp);
         final TextView titleMeet = (TextView) findViewById(R.id.textTitle);
 
@@ -46,6 +48,25 @@ public class SignUpActivity extends AppCompatActivity {
                 registerButtonPressed();
             }
         });
+
+        spCountry = (Spinner)findViewById(R.id.spCountry);
+
+        //currently only the countries with most immigrants
+        String[] countries = new String[]{"Afghanistan", "Irak","Somalia", "Syria", "Turkey", "Sweden", "Country of Origin"};
+
+        final int countrylistsize = countries.length - 1;
+
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countries){
+            @Override
+            public int getCount(){
+                return(countrylistsize);
+            }
+        };
+
+        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spCountry.setAdapter(countryAdapter);
+        spCountry.setSelection(countrylistsize);
+
     }
 
 
@@ -75,4 +96,7 @@ public class SignUpActivity extends AppCompatActivity {
         builder.addRequest(req);
         builder.execute();
     }
+
+
+
 }
