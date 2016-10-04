@@ -79,16 +79,12 @@ public class ChatActivity extends AppCompatActivity {
         System.out.println("Message: " + textView.getText().toString());
         Calendar c = GregorianCalendar.getInstance();
         Message message;
-<<<<<<< HEAD
-        if (r.nextBoolean()) {
-=======
 
         /*
         Test code to send message from either person
          */
         Random r = new Random();
         if(r.nextBoolean()){
->>>>>>> 2bf686e2a6d42287c1596b1344757cc6dafca5ee
             message = new Message(textView.getText().toString(), p1, c);
         } else {
             message = new Message(textView.getText().toString(), p2, c);
