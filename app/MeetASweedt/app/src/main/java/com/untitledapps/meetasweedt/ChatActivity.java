@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.NetworkShared.RequestSendMessage;
+import com.untitledapps.Client.RequestBuilder;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -20,8 +23,9 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayList<Message> chatMessages = new ArrayList<>();
     private ArrayAdapter<String> chatAdapter;
     private View activityView;
+    private TextView textView;
 
-    //Temp Person, should be currently logged in person?
+    //TODO should be self, person to send message to
     Person p1, p2;
 
     @Override
@@ -37,6 +41,8 @@ public class ChatActivity extends AppCompatActivity {
         For receiving chat messages:
          */
         startService(new Intent(this, ChatService.class));
+
+        textView = (TextView) activityView.findViewById(R.id.chatText);
     }
 
     @Override
@@ -47,14 +53,14 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View v) {
-        //Name of sender etc., or maybe something more fancy like color coding and centering
-        //right, left for sent and received messages?
-        TextView textView = (TextView) activityView.findViewById(R.id.chatText);
-        //TextView textView = (TextView) getParent().findViewById(R.id.chatText);
         System.out.println("Message: " + textView.getText().toString());
         Calendar c = GregorianCalendar.getInstance();
-        Random r = new Random();
         Message message;
+
+        /*
+        Test code to send message from either person
+         */
+        Random r = new Random();
         if(r.nextBoolean()){
             message = new Message(textView.getText().toString(), p1, c);
         } else {
@@ -62,12 +68,34 @@ public class ChatActivity extends AppCompatActivity {
         }
         //String message = textView.getText().toString();
 
+        //reqSendMessage(message); (does nothing until there is a receiver who can get the message)
+        updateChatView(message);
+    }
+
+    public void updateChatView(Message message) {
         //sets adapter if not already set
         setChatAdapter();
         chatMessages.add(message);
-        //chatMessages.add(message);
-        //chatAdapter.notifyDataSetChanged();
+
         textView.setText("");
+    }
+
+    private void reqSendMessage(Message message) {
+        final RequestSendMessage req = new RequestSendMessage(Integer.parseInt(p1.getName()), Integer.parseInt(p2.getName()), message.getMessage());
+
+        RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
+            @Override
+            public void PostExecute() {
+                if (req.was_successfull()) {
+                    System.out.println("Message sent");
+                } else {
+                    System.out.println("Send message failed");
+                }
+            }
+        });
+
+        requestBuilder.addRequest(req);
+        requestBuilder.execute();
     }
 
     public void setChatAdapter() {
