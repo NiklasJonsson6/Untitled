@@ -10,10 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+=======
+import com.example.NetworkShared.RequestSendMessage;
+import com.untitledapps.Client.RequestBuilder;
+>>>>>>> 2bf686e2a6d42287c1596b1344757cc6dafca5ee
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,8 +34,9 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayList<Message> chatMessages = new ArrayList<>();
     private ArrayAdapter<String> chatAdapter;
     private View activityView;
+    private TextView textView;
 
-    //Temp Person, should be currently logged in person?
+    //TODO should be self, person to send message to
     Person p1, p2;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -50,12 +56,16 @@ public class ChatActivity extends AppCompatActivity {
         /*
         For receiving chat messages:
          */
+                /*
                 startService(new Intent(this, ChatService.class));
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        */
+        startService(new Intent(this, ChatService.class));
 
-        System.out.println(new MicrosoftTranslation().TranslateString("Swedish", "English", "Doesn't matter"));
+        textView = (TextView) activityView.findViewById(R.id.chatText);
+
     }
 
     @Override
@@ -66,27 +76,53 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View v) {
-        //Name of sender etc., or maybe something more fancy like color coding and centering
-        //right, left for sent and received messages?
-        TextView textView = (TextView) activityView.findViewById(R.id.chatText);
-        //TextView textView = (TextView) getParent().findViewById(R.id.chatText);
         System.out.println("Message: " + textView.getText().toString());
         Calendar c = GregorianCalendar.getInstance();
-        Random r = new Random();
         Message message;
+<<<<<<< HEAD
         if (r.nextBoolean()) {
+=======
+
+        /*
+        Test code to send message from either person
+         */
+        Random r = new Random();
+        if(r.nextBoolean()){
+>>>>>>> 2bf686e2a6d42287c1596b1344757cc6dafca5ee
             message = new Message(textView.getText().toString(), p1, c);
         } else {
             message = new Message(textView.getText().toString(), p2, c);
         }
         //String message = textView.getText().toString();
 
+        //reqSendMessage(message); (does nothing until there is a receiver who can get the message)
+        updateChatView(message);
+    }
+
+    public void updateChatView(Message message) {
         //sets adapter if not already set
         setChatAdapter();
         chatMessages.add(message);
-        //chatMessages.add(message);
-        //chatAdapter.notifyDataSetChanged();
+
         textView.setText("");
+    }
+
+    private void reqSendMessage(Message message) {
+        final RequestSendMessage req = new RequestSendMessage(Integer.parseInt(p1.getName()), Integer.parseInt(p2.getName()), message.getMessage());
+
+        RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
+            @Override
+            public void PostExecute() {
+                if (req.was_successfull()) {
+                    System.out.println("Message sent");
+                } else {
+                    System.out.println("Send message failed");
+                }
+            }
+        });
+
+        requestBuilder.addRequest(req);
+        requestBuilder.execute();
     }
 
     public void setChatAdapter() {
