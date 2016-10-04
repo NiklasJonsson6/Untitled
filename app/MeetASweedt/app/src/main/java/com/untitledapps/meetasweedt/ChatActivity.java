@@ -10,15 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-<<<<<<< HEAD
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-=======
 import com.example.NetworkShared.RequestSendMessage;
 import com.untitledapps.Client.RequestBuilder;
->>>>>>> 2bf686e2a6d42287c1596b1344757cc6dafca5ee
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
