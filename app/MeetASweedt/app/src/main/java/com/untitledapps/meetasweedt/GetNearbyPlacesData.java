@@ -19,7 +19,7 @@ import java.util.List;
 
 public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
 
-    String googlePlacesData="kevin2";
+    String googlePlacesData;
     GoogleMap mMap;
     String url;
 
@@ -44,14 +44,14 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
     @Override
     protected void onPostExecute(String result) {
         System.out.println(result);
-        /*System.out.println(result); //result/googlePlacesData is null right now
+        System.out.println(result); //result/googlePlacesData is null right now
         Log.d("GooglePlacesReadTask", "onPostExecute Entered");
         List<HashMap<String, String>> nearbyPlacesList = null;
         DataParser dataParser = new DataParser();
         nearbyPlacesList = dataParser.parse(result);
         ShowNearbyPlaces(nearbyPlacesList);
         Log.d("GooglePlacesReadTask", "onPostExecute Exit");
-    */
+
     }
 
     private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList){

@@ -163,7 +163,7 @@ public class ChatListAdapter extends BaseAdapter {
         return rowView;
     }
 
-    class MyAsyncTask extends AsyncTask<String, Integer, String> {
+      class MyAsyncTask extends AsyncTask<String, Integer, String> {
         @Override
         protected String doInBackground(String... arg0) {
             Translate.setClientId("MeetASweedt");

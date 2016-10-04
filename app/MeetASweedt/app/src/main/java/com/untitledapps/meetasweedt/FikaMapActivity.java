@@ -66,8 +66,19 @@ public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fika_map);
 
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            checkLocationPermission();
+        }
 
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if(!CheckGooglePlayServices()){
+            Log.d("onCreate", "Finishing test case since Google Play Services are not available");
+            finish();
+        }
+        else {
+            Log.d("onCreate", "Google Play Services available.");
+        }
+
+        /*mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         mProviderName = mLocationManager.getBestProvider(criteria, true);
 
@@ -80,16 +91,11 @@ public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCall
             }
 
 
-        }
+        }*/
 
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            checkLocationPermission();
-        }
 
-        if(!CheckGooglePlayServices()){
-            Log.d("onCreate", "Finishing test case since Google Play Services are not available");
-            finish();
-        }
+
+
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -98,7 +104,7 @@ public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCall
         mapFragment.getMapAsync(this);
     }
 
-    private void enableMyLocation() {
+    /*private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission to access the location is missing.
@@ -108,14 +114,16 @@ public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCall
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
         }
-    }
+    }*/
 
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        enableMyLocation();
+        //enableMyLocation();
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
@@ -175,8 +183,8 @@ public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCall
 
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        mLocationRequest = new LocationRequest();
+    public void onConnected(Bundle bundle) {
+            mLocationRequest = new LocationRequest();
             mLocationRequest.setInterval(1000);
             mLocationRequest.setFastestInterval(1000);
             mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -217,6 +225,7 @@ public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.d("onLocationChanged", "entered");
         mLastLocation = location;
             if(mCurrLocationMarker!=null){
                 mCurrLocationMarker.remove();
@@ -235,8 +244,11 @@ public class FikaMapActivity extends AppCompatActivity implements OnMapReadyCall
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
         Toast.makeText(FikaMapActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
+        Log.d("onLocationChanged", String.format("latitude:%.3f longitude:&3f",latitude,longitude));
+
         if(mGoogleApiClient!=null){
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            Log.d("onLocationChanged", "Removing Location Updates");
         }
     }
 
