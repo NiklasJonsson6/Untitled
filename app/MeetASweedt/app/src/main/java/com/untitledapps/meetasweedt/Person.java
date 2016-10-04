@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.ExecutionException;
 
 public class Person {
     private boolean isLearner;
@@ -23,27 +24,24 @@ public class Person {
     private float longitude;
     private float latitude;
 
-    //in meters
-    private float matchingRadius;
-
     //database request builder
 
     private ArrayList<String> interests = new ArrayList<>();
 
-    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, float matchingRadius, ArrayList<String> interests) {
+    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, ArrayList<String> interests) {
         this.isLearner = isLearner;
         this.age = age;
         this.name = name;
         this.orginCountry = orginCountry;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.matchingRadius = matchingRadius;
         this.interests = interests;
     }
 
     public void databaseCreateUser() {
         //TODO Properties of the database person and the person object has to be the same!
-        /*RequestCreateUser req = new RequestCreateUser(this.username, this.name, this.surname, this.username, this.password, this.isSwedish, this.bio, this.longitude, this.latitude);
+        RequestCreateUser req = new RequestCreateUser(this.isLearner, this.age, this.name, this.orginCountry, this.longitude, this.latitude, this.interests, "password");
+        /*RequestBuilder requestBuilder = new RequestBuilder(this, RequestBuilder.Action());
         requestBuilder.addRequest(req);
         try {
             requestBuilder.execute().get();
@@ -109,14 +107,6 @@ public class Person {
         this.latitude = latitude;
     }
 
-    public float getMatchingRadius() {
-        return matchingRadius;
-    }
-
-    public void setMatchingRadius(float matchingRadius) {
-        this.matchingRadius = matchingRadius;
-    }
-
     public ArrayList<String> getInterests() {
         return interests;
     }
@@ -134,13 +124,8 @@ public class Person {
                 ", orginCountry='" + orginCountry + '\'' +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
-                ", matchingRadius=" + matchingRadius +
                 ", interests=" + interests +
                 '}';
-    }
-
-    public boolean isInMatchingRadiusOf(Person other){
-        return getDistanceTo(other) <= matchingRadius;
     }
 
     //TODO (hardcore) if someone want to be hardcore, include altitude differance: http://en.wikipedia.org/wiki/Vincenty%27s_formulae
@@ -179,8 +164,6 @@ public class Person {
         final int matchingTests = 2;
         float matchingScore = 0;
         if(other.isLearner() == this.isLearner()){
-            return 0;
-        } else if(getDistanceTo(other) > matchingRadius || getDistanceTo(other) > other.getMatchingRadius()){
             return 0;
         } else {
 

@@ -6,6 +6,10 @@ import com.example.NetworkShared.*;
 import java.io.*;
 import java.net.Socket;
 import java.sql.*;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Executor;
+
 /**
  * @author Daniel.
  */
@@ -52,20 +56,25 @@ public class ConnectionHandler implements Runnable
 
                                 String hashed_password;
                                 try {
-                                    hashed_password = PasswordStorage.createHash(createUser.password);
+                                    hashed_password = PasswordStorage.createHash(createUser.getPassword());
                                 } catch (PasswordStorage.CannotPerformOperationException ex) {
                                     oos.writeObject(new ResponseCreateUser(false, -1));
                                     break;
                                 }
 
                                 PreparedStatement preparedStatement = conn.prepareStatement(insert_user_sql);
-                                preparedStatement.setString(1, createUser.name);
-                                preparedStatement.setString(2, hashed_password);
-                                preparedStatement.setString(3, (createUser.isSwedish ? "swedish_speaker" : "swedish_learner"));
-                                preparedStatement.setString(4, createUser.bio);
-                                preparedStatement.setString(5, createUser.userName);
-                                preparedStatement.setFloat(6, createUser.longitude);
-                                preparedStatement.setFloat(7, createUser.latitude);
+                                preparedStatement.setBoolean(1, createUser.isLearner());
+                                preparedStatement.setInt(2, createUser.getAge());
+                                preparedStatement.setString(3, createUser.getOrginCountry());
+                                preparedStatement.setFloat(4, createUser.getLongitude());
+                                preparedStatement.setFloat(5, createUser.getLatitude());
+
+                                final String[] interestsData = createUser.getInterests().toArray(new String[createUser.getInterests().size()]);
+                                final java.sql.Array sqlArray = conn.createArrayOf("String", interestsData);
+
+
+                                preparedStatement.setArray(6, sqlArray);
+                                preparedStatement.setString(7, hashed_password);
 
                                 boolean success = 1 == preparedStatement.executeUpdate();
 

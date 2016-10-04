@@ -6,6 +6,7 @@ package com.untitledapps.meetasweedt;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.memetix.mst.language.Language;
+import com.memetix.mst.translate.Translate;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -26,14 +30,20 @@ import static android.graphics.Color.RED;
 
 public class ChatListAdapter extends BaseAdapter {
     ArrayList<Message> messageList;
+    ArrayList<String> translatedText;
+    ArrayList<View> translateView;
+    int translationIndex;
     Person loggedIn;
     Context context;
+    TextView textView;
     private static LayoutInflater inflater = null;
 
     public ChatListAdapter(Context mainActivity, ArrayList<Message> messageList, Person loggedIn) {
         // TODO Auto-generated constructor stub
         this.messageList = messageList;
         this.loggedIn = loggedIn;
+        translationIndex = 0;
+        translatedText = new ArrayList<String>();
         context = mainActivity;
         inflater = (LayoutInflater) context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -69,7 +79,6 @@ public class ChatListAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         Holder holder = new Holder();
         View rowView;
-
         if(messageList.get(position).getSender() == loggedIn) {
             rowView = inflater.inflate(R.layout.activity_chat_this_message, null);
 
@@ -119,7 +128,6 @@ public class ChatListAdapter extends BaseAdapter {
                 holder.rl.setBackgroundResource(R.drawable.chat_background_other);
             }
         }
-
         if(messageList.get(position).getMessage() != null && messageList.get(position).getMessage().toString() != "") {
             System.out.println("IN IF: " + messageList.get(position).getMessage());
             holder.tv.setText(messageList.get(position).getMessage());
@@ -136,16 +144,38 @@ public class ChatListAdapter extends BaseAdapter {
                     } else {
                         v.findViewById(R.id.chat_this_message_time).setVisibility(View.VISIBLE);
                     }
-                } else {
+                    textView = ((TextView) v.findViewById(R.id.chat_this));
+                    } else {
                     if (v.findViewById(R.id.chat_other_message_time).getVisibility() == View.VISIBLE) {
                         v.findViewById(R.id.chat_other_message_time).setVisibility(View.INVISIBLE);
                     } else {
                         v.findViewById(R.id.chat_other_message_time).setVisibility(View.VISIBLE);
                     }
+                    textView = ((TextView) v.findViewById(R.id.chat_other));
                 }
+                new MyAsyncTask() {
+                    protected void onPostExecute(String result) {
+                        textView.setText(result);
+                    }
+                }.execute(messageList.get(position).getMessage());
             }
         });
         return rowView;
+    }
+
+    class MyAsyncTask extends AsyncTask<String, Integer, String> {
+        @Override
+        protected String doInBackground(String... arg0) {
+            Translate.setClientId("MeetASweedt");
+            Translate.setClientSecret("aF+QBqtp8FANWemB7hqvkYPWrUbVwl85aih3n1vtDsc=");
+            String s;
+            try {
+                s = Translate.execute(arg0[0], Language.SWEDISH, Language.ENGLISH);
+            } catch(Exception e) {
+                s = e.toString();
+            }
+            return s;
+        }
     }
 
 }
