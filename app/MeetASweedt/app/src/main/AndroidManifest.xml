@@ -50,7 +50,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDZKyHNEvNYqi4kxnX4pAUu1xpqMh58itw" />
+            android:value="AIzaSyBDVnMhxw_K6vbt-zwSvMkbNbr0GbpYDlA" />
 
         <activity
             android:name=".FikaMapActivity"

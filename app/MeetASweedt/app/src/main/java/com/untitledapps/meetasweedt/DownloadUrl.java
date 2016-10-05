@@ -10,49 +10,46 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
+ *
  * Created by Shaotime on 10/2/2016.
  */
-
 public class DownloadUrl {
 
-    public String readUrl(String strUrl) throws IOException{
+    public String readUrl(String strUrl) throws IOException {
         String data = "";
-
         InputStream iStream = null;
         HttpURLConnection urlConnection = null;
-        try{
+        try {
             URL url = new URL(strUrl);
-            System.out.println("new URL");
+
+            // Creating an http connection to communicate with url
             urlConnection = (HttpURLConnection) url.openConnection();
-            System.out.println("HTTPURLCONNECTION");
+
+            // Connecting to url
             urlConnection.connect();
-            System.out.println("urlconnection.connect");
-            iStream = urlConnection.getInputStream(); //error here
-            System.out.println("istream = getinputstream");
+
+            // Reading data from url
+            iStream = urlConnection.getInputStream();
+
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-            System.out.println("new bufferedReader");
+
             StringBuffer sb = new StringBuffer();
-            System.out.println("new StringBuffer");
+
             String line = "";
-            while((line = br.readLine())!=null){
-                System.out.println("***");
+            while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
-            System.out.println("finished while loop");
+
             data = sb.toString();
-            System.out.println("data to string");
             Log.d("downloadUrl", data.toString());
             br.close();
-        } catch(Exception e){
-            System.out.println("ERROR");
+
+        } catch (Exception e) {
             Log.d("Exception", e.toString());
         } finally {
-            System.out.println("finally");
-            iStream.close(); //error here
-            System.out.println("stream.close");
+            iStream.close();
             urlConnection.disconnect();
-            System.out.println("disconnect");
         }
-        return data; //data is null
+        return data;
     }
 }
