@@ -113,6 +113,7 @@ public class ChatActivity extends AppCompatActivity {
         ListView listView = (ListView) activityView.findViewById(R.id.chatListView);
         //if(listView.getAdapter() == null) {
         listView.setAdapter(new ChatListAdapter(this, chatMessages, p1));
+        listView.setSelection(chatMessages.size());
         //}
     }
 }
