@@ -27,9 +27,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.util.HashMap;
-import java.util.List;
+import com.untitledapps.MapsAPI.GetNearbyPlacesData;
 
 /**
  * Created by Shaotime on 10/2/2016.
@@ -41,13 +39,13 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
         LocationListener {
 
     private GoogleMap mMap;
-    double latitude;
-    double longitude;
+    private double latitude;
+    private double longitude;
     private int PROXIMITY_RADIUS = 10000;
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
-    LocationRequest mLocationRequest;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private Marker mCurrLocationMarker;
+    private LocationRequest mLocationRequest;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private Boolean visible = false;
 
