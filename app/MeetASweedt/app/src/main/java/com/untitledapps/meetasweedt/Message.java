@@ -12,7 +12,13 @@ public class Message {
     Person sender;
     Calendar calendar;
 
-    public Message(String message, Person sender, Calendar calendar) {
+    /* public Message(String message, Person sender, Calendar calendar) {
+        this.message = message;
+        this.sender = sender;
+        this.calendar = calendar;
+    } */
+
+    public void setMessage(String message, Person sender, Calendar calendar) {
         this.message = message;
         this.sender = sender;
         this.calendar = calendar;

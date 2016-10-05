@@ -33,14 +33,10 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayAdapter<String> chatAdapter;
     private View activityView;
     private TextView textView;
+    private final Message message = new Message();
 
     //TODO should be self, person to send message to
     Person p1, p2;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +50,6 @@ public class ChatActivity extends AppCompatActivity {
         /*
         For receiving chat messages:
          */
-                /*
-                startService(new Intent(this, ChatService.class));
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        */
         startService(new Intent(this, ChatService.class));
 
         textView = (TextView) activityView.findViewById(R.id.chatText);
@@ -76,16 +66,16 @@ public class ChatActivity extends AppCompatActivity {
     public void sendMessage(View v) {
         System.out.println("Message: " + textView.getText().toString());
         Calendar c = GregorianCalendar.getInstance();
-        Message message;
+        //Message message;
 
         /*
         Test code to send message from either person
          */
         Random r = new Random();
         if(r.nextBoolean()){
-            message = new Message(textView.getText().toString(), p1, c);
+            message.setMessage(textView.getText().toString(), p1, c);
         } else {
-            message = new Message(textView.getText().toString(), p2, c);
+            message.setMessage(textView.getText().toString(), p2, c);
         }
         //String message = textView.getText().toString();
 
@@ -125,41 +115,5 @@ public class ChatActivity extends AppCompatActivity {
         //if(listView.getAdapter() == null) {
         listView.setAdapter(new ChatListAdapter(this, chatMessages, p1));
         //}
-    }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Chat Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
     }
 }
