@@ -6,6 +6,7 @@ import com.example.NetworkShared.*;
 import java.io.*;
 import java.net.Socket;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
@@ -141,6 +142,30 @@ public class ConnectionHandler implements Runnable
                             case TerminateConnection:
                                 running = false;
                                 break;
+
+                            case GetMessages: {
+                                /*
+                                TODO finish and test this shit,
+                                how do the messages, both to and from requester, end up in the correct order?
+                                 */
+                                int to_id;
+                                int from_id;
+                                ArrayList<String> messages;
+                                Statement statement = null;
+                                String query = ("select from_id, to_id, message_body from message_table");
+
+                                try {
+                                    statement = conn.createStatement();
+                                    ResultSet resultSet = statement.executeQuery(query);
+                                    while (resultSet.next()) {
+
+                                    }
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+
+                                //oos.writeObject(new ResponseGetMessages(success, to_id, from_id, messages));
+                            } break;
                             default: {
                                 System.err.println("msg type is not handled " + msg.type);
                             }
