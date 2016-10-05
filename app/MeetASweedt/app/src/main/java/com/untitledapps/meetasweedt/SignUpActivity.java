@@ -75,15 +75,18 @@ public class SignUpActivity extends AppCompatActivity {
         //        etName.getText().toString(), "Sweden" /*should maybe be swedish true/false?*/,
         //        20, 20 /*get longitude/latitude somehow*/, 20 /*example*/, new ArrayList<String>());
 
+        //// TODO: 2016-10-05 check user entered valid data (not left empty) 
+        
         final RequestCreateUser req =
                 new RequestCreateUser(
                         false,
-                        Integer.parseInt(etAge.getText().toString()),
+                        etAge.getText().toString().equals("")? 0: Integer.parseInt(etAge.getText().toString()),
                         etName.getText().toString(),
-                        etCountry.getText().toString(),
-                        0,
-                        0,
+                        spCountry.getSelectedItem().toString(),
+                        -1,
+                        -1,
                         new ArrayList<String>(),
+                        etUsername.getText().toString(),
                         "password"
 
                 );
@@ -98,6 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
         builder.addRequest(req);
         builder.execute();
     }
+
 
 
 

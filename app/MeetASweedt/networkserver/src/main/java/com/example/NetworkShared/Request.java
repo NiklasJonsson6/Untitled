@@ -31,6 +31,7 @@ public abstract class Request<T extends Response> implements Serializable
 
     public boolean was_successfull()
     {
+        System.out.println("response exist: " + response != null + " response success: " + response.success);
         return response != null && response.success;
     }
 

@@ -33,6 +33,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
                 startActivity(intent);
+                //TODO fix
                 //goToProfileActivity();
             }
         });}

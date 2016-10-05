@@ -99,16 +99,8 @@ public class ChatListAdapter extends BaseAdapter {
             if((position < getCount()-1 && position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender()
                     && messageList.get(position).getSender() == messageList.get(position + 1).getSender())){
                 holder.rl.setBackgroundResource(R.drawable.chat_background_this_both);
-
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rowView.findViewById(R.id.chat_this_main).getLayoutParams();
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                ((RelativeLayout)rowView.findViewById(R.id.chat_this_main)).setLayoutParams(layoutParams);
             } else if((position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender())){
                 holder.rl.setBackgroundResource(R.drawable.chat_background_this_top);
-
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rowView.findViewById(R.id.chat_this_main).getLayoutParams();
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                ((RelativeLayout)rowView.findViewById(R.id.chat_this_main)).setLayoutParams(layoutParams);
             } else {
                 holder.name = (TextView) rowView.findViewById(R.id.chat_this_name);
                 holder.name.setVisibility(View.VISIBLE);
@@ -137,16 +129,8 @@ public class ChatListAdapter extends BaseAdapter {
             if((position < getCount()-1 && position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender()
                     && messageList.get(position).getSender() == messageList.get(position + 1).getSender())){
                 holder.rl.setBackgroundResource(R.drawable.chat_background_other_both);
-
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rowView.findViewById(R.id.chat_other_main).getLayoutParams();
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                ((RelativeLayout)rowView.findViewById(R.id.chat_other_main)).setLayoutParams(layoutParams);
             } else if((position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender())){
                 holder.rl.setBackgroundResource(R.drawable.chat_background_other_top);
-
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rowView.findViewById(R.id.chat_other_main).getLayoutParams();
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                ((RelativeLayout)rowView.findViewById(R.id.chat_other_main)).setLayoutParams(layoutParams);
             } else {
                 holder.name = (TextView) rowView.findViewById(R.id.chat_other_name);
                 holder.name.setVisibility(View.VISIBLE);

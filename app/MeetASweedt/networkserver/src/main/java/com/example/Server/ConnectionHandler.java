@@ -50,9 +50,9 @@ public class ConnectionHandler implements Runnable
                                 System.out.println(createUser);
 
                                 String insert_user_sql = "INSERT IGNORE into user_table " +
-                                        "(name,hashed_password,user_type,bio,user_name, longitude, latitude)" +
+                                        "(isLearner,age,name,orginCountry,longitude,latitude,interests,username,hashed_password)" +
                                         " VALUES " +
-                                        "(?, ?, ?, ?, ?, ?, ?)";
+                                        "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 
                                 String hashed_password;
@@ -66,16 +66,28 @@ public class ConnectionHandler implements Runnable
                                 PreparedStatement preparedStatement = conn.prepareStatement(insert_user_sql);
                                 preparedStatement.setBoolean(1, createUser.isLearner());
                                 preparedStatement.setInt(2, createUser.getAge());
-                                preparedStatement.setString(3, createUser.getOrginCountry());
-                                preparedStatement.setFloat(4, createUser.getLongitude());
-                                preparedStatement.setFloat(5, createUser.getLatitude());
+                                preparedStatement.setString(3, createUser.getName());
+                                preparedStatement.setString(4, createUser.getOrginCountry());
+                                preparedStatement.setFloat(5, createUser.getLongitude());
+                                preparedStatement.setFloat(6, createUser.getLatitude());
 
+
+                                /*
+                                arrays not supported by datagbase, java.sql.SQLFeatureNotSupportedException: Not yet supported
                                 final String[] interestsData = createUser.getInterests().toArray(new String[createUser.getInterests().size()]);
                                 final java.sql.Array sqlArray = conn.createArrayOf("String", interestsData);
 
+                                store as string for now
+                               */
 
-                                preparedStatement.setArray(6, sqlArray);
-                                preparedStatement.setString(7, hashed_password);
+                                String interestsString = "";
+                                for(String interest: createUser.getInterests()) {
+                                    interestsString = interestsString + "," + interest;
+                                }
+
+                                preparedStatement.setString(7, interestsString);
+                                preparedStatement.setString(8, createUser.getUsername());
+                                preparedStatement.setString(9, hashed_password);
 
                                 boolean success = 1 == preparedStatement.executeUpdate();
 
@@ -105,9 +117,10 @@ public class ConnectionHandler implements Runnable
                             case VerifyPassword:
                             {
                                 RequestVerifyPassword verifyPassword = (RequestVerifyPassword) msg;
-                                String sql = "Select hashed_password, user_id from user_table where user_name = ?";
+                                //String sql = "Select hashed_password, user_id from user_table where user_name = ?";
+                                String sql = "Select hashed_password, username from user_table";
                                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
-                                preparedStatement.setString(1, verifyPassword.user_name);
+                                preparedStatement.setString(1, verifyPassword.username);
 
                                 try
                                 {
