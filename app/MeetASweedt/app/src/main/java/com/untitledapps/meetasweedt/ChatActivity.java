@@ -33,7 +33,6 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayAdapter<String> chatAdapter;
     private View activityView;
     private TextView textView;
-    private final Message message = new Message();
 
     //TODO should be self, person to send message to
     Person p1, p2;
@@ -66,16 +65,16 @@ public class ChatActivity extends AppCompatActivity {
     public void sendMessage(View v) {
         System.out.println("Message: " + textView.getText().toString());
         Calendar c = GregorianCalendar.getInstance();
-        //Message message;
+        Message message;
 
         /*
         Test code to send message from either person
          */
         Random r = new Random();
         if(r.nextBoolean()){
-            message.setMessage(textView.getText().toString(), p1, c);
+            message = new Message(textView.getText().toString(), p1, c);
         } else {
-            message.setMessage(textView.getText().toString(), p2, c);
+            message = new Message(textView.getText().toString(), p2, c);
         }
         //String message = textView.getText().toString();
 
