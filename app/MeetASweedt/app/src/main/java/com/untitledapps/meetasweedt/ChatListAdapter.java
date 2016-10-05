@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +35,10 @@ public class ChatListAdapter extends BaseAdapter {
     ArrayList<String> translatedText;
     ArrayList<View> translateView;
     int translationIndex;
+    Spinner spinner;
     Person loggedIn;
     Context context;
+    View lastClickedView;
     TextView textView;
     private static LayoutInflater inflater = null;
 
@@ -103,6 +107,12 @@ public class ChatListAdapter extends BaseAdapter {
                 holder.name.setText(messageList.get(position).getSender().getName());
                 holder.rl.setBackgroundResource(R.drawable.chat_background_this);
             }
+            //Spinner content
+            Spinner spinner = (Spinner) rowView.findViewById(R.id.chat_this_spinner);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                    R.array.language_array, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
         } else {
             rowView = inflater.inflate(R.layout.activity_chat_other_message, null);
 
@@ -127,6 +137,12 @@ public class ChatListAdapter extends BaseAdapter {
                 holder.name.setText(messageList.get(position).getSender().getName());
                 holder.rl.setBackgroundResource(R.drawable.chat_background_other);
             }
+            //Spinner content
+            Spinner spinner = (Spinner) rowView.findViewById(R.id.chat_other_spinner);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                    R.array.language_array, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
         }
         if(messageList.get(position).getMessage() != null && messageList.get(position).getMessage().toString() != "") {
             System.out.println("IN IF: " + messageList.get(position).getMessage());
@@ -135,46 +151,117 @@ public class ChatListAdapter extends BaseAdapter {
             System.out.printf("IN ELSE");
             holder.tv.setText(" ");
         }
+        if(messageList.get(position).getSender() == loggedIn) {
+            rowView.findViewById(R.id.chat_this_translate_button).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new MyAsyncTask() {
+                        protected void onPostExecute(String result) {
+                            textView.setText(result);
+                        }
+                    }.execute(new TranslationRequest(spinner.getSelectedItemPosition(),messageList.get(position).getMessage()));
+                }
+            });
+        } else {
+            rowView.findViewById(R.id.chat_other_translate_button).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new MyAsyncTask() {
+                        protected void onPostExecute(String result) {
+                            textView.setText(result);
+                        }
+                    }.execute(new TranslationRequest(spinner.getSelectedItemPosition(),messageList.get(position).getMessage()));
+                }
+            });
+        }
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(messageList.get(position).getSender() == loggedIn) {
                     if (v.findViewById(R.id.chat_this_message_time).getVisibility() == View.VISIBLE) {
                         v.findViewById(R.id.chat_this_message_time).setVisibility(View.INVISIBLE);
+                        v.findViewById(R.id.chat_this_translate_layout).setVisibility(View.GONE);
                     } else {
                         v.findViewById(R.id.chat_this_message_time).setVisibility(View.VISIBLE);
+                        v.findViewById(R.id.chat_this_translate_layout).setVisibility(View.VISIBLE);
                     }
                     textView = ((TextView) v.findViewById(R.id.chat_this));
-                    } else {
+                    spinner = ((Spinner) v.findViewById(R.id.chat_this_spinner));
+                } else {
                     if (v.findViewById(R.id.chat_other_message_time).getVisibility() == View.VISIBLE) {
                         v.findViewById(R.id.chat_other_message_time).setVisibility(View.INVISIBLE);
+                        v.findViewById(R.id.chat_other_translate_layout).setVisibility(View.GONE);
                     } else {
                         v.findViewById(R.id.chat_other_message_time).setVisibility(View.VISIBLE);
+                        v.findViewById(R.id.chat_other_translate_layout).setVisibility(View.VISIBLE);
                     }
                     textView = ((TextView) v.findViewById(R.id.chat_other));
+                    spinner = ((Spinner) v.findViewById(R.id.chat_other_spinner));
                 }
-                new MyAsyncTask() {
+                if(lastClickedView != v) {
+                    if (lastClickedView != null) {
+                        if (lastClickedView.findViewById(R.id.chat_this_message_time) != null) {
+                            lastClickedView.findViewById(R.id.chat_this_message_time).setVisibility(View.INVISIBLE);
+                            lastClickedView.findViewById(R.id.chat_this_translate_layout).setVisibility(View.GONE);
+                        } else {
+                            lastClickedView.findViewById(R.id.chat_other_message_time).setVisibility(View.INVISIBLE);
+                            lastClickedView.findViewById(R.id.chat_other_translate_layout).setVisibility(View.GONE);
+                        }
+                    }
+                    lastClickedView = v;
+                }
+                /*new MyAsyncTask() {
                     protected void onPostExecute(String result) {
                         textView.setText(result);
                     }
-                }.execute(messageList.get(position).getMessage());
+                }.execute(messageList.get(position).getMessage());*/
             }
         });
         return rowView;
     }
 
-      class MyAsyncTask extends AsyncTask<String, Integer, String> {
+      class MyAsyncTask extends AsyncTask<TranslationRequest, Integer, String> {
         @Override
-        protected String doInBackground(String... arg0) {
+        protected String doInBackground(TranslationRequest... arg0) {
             Translate.setClientId("MeetASweedt");
             Translate.setClientSecret("aF+QBqtp8FANWemB7hqvkYPWrUbVwl85aih3n1vtDsc=");
             String s;
             try {
-                s = Translate.execute(arg0[0], Language.SWEDISH, Language.ENGLISH);
+                s = Translate.execute(arg0[0].getMessage(), Language.AUTO_DETECT, arg0[0].getLanguage());
             } catch(Exception e) {
                 s = e.toString();
             }
             return s;
+        }
+    }
+
+    class TranslationRequest{
+        Language language;
+        String message;
+        TranslationRequest(int to, String message){
+            switch (to){
+                case 0:
+                    language = Language.ARABIC;
+                    break;
+                case 1:
+                    language = Language.ENGLISH;
+                    break;
+                case 2:
+                    language = Language.PERSIAN;
+                    break;
+                case 3:
+                    language = Language.SWEDISH;
+                    break;
+            }
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public Language getLanguage() {
+            return language;
         }
     }
 
