@@ -5,7 +5,6 @@ package com.untitledapps.meetasweedt;
  */
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,13 +12,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import java.util.ArrayList;
-
-import static android.graphics.Color.GREEN;
-import static android.graphics.Color.RED;
 
 public class InterestListAdapter extends BaseAdapter {
     ArrayList<String> interest;

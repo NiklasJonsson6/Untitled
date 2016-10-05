@@ -1,7 +1,7 @@
 package com.untitledapps.meetasweedt;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,7 +13,6 @@ import com.example.NetworkShared.RequestCreateUser;
 import com.untitledapps.Client.RequestBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SignUpActivity extends AppCompatActivity {
     private Person person;
@@ -52,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
         spCountry = (Spinner)findViewById(R.id.spCountry);
 
         //currently only the countries with most immigrants
-        String[] countries = new String[]{"Afghanistan", "Irak","Somalia", "Syria", "Turkey", "Sweden", "Country of Origin"};
+        String[] countries = new String[]{"Afghanistan", "Irak", "Somalia", "Syria", "Turkey", "Sweden", "Country of Origin"};
 
         final int countrylistsize = countries.length - 1;
 

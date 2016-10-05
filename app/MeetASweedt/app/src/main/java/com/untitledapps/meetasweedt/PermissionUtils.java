@@ -27,8 +27,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.untitledapps.meetasweedt.R;
-
 /**
  * Utility class for access to runtime permissions.
  */

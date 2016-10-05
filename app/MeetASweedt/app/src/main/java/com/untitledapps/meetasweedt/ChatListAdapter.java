@@ -5,7 +5,6 @@ package com.untitledapps.meetasweedt;
  */
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
@@ -26,9 +23,6 @@ import com.memetix.mst.translate.Translate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
-
-import static android.graphics.Color.GREEN;
-import static android.graphics.Color.RED;
 
 public class ChatListAdapter extends BaseAdapter {
     ArrayList<Message> messageList;
