@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 public class Person {
     private boolean isLearner;
 
+    private String username;
     private int age;
     private String name;
     private String orginCountry;
@@ -28,7 +29,7 @@ public class Person {
 
     private ArrayList<String> interests = new ArrayList<>();
 
-    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, ArrayList<String> interests) {
+    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, ArrayList<String> interests, String username) {
         this.isLearner = isLearner;
         this.age = age;
         this.name = name;
@@ -36,11 +37,12 @@ public class Person {
         this.longitude = longitude;
         this.latitude = latitude;
         this.interests = interests;
+        this.username = username;
     }
 
     public void databaseCreateUser() {
         //TODO Properties of the database person and the person object has to be the same!
-        RequestCreateUser req = new RequestCreateUser(this.isLearner, this.age, this.name, this.orginCountry, this.longitude, this.latitude, this.interests, "password");
+        RequestCreateUser req = new RequestCreateUser(this.isLearner, this.age, this.name, this.orginCountry, this.longitude, this.latitude, this.interests, this.username, "password");
         /*RequestBuilder requestBuilder = new RequestBuilder(this, RequestBuilder.Action());
         requestBuilder.addRequest(req);
         try {

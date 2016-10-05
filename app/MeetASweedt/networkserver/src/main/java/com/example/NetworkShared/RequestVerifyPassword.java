@@ -6,10 +6,10 @@ package com.example.NetworkShared;
 public class RequestVerifyPassword extends Request<ResponsVerifyPassword>{
 
     public String password;
-    public String user_name;
-    public RequestVerifyPassword(String user_name,String password) {
+    public String username;
+    public RequestVerifyPassword(String username,String password) {
         super(MessageType.VerifyPassword);
         this.password = password;
-        this.user_name= user_name;
+        this.username= username;
     }
 }

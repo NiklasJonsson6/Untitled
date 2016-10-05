@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //CREATE USER
 public class RequestCreateUser extends Request<ResponseCreateUser>
 {
-    public RequestCreateUser(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, ArrayList<String> interests, String password)
+    public RequestCreateUser(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, ArrayList<String> interests, String username, String password)
     {
         super(MessageType.CreateUser);
         this.isLearner = isLearner;
@@ -14,6 +14,7 @@ public class RequestCreateUser extends Request<ResponseCreateUser>
         this.orginCountry = orginCountry;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.username = username;
         this.interests = interests;
 
         //todo
@@ -38,6 +39,7 @@ public class RequestCreateUser extends Request<ResponseCreateUser>
     private int age;
 
     //// TODO: 2016-10-04 fix password
+    private String username;
     private String password;
     private String name;
     private String orginCountry;
@@ -47,6 +49,10 @@ public class RequestCreateUser extends Request<ResponseCreateUser>
 
     private ArrayList<String> interests = new ArrayList<>();
 
+
+    public String getUsername() {
+        return username;
+    }
 
     public boolean isLearner() {
         return isLearner;
