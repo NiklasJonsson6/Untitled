@@ -121,6 +121,7 @@ public class Person {
     public String toString() {
         return "Person{" +
                 "isLearner=" + isLearner +
+                ", username='" + username + '\'' +
                 ", age=" + age +
                 ", name='" + name + '\'' +
                 ", orginCountry='" + orginCountry + '\'' +
@@ -163,7 +164,7 @@ public class Person {
     }
 
     public float getMatchScore(Person other){
-        final int matchingTests = 2;
+        final int matchingTests = 3;
         float matchingScore = 0;
         if(other.isLearner() == this.isLearner()){
             return 0;
@@ -177,6 +178,19 @@ public class Person {
                     }
                 }
             }
+
+            final float CLOSE_RAD = 10000;
+            final float FAR_RAD = 30000;
+
+            if(getDistanceTo(other) < 30000) {
+                matchingScore += .5f;
+
+                float distance = getDistanceTo(other);
+
+
+                matchingScore += distance < CLOSE_RAD? getDistanceTo(other) / (2 * CLOSE_RAD) : 0;
+            }
+
 
             //enter preference ?
             matchingScore += 1f - Math.min(1, Math.pow(Math.abs(this.getAge()-other.getAge()), 1.1f)/25);
