@@ -1,18 +1,9 @@
 package com.untitledapps.meetasweedt;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-
 import com.example.NetworkShared.RequestCreateUser;
-import com.example.NetworkShared.RequestVerifyPassword;
-import com.untitledapps.Client.RequestBuilder;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.concurrent.ExecutionException;
 
 public class Person {
     private boolean isLearner;
@@ -121,6 +112,7 @@ public class Person {
     public String toString() {
         return "Person{" +
                 "isLearner=" + isLearner +
+                ", username='" + username + '\'' +
                 ", age=" + age +
                 ", name='" + name + '\'' +
                 ", orginCountry='" + orginCountry + '\'' +
@@ -138,16 +130,14 @@ public class Person {
 
         final float DEGREES_TO_RADIANS = 3.14159265f / 180f;
 
-        float deltaLongitude = (long2 - long1); //* DEGREES_TO_RADIANS;
-        float deltaLatitude = (lat2 - lat1);// * DEGREES_TO_RADIANS;
+        float deltaLongitude = (long2 - long1);
+        float deltaLatitude = (lat2 - lat1);
 
         float deltaLatitudeDividedBy2 = deltaLatitude / 2.0f;
         float deltaLongitudeDividedBy2 = deltaLongitude / 2.0f;
 
         double a = Math.sin((double)deltaLatitudeDividedBy2) * Math.sin(deltaLatitudeDividedBy2) +
                 Math.cos(lat1 * DEGREES_TO_RADIANS) * Math.cos(lat2 * DEGREES_TO_RADIANS) * Math.sin(deltaLongitudeDividedBy2) * Math.sin(deltaLongitudeDividedBy2);
-
-        Log.d("personClass", " a: " + a + " sqrt(q)" + Math.sqrt(a));
 
         double c = 2f * Math.atan2(Math.sqrt((float)a), (float)Math.sqrt(1.0f - a));
 
@@ -163,7 +153,7 @@ public class Person {
     }
 
     public float getMatchScore(Person other){
-        final int matchingTests = 2;
+        final int matchingTests = 3;
         float matchingScore = 0;
         if(other.isLearner() == this.isLearner()){
             return 0;
@@ -177,6 +167,19 @@ public class Person {
                     }
                 }
             }
+
+            final float CLOSE_RAD = 10000;
+            final float FAR_RAD = 30000;
+
+            if(getDistanceTo(other) < FAR_RAD) {
+                matchingScore += .5f;
+
+                float distance = getDistanceTo(other);
+
+
+                matchingScore += distance < CLOSE_RAD? getDistanceTo(other) / (2 * CLOSE_RAD) : 0;
+            }
+
 
             //enter preference ?
             matchingScore += 1f - Math.min(1, Math.pow(Math.abs(this.getAge()-other.getAge()), 1.1f)/25);

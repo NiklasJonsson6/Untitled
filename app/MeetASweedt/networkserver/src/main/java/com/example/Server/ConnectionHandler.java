@@ -1,15 +1,28 @@
 package com.example.Server;
 
 
-import com.example.NetworkShared.*;
+import com.example.NetworkShared.MessageType;
+import com.example.NetworkShared.Request;
+import com.example.NetworkShared.RequestCreateUser;
+import com.example.NetworkShared.RequestSendMessage;
+import com.example.NetworkShared.RequestUpdateLocation;
+import com.example.NetworkShared.RequestVerifyPassword;
+import com.example.NetworkShared.ResponsVerifyPassword;
+import com.example.NetworkShared.Response;
+import com.example.NetworkShared.ResponseCreateUser;
+import com.example.NetworkShared.ResponseUpdateLocation;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.Executor;
 
 /**
  * @author Daniel.
@@ -71,7 +84,6 @@ public class ConnectionHandler implements Runnable
                                 preparedStatement.setFloat(5, createUser.getLongitude());
                                 preparedStatement.setFloat(6, createUser.getLatitude());
 
-
                                 /*
                                 arrays not supported by datagbase, java.sql.SQLFeatureNotSupportedException: Not yet supported
                                 final String[] interestsData = createUser.getInterests().toArray(new String[createUser.getInterests().size()]);
@@ -80,12 +92,7 @@ public class ConnectionHandler implements Runnable
                                 store as string for now
                                */
 
-                                String interestsString = "";
-                                for(String interest: createUser.getInterests()) {
-                                    interestsString = interestsString + "," + interest;
-                                }
-
-                                preparedStatement.setString(7, interestsString);
+                                preparedStatement.setString(7, createUser.getInterestsString());
                                 preparedStatement.setString(8, createUser.getUsername());
                                 preparedStatement.setString(9, hashed_password);
 

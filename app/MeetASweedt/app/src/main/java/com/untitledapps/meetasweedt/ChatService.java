@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
-import static com.untitledapps.meetasweedt.MatchingActivity.context;
-
 public class ChatService extends Service {
     private boolean isRunning;
     private Context context;

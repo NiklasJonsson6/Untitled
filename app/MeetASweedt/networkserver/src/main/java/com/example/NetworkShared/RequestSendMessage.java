@@ -1,7 +1,5 @@
 package com.example.NetworkShared;
 
-import java.util.ResourceBundle;
-
 /**
  * Created by Daniel on 26/09/2016.
  */

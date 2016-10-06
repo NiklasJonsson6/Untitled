@@ -1,7 +1,6 @@
 package com.untitledapps.meetasweedt;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by fredr on 2016-09-27.

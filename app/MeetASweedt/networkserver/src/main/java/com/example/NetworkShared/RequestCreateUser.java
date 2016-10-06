@@ -85,4 +85,16 @@ public class RequestCreateUser extends Request<ResponseCreateUser>
     public ArrayList<String> getInterests() {
         return interests;
     }
+
+    public String getInterestsString() {
+        String s = "";
+        for(String interest: interests){
+            if(s.equals("")){
+                s = s + interest;
+            } else {
+                s = s + "," + interest;
+            }
+        }
+        return s;
+    }
 }

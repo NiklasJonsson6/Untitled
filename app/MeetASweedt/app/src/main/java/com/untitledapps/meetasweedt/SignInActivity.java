@@ -1,17 +1,14 @@
 package com.untitledapps.meetasweedt;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.NetworkShared.RequestCreateUser;
 import com.example.NetworkShared.RequestVerifyPassword;
 import com.untitledapps.Client.RequestBuilder;
-
-import java.util.concurrent.ExecutionException;
 
 public class SignInActivity extends AppCompatActivity {
 
