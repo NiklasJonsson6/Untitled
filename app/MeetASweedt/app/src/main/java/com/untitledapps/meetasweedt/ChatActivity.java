@@ -1,8 +1,12 @@
 package com.untitledapps.meetasweedt;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,6 +22,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
+import static com.untitledapps.meetasweedt.ChatService.CHAT_ACTION;
 
 
 public class ChatActivity extends AppCompatActivity {
@@ -26,6 +31,8 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayAdapter<String> chatAdapter;
     private View activityView;
     private TextView textView;
+
+    private BroadcastReceiver receiver;
 
     //TODO should be self, person to send message to
     Person p1, p2;
@@ -42,10 +49,21 @@ public class ChatActivity extends AppCompatActivity {
         /*
         For receiving chat messages:
          */
-        startService(new Intent(this, ChatService.class));
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String[] messageContainer = intent.getStringArrayExtra("MessageContainer");
+                addMessageFromContainer(messageContainer);
+            }
+        };
+
+        Intent serviceIntent = new Intent(this, ChatService.class);
+        serviceIntent.putExtra("from_id", p1.getName());
+        serviceIntent.putExtra("to_io", p2.getName());
+        serviceIntent.putExtra("index", chatMessages.size());
+        startService(serviceIntent);
 
         textView = (TextView) activityView.findViewById(R.id.chatText);
-
     }
 
     @Override
@@ -53,6 +71,30 @@ public class ChatActivity extends AppCompatActivity {
         //stops polling for messages when chat view is closed
         stopService(new Intent(this, ChatService.class));
         super.onPause();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter(CHAT_ACTION));
+    }
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onStop();
+    }
+
+    public void addMessageFromContainer(String[] messageContainer) {
+        Message message;
+        Calendar c = GregorianCalendar.getInstance();
+        if (messageContainer[0].equals(p1.getName())) {
+            message = new Message(messageContainer[1], p1, c);
+            updateChatView(message);
+        } else if (messageContainer[0].equals(p2.getName())) {
+            message = new Message(messageContainer[1], p2, c);
+            updateChatView(message);
+        }
     }
 
     public void sendMessage(View v) {
@@ -71,7 +113,7 @@ public class ChatActivity extends AppCompatActivity {
         }
         //String message = textView.getText().toString();
 
-        //reqSendMessage(message); (does nothing until there is a receiver who can get the message)
+        reqSendMessage(message);
         updateChatView(message);
     }
 

@@ -4,12 +4,14 @@ package com.example.Server;
 import com.example.NetworkShared.MessageType;
 import com.example.NetworkShared.Request;
 import com.example.NetworkShared.RequestCreateUser;
+import com.example.NetworkShared.RequestGetMessages;
 import com.example.NetworkShared.RequestSendMessage;
 import com.example.NetworkShared.RequestUpdateLocation;
 import com.example.NetworkShared.RequestVerifyPassword;
 import com.example.NetworkShared.ResponsVerifyPassword;
 import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseCreateUser;
+import com.example.NetworkShared.ResponseGetMessages;
 import com.example.NetworkShared.ResponseUpdateLocation;
 
 import java.io.IOException;
@@ -164,28 +166,50 @@ public class ConnectionHandler implements Runnable
                                 break;
 
                             case GetMessages: {
-                                /*
-                                TODO finish and test this shit,
-                                how do the messages, both to and from requester, end up in the correct order?
-                                 */
-                                String to_id;
-                                String from_id;
-                                ArrayList<String> messages;
+                                int index = ((RequestGetMessages) msg). getIndex();
+                                String to_id = ((RequestGetMessages) msg).getTo_id();
+                                String from_id = ((RequestGetMessages) msg).getFrom_id();
+
+                                ArrayList<String[]> messageContainer = new ArrayList<>();
+
                                 Statement statement = null;
                                 String query = ("select to_id, from_id, message_body from message_table");
 
                                 try {
                                     statement = conn.createStatement();
                                     ResultSet resultSet = statement.executeQuery(query);
-                                    while (resultSet.next()) {
 
+                                    int i = 0;
+                                    while (resultSet.next()) {
+                                        if (resultSet.getString("to_id").equals(to_id) && resultSet.getString("from_id").equals(from_id)) {
+                                            //if you're the sender
+                                            if (i < index) {
+                                                i++;
+                                            } else {
+                                                String[] body = new String[2];
+                                                body[0] = from_id;
+                                                body[1] = resultSet.getString("message_body");
+                                                messageContainer.add(body);
+                                            }
+                                        } else if (resultSet.getString("to_id").equals(from_id) && resultSet.getString("from_id").equals(to_id)) {
+                                            //if you're the receiver
+                                            if (i < index) {
+                                                i++;
+                                            } else {
+                                                String[] body = new String[2];
+                                                body[0] = to_id;
+                                                body[1] = resultSet.getString("message_body");
+                                                messageContainer.add(body);
+                                            }
+                                        }
                                     }
+                                    oos.writeObject(new ResponseGetMessages(true, messageContainer));
                                 } catch (Exception ex) {
+                                    //TODO probably some exception handling I guess
                                     ex.printStackTrace();
                                 }
-
-                                //oos.writeObject(new ResponseGetMessages(success, to_id, from_id, messages));
                             } break;
+
                             default: {
                                 System.err.println("msg type is not handled " + msg.type);
                             }
