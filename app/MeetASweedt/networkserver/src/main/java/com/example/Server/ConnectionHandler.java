@@ -146,8 +146,8 @@ public class ConnectionHandler implements Runnable
                                 RequestSendMessage sendMessage = (RequestSendMessage) msg;
                                 String sql = "INSERT INTO message_table (from_id, to_id, message_body) VALUES (?,?,?)";
                                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
-                                preparedStatement.setInt(1, sendMessage.from_id);
-                                preparedStatement.setInt(2, sendMessage.to_id);
+                                preparedStatement.setString(1, sendMessage.to_id);
+                                preparedStatement.setString(2, sendMessage.from_id);
                                 preparedStatement.setString(3, sendMessage.message);
                                 oos.writeObject(new Response(MessageType.SendMessage,1==preparedStatement.executeUpdate()));
                             }
@@ -161,11 +161,11 @@ public class ConnectionHandler implements Runnable
                                 TODO finish and test this shit,
                                 how do the messages, both to and from requester, end up in the correct order?
                                  */
-                                int to_id;
-                                int from_id;
+                                String to_id;
+                                String from_id;
                                 ArrayList<String> messages;
                                 Statement statement = null;
-                                String query = ("select from_id, to_id, message_body from message_table");
+                                String query = ("select to_id, from_id, message_body from message_table");
 
                                 try {
                                     statement = conn.createStatement();

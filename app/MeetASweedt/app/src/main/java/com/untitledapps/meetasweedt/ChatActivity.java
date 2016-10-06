@@ -91,7 +91,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void reqSendMessage(Message message) {
-        final RequestSendMessage req = new RequestSendMessage(Integer.parseInt(p1.getName()), Integer.parseInt(p2.getName()), message.getMessage());
+        final RequestSendMessage req = new RequestSendMessage(p1.getName(), p2.getName(), message.getMessage());
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override

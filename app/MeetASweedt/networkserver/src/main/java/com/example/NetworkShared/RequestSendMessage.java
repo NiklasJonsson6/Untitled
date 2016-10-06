@@ -6,9 +6,9 @@ import java.util.ResourceBundle;
  * Created by Daniel on 26/09/2016.
  */
 public class RequestSendMessage extends Request<Response>{
-    public int from_id,to_id;
+    public String to_id, from_id;
     public String message;
-    public RequestSendMessage(int from_id, int to_id, String message)
+    public RequestSendMessage(String to_id, String from_id, String message)
     {
         super(MessageType.SendMessage);
         this.from_id = from_id;
