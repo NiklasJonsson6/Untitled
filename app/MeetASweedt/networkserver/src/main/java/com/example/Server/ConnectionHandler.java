@@ -126,27 +126,23 @@ public class ConnectionHandler implements Runnable
                             case VerifyPassword:
                             {
                                 RequestVerifyPassword verifyPassword = (RequestVerifyPassword) msg;
-                                //String sql = "Select hashed_password, user_id from user_table where user_name = ?";
-                                String sql = "Select hashed_password, username from user_table";
+                                String sql = "Select hashed_password, user_id from user_table where username = ?";
                                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
                                 preparedStatement.setString(1, verifyPassword.username);
 
-                                try
-                                {
+                                try {
                                     ResultSet resultSet = preparedStatement.executeQuery();
                                     if(resultSet.next())
                                     {
-                                        boolean success = PasswordStorage.verifyPassword(verifyPassword.password,resultSet.getString(1));
-                                        System.out.println("pass hash: " + resultSet.getString(1) + "provided:" + verifyPassword.password+success);
+                                        boolean success = PasswordStorage.verifyPassword( verifyPassword.password,resultSet.getString(1));
+                                        System.out.println("pass hash: " + resultSet.getString(1) + "\nprovided:" + verifyPassword.password+success);
                                         oos.writeObject(new ResponsVerifyPassword(success,resultSet.getInt(2)));
                                     }
                                     else
                                     {
                                         oos.writeObject(new ResponsVerifyPassword(false,-1));
                                     }
-                                }
-                                catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException ex)
-                                {
+                                } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException ex) {
                                     oos.writeObject(new Response(ex.toString()));
                                 }
                             }break;

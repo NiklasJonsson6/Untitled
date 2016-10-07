@@ -86,8 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
                         -1,
                         new ArrayList<String>(),
                         etUsername.getText().toString(),
-                        "password"
-
+                        etPassword.getText().toString()
                 );
 
         RequestBuilder builder = new RequestBuilder(this, new RequestBuilder.Action() {
