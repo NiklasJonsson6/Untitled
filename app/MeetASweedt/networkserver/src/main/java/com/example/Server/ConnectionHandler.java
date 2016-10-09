@@ -3,13 +3,16 @@ package com.example.Server;
 
 import com.example.NetworkShared.MessageType;
 import com.example.NetworkShared.Request;
+import com.example.NetworkShared.RequestAllPeople;
 import com.example.NetworkShared.RequestCreateUser;
 import com.example.NetworkShared.RequestGetMessages;
+import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.RequestSendMessage;
 import com.example.NetworkShared.RequestUpdateLocation;
 import com.example.NetworkShared.RequestVerifyPassword;
 import com.example.NetworkShared.ResponsVerifyPassword;
 import com.example.NetworkShared.Response;
+import com.example.NetworkShared.ResponseAllPeople;
 import com.example.NetworkShared.ResponseCreateUser;
 import com.example.NetworkShared.ResponseGetMessages;
 import com.example.NetworkShared.ResponseUpdateLocation;
@@ -87,7 +90,7 @@ public class ConnectionHandler implements Runnable
                                 preparedStatement.setFloat(6, createUser.getLatitude());
 
                                 /*
-                                arrays not supported by datagbase, java.sql.SQLFeatureNotSupportedException: Not yet supported
+                                //arrays not supported by database, java.sql.SQLFeatureNotSupportedException: Not yet supported
                                 final String[] interestsData = createUser.getInterests().toArray(new String[createUser.getInterests().size()]);
                                 final java.sql.Array sqlArray = conn.createArrayOf("String", interestsData);
 
@@ -205,6 +208,89 @@ public class ConnectionHandler implements Runnable
                                     ex.printStackTrace();
                                 }
                             } break;
+
+                            case GetAllPeople: {
+                                System.out.println("is in get all people case");
+
+                                RequestAllPeople requestAllPeople = (RequestAllPeople) msg;
+
+                                //TODO secure? req pass?
+
+                                ArrayList<String[]> messageContainer = new ArrayList<>();
+
+                                Statement statement = null;
+                                String query = ("select isLearner, age, name, orginCountry, longitude, latitude, interests, username, user_id from user_table");
+
+                                try {
+                                    statement = conn.createStatement();
+                                    ResultSet resultSet = statement.executeQuery(query);
+
+                                    ResponseAllPeople response = new ResponseAllPeople(true);
+
+
+                                    int i = 0;
+
+                                    final int FETCH_LIMIT = 500;
+                                    ArrayList<String> personStrings = new ArrayList<>();
+
+                                    while (resultSet.next() && i < FETCH_LIMIT) {
+
+                                        response.getUsername().add(resultSet.getString("username"));
+
+                                        System.out.println("response usn:" + response.getUsername().get(i) + " usn:" + requestAllPeople.getUsername());
+                                        if(!response.getUsername().get(i).equals(requestAllPeople.getUsername())) {
+
+
+                                            //String personString = "";
+
+                                            response.getIsLearner().add(resultSet.getBoolean("isLearner"));
+                                            response.getAge().add(resultSet.getInt("age"));
+                                            response.getName().add(resultSet.getString("name"));
+                                            response.getOrginCountry().add(resultSet.getString("orginCountry"));
+                                            response.getLongitude().add(resultSet.getFloat("longitude"));
+                                            response.getLatitude().add(resultSet.getFloat("latitude"));
+                                            response.getInterestsString().add(resultSet.getString("interests"));
+                                            //response.getUsername().add(resultSet.getString("username"));
+                                            response.getUser_id().add(resultSet.getInt("user_id"));
+
+                                            /*personString += resultSet.getBoolean("isLearner");
+                                            personString += "," + resultSet.getInt("age");
+                                            personString += "," + resultSet.getString("name");
+                                            personString += "," + resultSet.getString("orginCountry");
+                                            personString += "," + resultSet.getFloat("longitude");
+                                            personString += "," + resultSet.getFloat("latitude");
+                                            personString += "," + resultSet.getString("interests");
+                                            personString += "," + resultSet.getString("username");
+                                            personString += "," + resultSet.getInt("user_id");*/
+
+                                            //System.out.printf("personString: " + personString);
+
+                                            i++;
+
+                                        } else {
+                                            response.getUsername().remove(resultSet.getString("username"));
+                                        }
+                                    }
+
+                                    //boolean success = response.getIsLearner().size() > 0;
+
+                                    res = conn.createStatement().executeQuery("SELECT @@IDENTITY");
+                                    res.next();
+
+
+                                    requestAllPeople.setRespone(response);
+                                    oos.writeObject(response);
+
+                                    //oos.writeObject(new ResponseAllPeople(true, requestAllPeople.getAllPersonStrings()));
+
+                                    System.out.println("got all users from db");
+                                } catch (Exception ex) {
+                                    System.out.println("error in getting all people from db");
+                                    //TODO probably some exception handling I guess
+                                    ex.printStackTrace();
+                                }
+                            } break;
+
 
                             default: {
                                 System.err.println("msg type is not handled " + msg.type);

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.NetworkShared.RequestVerifyPassword;
+import com.example.NetworkShared.ResponsVerifyPassword;
 import com.example.Server.PasswordStorage;
 import com.untitledapps.Client.RequestBuilder;
 
@@ -31,7 +32,6 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
                 //startActivity(intent);
-                //TODO fix
                 goToProfileActivity();
             }
         });}
@@ -39,7 +39,6 @@ public class SignInActivity extends AppCompatActivity {
     private void goToProfileActivity() {
 
         final RequestVerifyPassword req = new RequestVerifyPassword(etUsername.getText().toString(), etPassword.getText().toString());
-
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override

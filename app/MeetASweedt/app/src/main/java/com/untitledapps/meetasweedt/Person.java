@@ -43,6 +43,10 @@ public class Person {
         }*/
     }
 
+    public Person(String personString) {
+
+    }
+
     public void setLearner(boolean learner) {
         isLearner = learner;
     }
@@ -98,6 +102,14 @@ public class Person {
 
     public void setLatitude(float latitude) {
         this.latitude = latitude;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public ArrayList<String> getInterests() {
