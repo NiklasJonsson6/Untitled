@@ -26,7 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etAge;
     private EditText etCountry;
     private Button buttonRegister;
-    private Spinner spCountry;
+    public static Spinner spCountry;
     private RatingBar sweLvl;
     private TextView valueLvl;
 
