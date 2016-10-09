@@ -6,8 +6,16 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.example.NetworkShared.Request;
+import com.example.NetworkShared.RequestConnectionTermination;
 import com.example.NetworkShared.RequestGetMessages;
+import com.example.NetworkShared.Response;
 import com.untitledapps.Client.RequestBuilder;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class ChatService extends Service {
     private boolean isRunning;
@@ -32,7 +40,7 @@ public class ChatService extends Service {
         broadcaster = LocalBroadcastManager.getInstance(this);
 
         req = new RequestGetMessages(to_id, from_id, index);
-        builder = new RequestBuilder(this, new RequestBuilder.Action() {
+        /*builder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
                 if (req.was_successfull()) {
@@ -41,7 +49,7 @@ public class ChatService extends Service {
                     }
                 }
             }
-        });
+        });*/
     }
 
     private Runnable updateChat = new Runnable() {
@@ -49,8 +57,31 @@ public class ChatService extends Service {
             while(isRunning) {
                 try {
                     //TODO get messages
-                    builder.addRequest(req);
-                    builder.execute();
+                    //builder.addRequest(req);
+                    //builder.execute();
+
+                    //doInBackground
+                    try {
+                        Socket socket = new Socket("46.239.104.53", 4000);
+                        ObjectOutputStream oos =new ObjectOutputStream(socket.getOutputStream());
+                        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+                        req.sendRequest(ois,oos);
+
+                        new RequestConnectionTermination().sendRequest(ois,oos);
+                        socket.close();
+                    } catch (IOException ex) {
+                        if(req.majorError()) {
+                            req.setRespone(new Response("clientside: "+ex.toString()));
+                        }
+                        ex.printStackTrace();
+                    }
+
+                    //PostExecute
+                    if (req.was_successfull()) {
+                        for (String[] messageContainer: req.getResponse().getMessageContainer()) {
+                            sendResult(messageContainer);
+                        }
+                    }
 
                     System.out.println("poll");
                     Thread.sleep(2000);
