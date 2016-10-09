@@ -1,11 +1,13 @@
 package com.untitledapps.meetasweedt;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,7 +27,8 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etCountry;
     private Button buttonRegister;
     private Spinner spCountry;
-
+    private RatingBar sweLvl;
+    private TextView valueLvl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +69,22 @@ public class SignUpActivity extends AppCompatActivity {
         spCountry.setAdapter(countryAdapter);
         spCountry.setSelection(countrylistsize);
 
+        addListenerOnRaingBar();
+
     }
 
+    ////hur visa upp på profile activity????
+    public void addListenerOnRaingBar(){
+        sweLvl = (RatingBar) findViewById(R.id.ratingBar);
+        //valueLvl = (TextView) findViewById(R.id.txtRatingvalue);
+
+        sweLvl.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                valueLvl.setText(String.valueOf(rating));
+            }
+        });
+    }
 
     public void registerButtonPressed() {
         //person = new Person(true /*not yet implemented*/, Integer.parseInt(etAge.getText().toString()),
@@ -99,8 +116,6 @@ public class SignUpActivity extends AppCompatActivity {
         builder.addRequest(req);
         builder.execute();
     }
-
-
 
 
 }
