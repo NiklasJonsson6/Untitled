@@ -104,6 +104,13 @@ public class MatchViewAdapter extends BaseAdapter {
                 ((TextView) temp.findViewById(R.id.name)).setText(result.get(position).getName());
                 ListView listView = (ListView) temp.findViewById(R.id.intrests);
                 listView.setAdapter(new InterestListAdapter(context, result.get(position).getInterests(), matchingPerson.getInterests()));
+                temp.findViewById(R.id.matchButton).setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        
+                    }
+                });
             }
 
         });
