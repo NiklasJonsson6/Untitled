@@ -7,20 +7,21 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.*;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import com.google.android.gms.maps.model.internal.IPolylineDelegate;
+
 
 /**
  * Created by Ajla on 2016-10-11.
  */
 
-public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener, OnCancelListener {
-
+public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener {
+///NOTE: class is costumized for string arrays only, not string lists
 
     ArrayAdapter<String> adapter;
     String[] itemlist = null;
@@ -28,12 +29,12 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener,
 
 
     public void onClick(DialogInterface dialog, int items, boolean Checked) {
-        if (selected != null){
-            if(items < selected.length) {
+        if (selected != null) {
+            if (items < selected.length) {
                 selected[items] = Checked;
 
                 adapter.clear();
-                adapter.add(buildSelectedItemStr());
+                adapter.add(getSelectedItemStr());
             }
         } else {
             throw new IllegalArgumentException(
@@ -42,22 +43,24 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener,
     }
 
 
-    ///contructors
-    public MultiSpinner(Context stuff){
+    ///constructors
+    public MultiSpinner(Context stuff) {
         super(stuff);
         adapter = new ArrayAdapter<String>(stuff, android.R.layout.simple_spinner_item);
         super.setAdapter(adapter);
     }
 
-    public MultiSpinner(Context stuff, AttributeSet aset){
+    public MultiSpinner(Context stuff, AttributeSet aset) {
         super(stuff, aset);
         adapter = new ArrayAdapter<String>(stuff, android.R.layout.simple_spinner_item);
         super.setAdapter(adapter);
     }
 
 
-    ///NOTE: class is costumized for string arrays only, not string lists
-    public void setItem(String[] items){
+
+
+    //set adapter items using String[] to spinner
+    public void setItem(String[] items) {
         itemlist = items;
         int length = itemlist.length;
         selected = new boolean[length];
@@ -68,9 +71,47 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener,
     }
 
 
-    
+    //set selected items on this adapter using String[] to this spinner
+    public void setSelection(String[] sel){
+        for(int i = 0; i<sel.length; i++){
+            for(int j=0; j<itemlist.length; j++){
+                if(itemlist[j].equals(sel[i])){
+                    selected[j] = true;
+                }
+            }
+        }
+    }
 
-    private String buildSelectedItemStr() {
+
+    //get selected items as a string
+    public List<String> getSelectedStrings(){
+        List<String> sel = new LinkedList<String>();
+
+        for(int i = 0; i < itemlist.length; i++){
+            if(selected[i])
+                sel.add(itemlist[i]);
+        }
+
+        return sel;
+    }
+
+
+
+    //get selected indexes as a list of integers
+    public List<Integer> getSelectedIndicies(){
+        List<Integer> sel = new LinkedList<Integer>();
+
+        for (int i = 0; i < itemlist.length; i++){
+            if(selected[i])
+                sel.add(i);
+        }
+
+        return sel;
+    }
+
+
+
+    private String getSelectedItemStr() {
         boolean foundOne = false;
         StringBuilder strngbf = new StringBuilder();
 
@@ -87,15 +128,23 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener,
     }
 
 
-    @Override
-    public void onCancel(DialogInterface dialog) {
 
+
+    @Override
+    public boolean performClick(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setMultiChoiceItems(itemlist, selected, this);
+        builder.show();
+
+        return true;
     }
 
-
-
-
-
+    @Override
+    public void setAdapter(SpinnerAdapter spadapter) {
+        throw new RuntimeException(
+                "setAdapter is not supported by MultiSelectSpinner.");
+    }
 
 
 
