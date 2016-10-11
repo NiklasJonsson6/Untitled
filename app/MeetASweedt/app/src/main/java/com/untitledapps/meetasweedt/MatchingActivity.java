@@ -14,7 +14,9 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.example.NetworkShared.RequestAddMatch;
 import com.example.NetworkShared.RequestAllPeople;
+import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.untitledapps.Client.RequestBuilder;
 
@@ -63,6 +65,7 @@ public class MatchingActivity extends AppCompatActivity {
 
         initiateLocationServices(user);
 
+        reqAddMatch(11, 2);
 
     }
 
@@ -137,22 +140,20 @@ public class MatchingActivity extends AppCompatActivity {
         //locationManager.removeUpdates(locationListener);
     }
 
-    public static ArrayList<Person> getAllPeopleDb(Activity activity, Person user) {
-        final RequestAllPeople req = new RequestAllPeople(user.getUsername());
+    public void reqAddMatch(int matchId, int userId){
+        final RequestAddMatch req = new RequestAddMatch(matchId, userId);
 
         final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
 
-        RequestBuilder requestBuilder = new RequestBuilder(activity, new RequestBuilder.Action() {
+        RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
                 if (req.was_successfull()) {
-                    ResponseAllPeople response = req.getResponse();
-                    if(response != null) {
-                        System.out.println("getpeople request successfull");
+                    Response response = req.getResponse();
+                    if (response != null) {
+                        System.out.println("addmatch request successfull");
 
-                        ArrayList <String> peopleStrings = response.getAllPeopleString();
-
-                        for(int i = 0; i < response.getIsLearner().size(); i++) {
+                        /*for(int i = 0; i < response.getIsLearner().size(); i++) {
                             String interestsString = response.getInterestsString().get(i);
 
                             ArrayList<String> interests = new ArrayList<>();
@@ -172,7 +173,63 @@ public class MatchingActivity extends AppCompatActivity {
                                     interests,
                                     response.getUsername().get(i),
                                     response.getUser_id().get(i)
-                            ));
+                            ));*/
+
+                    }
+
+                    //System.out.println("playerStrings(1): " + peopleStrings.get(2).toString());
+                } else {
+                    System.out.println("fail adding match");
+                }
+            }
+        });
+
+
+        requestBuilder.addRequest(req);
+        requestBuilder.execute();
+    }
+
+    public static ArrayList<Person> getAllPeopleDb(Activity activity, Person user) {
+        final RequestAllPeople req = new RequestAllPeople(user.getUsername());
+
+        final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
+
+        RequestBuilder requestBuilder = new RequestBuilder(activity, new RequestBuilder.Action() {
+            @Override
+            public void PostExecute() {
+                if (req.was_successfull()) {
+                    ResponseAllPeople response = req.getResponse();
+
+                    if(response != null) {
+                        System.out.println("getpeople request successfull");
+
+                        ArrayList <String> peopleStrings = response.getAllPeopleString();
+
+                        for(int i = 0; i < response.getIsLearner().size(); i++) {
+                            String interestsString = response.getInterestsString().get(i);
+
+                            ArrayList<String> interests = new ArrayList<>();
+                            String[] parts = interestsString.split(",");
+
+                            for(String part: parts) {
+                                interests.add(part);
+                            }
+
+                            Person person = new Person(
+                                    response.getIsLearner().get(i),
+                                    response.getAge().get(i),
+                                    response.getName().get(i),
+                                    response.getOrginCountry().get(i),
+                                    response.getLongitude().get(i),
+                                    response.getLatitude().get(i),
+                                    interests,
+                                    response.getUsername().get(i),
+                                    response.getUser_id().get(i)
+                            );
+
+                            peopleFromDatabase.add(person);
+
+
 
                         }
 
