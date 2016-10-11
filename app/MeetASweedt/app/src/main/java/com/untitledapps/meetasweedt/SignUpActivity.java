@@ -81,7 +81,8 @@ public class SignUpActivity extends AppCompatActivity {
         sweLvl.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                valueLvl.setText(String.valueOf(rating));
+                if(valueLvl != null)
+                    valueLvl.setText(String.valueOf(rating));
             }
         });
     }

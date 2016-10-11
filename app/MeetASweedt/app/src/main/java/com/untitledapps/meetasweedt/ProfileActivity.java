@@ -57,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        String selCountry = SignUpActivity.spCountry.getSelectedItem().toString();
+        //String selCountry = SignUpActivity.spCountry.getSelectedItem().toString();
 
     }
 

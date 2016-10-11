@@ -35,6 +35,7 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".MatchingActivity" />
         <activity android:name=".SignInActivity" />
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".MatchesActivity" />
         <activity
             android:name=".ChatActivity"
