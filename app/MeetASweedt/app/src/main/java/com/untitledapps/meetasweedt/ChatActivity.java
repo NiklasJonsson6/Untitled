@@ -88,10 +88,10 @@ public class ChatActivity extends AppCompatActivity {
     public void addMessageFromContainer(String[] messageContainer) {
         Message message;
         Calendar c = GregorianCalendar.getInstance();
-        if (messageContainer[0].equals(p1.getName())) {
+        if (messageContainer[0].equals(p1.getUsername())) {
             message = new Message(messageContainer[1], p1, c);
             updateChatView(message);
-        } else if (messageContainer[0].equals(p2.getName())) {
+        } else if (messageContainer[0].equals(p2.getUsername())) {
             message = new Message(messageContainer[1], p2, c);
             updateChatView(message);
         }

@@ -78,9 +78,7 @@ public class ChatService extends Service {
                     //PostExecute
                     if (req.was_successfull()) {
                         System.out.println("successfull");
-                        System.out.println("container: " + req.getResponse().getMessageContainer());
                         for (String[] messageContainer: req.getResponse().getMessageContainer()) {
-                            System.out.println("messageContainer length: " + messageContainer.length);
                             sendResult(messageContainer);
                         }
                     } else {
@@ -100,6 +98,8 @@ public class ChatService extends Service {
         Intent intent = new Intent(CHAT_ACTION);
         intent.putExtra("MessageContainer", messageContainer);
         broadcaster.sendBroadcast(intent);
+        System.out.println("Broadcaster sent: " + messageContainer[1]);
+        req.incIndex();
     }
 
     @Override
