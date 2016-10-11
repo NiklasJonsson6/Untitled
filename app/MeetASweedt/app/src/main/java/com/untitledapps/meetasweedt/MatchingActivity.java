@@ -62,6 +62,8 @@ public class MatchingActivity extends AppCompatActivity {
         System.out.println("hey " + matchingProfileView.findViewById(R.id.matchProcent));
 
         initiateLocationServices(user);
+
+
     }
 
     public void populateMatchingView(ArrayList<Person> personArrayList, Person user) {

@@ -3,6 +3,7 @@ package com.example.Server;
 
 import com.example.NetworkShared.MessageType;
 import com.example.NetworkShared.Request;
+import com.example.NetworkShared.RequestAddMatch;
 import com.example.NetworkShared.RequestAllPeople;
 import com.example.NetworkShared.RequestCreateUser;
 import com.example.NetworkShared.RequestGetMessages;
@@ -12,6 +13,7 @@ import com.example.NetworkShared.RequestUpdateLocation;
 import com.example.NetworkShared.RequestVerifyPassword;
 import com.example.NetworkShared.ResponsVerifyPassword;
 import com.example.NetworkShared.Response;
+import com.example.NetworkShared.ResponseAddMatch;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.example.NetworkShared.ResponseCreateUser;
 import com.example.NetworkShared.ResponseGetMessages;
@@ -127,6 +129,41 @@ public class ConnectionHandler implements Runnable
                                 preparedStatement.setInt(3,updateLocation.user_id);
                                 boolean success = preparedStatement.executeUpdate() == 1;
                                 oos.writeObject(new ResponseUpdateLocation(success));
+                            } break;
+                            case AddMatch: {
+                                RequestAddMatch requestAddMatch = (RequestAddMatch) msg;
+                                String sql = "update user_table set matches=? where user_id = ?";
+                                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+                                String newIdString = "" + requestAddMatch.getMatchId();
+
+                                String oldMatches = "";
+
+                                String query = ("Select matches from user_table where user_id = ?");
+                                PreparedStatement preparedStatementMatch = conn.prepareStatement(sql);
+                                preparedStatementMatch.setInt(1, requestAddMatch.getUserID());
+
+                                ResultSet resultSet = preparedStatementMatch.executeQuery();
+
+                                oldMatches = resultSet.getString("matches");
+
+
+                                String[]parts = oldMatches.split(newIdString);
+
+                                if(parts.length > 1){
+                                    if(oldMatches.equals("")){
+                                        preparedStatement.setString(1, oldMatches + requestAddMatch.getMatchId()); //add old string
+                                    } else {
+                                        preparedStatement.setString(1, oldMatches + "," + requestAddMatch.getMatchId()); //add old string
+                                    }
+
+                                    preparedStatement.setInt(3, requestAddMatch.getUserID());
+                                    boolean success = preparedStatement.executeUpdate() == 1;
+                                    oos.writeObject(new ResponseAddMatch(success));
+                                } else {
+                                    //already in matches
+                                    oos.writeObject(new ResponseUpdateLocation(true));
+                                }
                             } break;
                             case VerifyPassword:
                             {

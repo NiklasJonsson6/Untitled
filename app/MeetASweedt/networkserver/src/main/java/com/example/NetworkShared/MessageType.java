@@ -7,6 +7,7 @@ package com.example.NetworkShared;
 public enum MessageType
 {
     GetMatches,
+    AddMatch,
     GetAllPeople,
     ValidUserName,
     CreateUser,
