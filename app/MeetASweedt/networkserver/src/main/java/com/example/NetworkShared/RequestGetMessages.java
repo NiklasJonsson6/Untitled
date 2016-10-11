@@ -18,6 +18,7 @@ public class RequestGetMessages extends Request<ResponseGetMessages> {
         super(MessageType.GetMessages);
         this.to_id = to_id;
         this.from_id = from_id;
+        this.index = index;
     }
 
     public String getTo_id() {
@@ -30,6 +31,10 @@ public class RequestGetMessages extends Request<ResponseGetMessages> {
 
     public int getIndex() {
         return index;
+    }
+
+    public void incIndex() {
+        index++;
     }
 
     @Override
