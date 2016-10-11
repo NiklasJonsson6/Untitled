@@ -41,8 +41,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityView = getLayoutInflater().inflate(R.layout.activity_chat, null);
-        p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "ah", 12);
-        p2 = new Person(false, 20, "Fredrik Mast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "fli", 13);
+        p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 12);
+        p2 = new Person(false, 20, "Fredrik Mast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "NiklasJonsson6", 13);
         //chatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         setContentView(activityView);
 
@@ -58,8 +58,8 @@ public class ChatActivity extends AppCompatActivity {
         };
 
         Intent serviceIntent = new Intent(this, ChatService.class);
-        serviceIntent.putExtra("from_id", p1.getName());
-        serviceIntent.putExtra("to_io", p2.getName());
+        serviceIntent.putExtra("from_id", p1.getUsername());
+        serviceIntent.putExtra("to_id", p2.getUsername());
         serviceIntent.putExtra("index", chatMessages.size());
         startService(serviceIntent);
 
@@ -106,7 +106,7 @@ public class ChatActivity extends AppCompatActivity {
         Test code to send message from either person
          */
         Random r = new Random();
-        if(r.nextBoolean()){
+        if(true && r.nextBoolean()){
             message = new Message(textView.getText().toString(), p1, c);
         } else {
             message = new Message(textView.getText().toString(), p2, c);
@@ -126,15 +126,13 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void reqSendMessage(Message message) {
-        final RequestSendMessage req = new RequestSendMessage(p1.getName(), p2.getName(), message.getMessage());
+        final RequestSendMessage req = new RequestSendMessage(p1.getUsername(), p2.getUsername(), message.getMessage());
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
                 if (req.was_successfull()) {
                     System.out.println("Message sent");
-                } else {
-                    System.out.println("Send message failed");
                 }
             }
         });

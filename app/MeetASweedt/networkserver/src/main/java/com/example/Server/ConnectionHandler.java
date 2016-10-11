@@ -17,6 +17,7 @@ import com.example.NetworkShared.ResponseCreateUser;
 import com.example.NetworkShared.ResponseGetMessages;
 import com.example.NetworkShared.ResponseMatches;
 import com.example.NetworkShared.ResponseUpdateLocation;
+import com.sun.corba.se.impl.protocol.giopmsgheaders.RequestMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -166,9 +167,14 @@ public class ConnectionHandler implements Runnable
                                 break;
 
                             case GetMessages: {
-                                int index = ((RequestGetMessages) msg). getIndex();
-                                String to_id = ((RequestGetMessages) msg).getTo_id();
-                                String from_id = ((RequestGetMessages) msg).getFrom_id();
+                                System.out.println("getmessagecase");
+                                RequestGetMessages requestMessage = (RequestGetMessages) msg;
+
+                                requestMessage.getIndex();
+
+                                int index = requestMessage.getIndex();
+                                String to_id = requestMessage.getTo_id();
+                                String from_id = requestMessage.getFrom_id();
 
                                 ArrayList<String[]> messageContainer = new ArrayList<>();
 
@@ -181,21 +187,30 @@ public class ConnectionHandler implements Runnable
 
                                     int i = 0;
                                     while (resultSet.next()) {
+                                        System.out.println("in while conhandl getmesg");
+                                        System.out.println("2id: "+ resultSet.getString("to_id") + ", given " + to_id);
+                                        System.out.println("fid: "+ resultSet.getString("from_id") + ", given " + from_id);
                                         if (resultSet.getString("to_id").equals(to_id) && resultSet.getString("from_id").equals(from_id)) {
                                             //if you're the sender
+                                            System.out.println("if11");
                                             if (i < index) {
                                                 i++;
+                                                System.out.println("if1");
                                             } else {
+                                                System.out.println("else1");
                                                 String[] body = new String[2];
                                                 body[0] = from_id;
                                                 body[1] = resultSet.getString("message_body");
                                                 messageContainer.add(body);
                                             }
                                         } else if (resultSet.getString("to_id").equals(from_id) && resultSet.getString("from_id").equals(to_id)) {
+                                            System.out.println("if22");
                                             //if you're the receiver
                                             if (i < index) {
                                                 i++;
+                                                System.out.println("if2");
                                             } else {
+                                                System.out.println("else2");
                                                 String[] body = new String[2];
                                                 body[0] = to_id;
                                                 body[1] = resultSet.getString("message_body");
@@ -203,7 +218,14 @@ public class ConnectionHandler implements Runnable
                                             }
                                         }
                                     }
-                                    oos.writeObject(new ResponseGetMessages(true, messageContainer));
+
+                                    System.out.println("messagecontainer: length on server: " + messageContainer.size());
+
+                                    ResponseGetMessages response = new ResponseGetMessages(true, messageContainer);
+
+                                    requestMessage.setRespone(response);
+
+                                    oos.writeObject(response);
                                 } catch (Exception ex) {
                                     //TODO probably some exception handling I guess
                                     ex.printStackTrace();
@@ -228,7 +250,6 @@ public class ConnectionHandler implements Runnable
                                     int i = 0;
 
                                     final int FETCH_LIMIT = 500;
-                                    ArrayList<String> personStrings = new ArrayList<>();
 
                                     while (resultSet.next() && i < FETCH_LIMIT) {
 
