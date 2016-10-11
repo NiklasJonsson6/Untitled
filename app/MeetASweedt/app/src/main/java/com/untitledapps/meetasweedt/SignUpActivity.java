@@ -86,13 +86,14 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+
     public void registerButtonPressed() {
         //person = new Person(true /*not yet implemented*/, Integer.parseInt(etAge.getText().toString()),
         //        etName.getText().toString(), "Sweden" /*should maybe be swedish true/false?*/,
         //        20, 20 /*get longitude/latitude somehow*/, 20 /*example*/, new ArrayList<String>());
 
-        //// TODO: 2016-10-05 check user entered valid data (not left empty) 
-        
+        //// TODO: 2016-10-05 check user entered valid data (not left empty)
+
         final RequestCreateUser req =
                 new RequestCreateUser(
                         false,
@@ -115,6 +116,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         builder.addRequest(req);
         builder.execute();
+
+        //after the registration go to interest list
+        Intent intent = new Intent(this, SignUp2Activity.class);
+        startActivity(intent);
     }
 
 

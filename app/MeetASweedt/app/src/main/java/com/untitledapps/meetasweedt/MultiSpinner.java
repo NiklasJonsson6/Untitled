@@ -111,7 +111,7 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener 
 
 
 
-    private String getSelectedItemStr() {
+    public String getSelectedItemStr() {
         boolean foundOne = false;
         StringBuilder strngbf = new StringBuilder();
 
