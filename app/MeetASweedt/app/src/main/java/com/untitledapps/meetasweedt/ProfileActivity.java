@@ -24,9 +24,18 @@ public class ProfileActivity extends AppCompatActivity {
         final Button buttonMatches = (Button) findViewById(R.id.buttonMatches);
         final Button buttonChat = (Button) findViewById(R.id.buttonChat);
         final Button mapButton = (Button) findViewById(R.id.mapButton);
+        final Button buttonMatch = (Button) findViewById(R.id.buttonMatch);
 
         //////MATCHES
         buttonMatches.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMatchesActivity();
+            }
+        });
+
+        //////MATCHES
+        buttonMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToMatchingActivity();
@@ -52,6 +61,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void goToMatchingActivity() {
         Intent intent = new Intent(this, MatchingActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToMatchesActivity() {
+        Intent intent = new Intent(this, MatchesActivity.class);
         startActivity(intent);
     }
 

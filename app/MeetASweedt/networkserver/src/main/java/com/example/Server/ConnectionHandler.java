@@ -15,6 +15,7 @@ import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.example.NetworkShared.ResponseCreateUser;
 import com.example.NetworkShared.ResponseGetMessages;
+import com.example.NetworkShared.ResponseMatches;
 import com.example.NetworkShared.ResponseUpdateLocation;
 
 import java.io.IOException;
@@ -172,7 +173,7 @@ public class ConnectionHandler implements Runnable
                                 ArrayList<String[]> messageContainer = new ArrayList<>();
 
                                 Statement statement = null;
-                                String query = ("select to_id, from_id, message_body from message_table");
+                                String query = ("Select to_id, from_id, message_body from message_table");
 
                                 try {
                                     statement = conn.createStatement();
@@ -213,10 +214,6 @@ public class ConnectionHandler implements Runnable
                                 System.out.println("is in get all people case");
 
                                 RequestAllPeople requestAllPeople = (RequestAllPeople) msg;
-
-                                //TODO secure? req pass?
-
-                                ArrayList<String[]> messageContainer = new ArrayList<>();
 
                                 Statement statement = null;
                                 String query = ("select isLearner, age, name, orginCountry, longitude, latitude, interests, username, user_id from user_table");
@@ -291,6 +288,70 @@ public class ConnectionHandler implements Runnable
                                 }
                             } break;
 
+                            case GetMatches: {
+                                System.out.println("in get matches case");
+                                RequestMatches requestMatches = (RequestMatches) msg;
+
+                                //TODO secure? req pass?
+
+                                Statement statement = null;
+
+
+                                //String sql = "Select hashed_password, user_id from user_table where username = ?";
+
+
+                                //String sql = "Select hashed_password, user_id from user_table where user_id = ?";
+                                //PreparedStatement preparedStatement = conn.prepareStatement(query);
+                                //preparedStatement.setInt(1, requestMatches.getUser_id());
+
+
+                                try {
+
+                                    String query = "Select matches from user_table where user_id = ?";
+                                    System.out.println("userid: " + requestMatches.getUser_id());
+
+
+                                    //String sql = "update user_table set longitude=?, latitude=? where user_id = ?";
+                                    PreparedStatement preparedStatement = conn.prepareStatement(query);
+                                    preparedStatement.setInt(1,requestMatches.getUser_id());
+
+
+
+                                    //boolean success = preparedStatement.executeUpdate() == 1;
+                                    //oos.writeObject(new ResponseUpdateLocation(success));
+
+
+
+                                    //statement = conn.createStatement();
+                                    System.out.println("b4 q");
+                                    //res = conn.createStatement().executeQuery("SELECT @@IDENTITY");
+
+                                    ResultSet resultSet = preparedStatement.executeQuery();
+                                    System.out.println("after q");
+
+                                    ResponseMatches response = new ResponseMatches(true);
+                                    //ResponseMatches response = new ResponseMatches(1==preparedStatement.executeUpdate());
+                                    resultSet.next();
+
+                                    response.setStringOfMatches(resultSet.getString("matches"));
+
+                                    //res = conn.createStatement().executeQuery("SELECT @@IDENTITY");
+                                    //res.next();
+
+
+                                    requestMatches.setRespone(response);
+                                    oos.writeObject(response);
+
+                                    //oos.writeObject(new ResponseAllPeople(true, requestAllPeople.getAllPersonStrings()));
+
+                                    System.out.println("got all matchesssssssssssssssssssssss from db");
+                                } catch (Exception ex) {
+                                    System.out.println("error in getting matches from db");
+                                    //TODO probably some exception handling I guess
+                                    ex.printStackTrace();
+                                }
+
+                            } break;
 
                             default: {
                                 System.err.println("msg type is not handled " + msg.type);

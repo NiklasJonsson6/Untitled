@@ -12,7 +12,7 @@ public class ResponseAllPeople extends Response {
         super(MessageType.GetAllPeople,success);
     }
 
-    public ArrayList<String> getAllPersonString() {
+    public ArrayList<String> getAllPeopleString() {
         return allPersonString;
     }
 
@@ -29,7 +29,6 @@ public class ResponseAllPeople extends Response {
     private ArrayList<Float> latitude = new ArrayList<>();
 
     private ArrayList<Integer> user_id = new ArrayList<>();
-
 
     public void setAllPersonString(ArrayList<String> allPersonString) {
         this.allPersonString = allPersonString;

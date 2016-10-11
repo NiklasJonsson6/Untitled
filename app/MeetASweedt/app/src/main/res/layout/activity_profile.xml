@@ -84,19 +84,6 @@
         android:layout_alignRight="@+id/etUsername"
         android:layout_alignEnd="@+id/etUsername" />
 
-    <Button
-        android:text="Match with people"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonMatches"
-        android:background="@android:color/holo_purple"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="81dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/etAge"
-        android:layout_alignEnd="@+id/etAge" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,10 +112,34 @@
         android:text="Map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/mapButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="11dp"
-        android:id="@+id/mapButton" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp" />
+
+    <Button
+        android:text="Matches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonMatches"
+        android:background="@android:color/holo_purple"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/buttonMatch"
+        android:layout_alignEnd="@+id/buttonMatch"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:text="Match with people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonMatch"
+        android:background="@android:color/holo_purple"
+        android:layout_alignBaseline="@+id/buttonChat"
+        android:layout_alignBottom="@+id/buttonChat"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

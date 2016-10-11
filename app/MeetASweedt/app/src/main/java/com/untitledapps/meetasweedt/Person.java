@@ -16,11 +16,13 @@ public class Person {
     private float longitude;
     private float latitude;
 
+    private int user_id;
+
     //database request builder
 
     private ArrayList<String> interests = new ArrayList<>();
 
-    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, ArrayList<String> interests, String username) {
+    public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, ArrayList<String> interests, String username, int user_id) {
         this.isLearner = isLearner;
         this.age = age;
         this.name = name;
@@ -29,6 +31,7 @@ public class Person {
         this.latitude = latitude;
         this.interests = interests;
         this.username = username;
+        this.user_id = user_id;
     }
 
     public void databaseCreateUser() {
@@ -110,6 +113,14 @@ public class Person {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public ArrayList<String> getInterests() {

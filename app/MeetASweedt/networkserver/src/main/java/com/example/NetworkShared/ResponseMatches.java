@@ -6,4 +6,14 @@ public class ResponseMatches extends Response
     {
         super(MessageType.GetMatches,success);
     }
+
+    private String stringOfMatches = "";
+
+    public String getStringOfMatches() {
+        return stringOfMatches;
+    }
+
+    public void setStringOfMatches(String stringOfMatches) {
+        this.stringOfMatches = stringOfMatches;
+    }
 }
