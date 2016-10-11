@@ -2,6 +2,7 @@ package com.untitledapps.meetasweedt;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import com.example.NetworkShared.RequestAddMatch;
 import com.example.NetworkShared.RequestAllPeople;
@@ -20,6 +20,7 @@ import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.untitledapps.Client.RequestBuilder;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -64,9 +65,6 @@ public class MatchingActivity extends AppCompatActivity {
         System.out.println("hey " + matchingProfileView.findViewById(R.id.matchProcent));
 
         initiateLocationServices(user);
-
-        reqAddMatch(11, 2);
-
     }
 
     public void populateMatchingView(ArrayList<Person> personArrayList, Person user) {
@@ -140,12 +138,12 @@ public class MatchingActivity extends AppCompatActivity {
         //locationManager.removeUpdates(locationListener);
     }
 
-    public void reqAddMatch(int matchId, int userId){
+    public static void requestAddMatch(Context context, int matchId, int userId){
         final RequestAddMatch req = new RequestAddMatch(matchId, userId);
 
         final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
 
-        RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
+        RequestBuilder requestBuilder = new RequestBuilder(context, new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
                 if (req.was_successfull()) {

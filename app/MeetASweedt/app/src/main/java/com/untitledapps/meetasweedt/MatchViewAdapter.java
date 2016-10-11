@@ -79,7 +79,7 @@ public class MatchViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         Holder holder = new Holder();
         View temp = inflater.inflate(R.layout.activity_matching_card, null);
@@ -108,7 +108,7 @@ public class MatchViewAdapter extends BaseAdapter {
 
                     @Override
                     public void onClick(View v) {
-                        
+                        MatchingActivity.requestAddMatch(context, result.get(position).getUser_id(), matchingPerson.getUser_id());
                     }
                 });
             }
