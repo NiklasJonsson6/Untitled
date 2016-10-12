@@ -79,7 +79,7 @@ public class MatchViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         Holder holder = new Holder();
         View temp = inflater.inflate(R.layout.activity_matching_card, null);
@@ -99,11 +99,18 @@ public class MatchViewAdapter extends BaseAdapter {
                 // TODO Add show profile
                 RelativeLayout temp = (RelativeLayout)inflater.inflate(R.layout.activity_matching_profile, null);
                 ((Activity) context).setContentView(temp);
-                ((TextView) temp.getChildAt(4)).setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)) + "%");
-                ((TextView) temp.getChildAt(1)).setText(Float.toString(Math.round((10f * result.get(position).getDistanceTo(matchingPerson) / 1000)) / 10f) + " Km");
-                ((TextView) temp.getChildAt(3)).setText(result.get(position).getName());
-                ListView listView = (ListView) temp.getChildAt(2);
+                ((TextView) temp.findViewById(R.id.matchingProcent)).setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)) + "%");
+                ((TextView) temp.findViewById(R.id.distance)).setText(Float.toString(Math.round((10f * result.get(position).getDistanceTo(matchingPerson) / 1000)) / 10f) + " Km");
+                ((TextView) temp.findViewById(R.id.name)).setText(result.get(position).getName());
+                ListView listView = (ListView) temp.findViewById(R.id.intrests);
                 listView.setAdapter(new InterestListAdapter(context, result.get(position).getInterests(), matchingPerson.getInterests()));
+                temp.findViewById(R.id.matchButton).setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        MatchingActivity.requestAddMatch(context, result.get(position).getUser_id(), matchingPerson.getUser_id());
+                    }
+                });
             }
 
         });

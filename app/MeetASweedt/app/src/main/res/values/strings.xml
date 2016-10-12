@@ -17,4 +17,6 @@
     </string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="title_activity_fika_map">Fika Map</string>
+    <string name="drawer_open">Drawer</string>
+    <string name="drawer_close">Drawer</string>
 </resources>

@@ -13,6 +13,7 @@ public class ResponseGetMessages extends Response {
     public ResponseGetMessages(boolean success, ArrayList<String[]> messageContainer) {
         super(MessageType.GetMessages, success);
         this.messageContainer = messageContainer;
+        System.out.println("messagecontainer: length in response: " + messageContainer.size());
     }
 
     /**

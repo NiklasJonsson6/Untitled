@@ -39,7 +39,6 @@ public class ChatService extends Service {
 
         broadcaster = LocalBroadcastManager.getInstance(this);
 
-        req = new RequestGetMessages(to_id, from_id, index);
         /*builder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
@@ -78,9 +77,12 @@ public class ChatService extends Service {
 
                     //PostExecute
                     if (req.was_successfull()) {
+                        System.out.println("successfull");
                         for (String[] messageContainer: req.getResponse().getMessageContainer()) {
                             sendResult(messageContainer);
                         }
+                    } else {
+                        System.out.println("get message request failed");
                     }
 
                     System.out.println("poll");
@@ -96,6 +98,8 @@ public class ChatService extends Service {
         Intent intent = new Intent(CHAT_ACTION);
         intent.putExtra("MessageContainer", messageContainer);
         broadcaster.sendBroadcast(intent);
+        System.out.println("Broadcaster sent: " + messageContainer[1]);
+        req.incIndex();
     }
 
     @Override
@@ -103,6 +107,8 @@ public class ChatService extends Service {
         to_id = intent.getStringExtra("to_id");
         from_id = intent.getStringExtra("from_id");
         index = intent.getIntExtra("index", 0);
+
+        req = new RequestGetMessages(to_id, from_id, index);
 
         if(!isRunning) {
             isRunning = true;
