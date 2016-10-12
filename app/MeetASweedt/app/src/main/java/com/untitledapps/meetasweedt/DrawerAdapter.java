@@ -101,21 +101,36 @@ public class DrawerAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     // TODO Add show profile
                     Intent intent = null;
+                    Boolean change = false;
                     switch (result.get(position)) {
                         case "My Profile":
-                            intent = new Intent(context, ProfileActivity.class);
+                            if(!(context instanceof  ProfileActivity)) {
+                                intent = new Intent(context, ProfileActivity.class);
+                                change = true;
+                            }
                             break;
                         case "Chat":
-                            intent = new Intent(context, ChatActivity.class);
+                            if(!(context instanceof  ChatActivity)) {
+                                intent = new Intent(context, ChatActivity.class);
+                                change = true;
+                            }
                             break;
                         case "Match":
-                            intent = new Intent(context, MatchingActivity.class);
+                            if(!(context instanceof  MatchingActivity)) {
+                                intent = new Intent(context, MatchingActivity.class);
+                                change = true;
+                            }
                             break;
                         case "Map":
-                            intent = new Intent(context, FikaMapActivity.class);
+                            if(!(context instanceof  FikaMapActivity)) {
+                                intent = new Intent(context, FikaMapActivity.class);
+                                change = true;
+                            }
                             break;
                     }
-                    context.startActivity(intent);
+                    if(change) {
+                        context.startActivity(intent);
+                    }
                 }
 
             });
