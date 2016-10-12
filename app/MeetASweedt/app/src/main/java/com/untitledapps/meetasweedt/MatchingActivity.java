@@ -16,6 +16,7 @@ import android.widget.GridView;
 
 import com.example.NetworkShared.RequestAddMatch;
 import com.example.NetworkShared.RequestAllPeople;
+import com.example.NetworkShared.RequestUpdateLocation;
 import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.untitledapps.Client.RequestBuilder;
@@ -94,6 +95,27 @@ public class MatchingActivity extends AppCompatActivity {
 
                 person.setLatitude((float)location.getLongitude());
                 person.setLongitude((float)location.getLatitude());
+
+                final RequestUpdateLocation req =
+                        new RequestUpdateLocation(
+                                person.getUser_id(),
+                                (float)location.getLongitude(),
+                                (float)location.getLatitude());
+
+                RequestBuilder requestBuilder = new RequestBuilder(context, new RequestBuilder.Action() {
+                    @Override
+                    public void PostExecute() {
+                        if (req.was_successfull()) {
+                            System.out.println("successfully updated location of user");
+                        } else {
+                            System.out.println("error when updating position");
+                        }
+                    }
+                });
+
+                requestBuilder.addRequest(req);
+                requestBuilder.execute();
+
 
                 //update gui after gps coordinates are updated (to update distance)
                 //assums matchesList is already populated

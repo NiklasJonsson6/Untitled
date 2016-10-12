@@ -124,11 +124,14 @@ public class ConnectionHandler implements Runnable
                                 RequestUpdateLocation updateLocation = (RequestUpdateLocation) msg;
                                 String sql = "update user_table set longitude=?, latitude=? where user_id = ?";
                                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
-                                preparedStatement.setInt(1,updateLocation.longitude);
-                                preparedStatement.setInt(2,updateLocation.latitude);
-                                preparedStatement.setInt(3,updateLocation.user_id);
+                                preparedStatement.setFloat(1, updateLocation.getLongitude());
+                                preparedStatement.setFloat(2, updateLocation.getLatitude());
+                                preparedStatement.setInt(3, updateLocation.getUser_id());
                                 boolean success = preparedStatement.executeUpdate() == 1;
                                 oos.writeObject(new ResponseUpdateLocation(success));
+
+                                System.out.println("updating user " + updateLocation.getUser_id() +" location, longitude: " + updateLocation.getLongitude() + ", latitude: " + updateLocation.getLatitude());
+
                             } break;
                             case AddMatch: {
                                 System.out.println("is in addmatch case");
