@@ -9,19 +9,22 @@ public class Main
     static AtomicBoolean globalRunning = new AtomicBoolean(true);
     public static void main(String[] args)
     {
-        try
+        while(true)//aint nobody gonna crash us we're gonna run forever.
         {
-            ServerSocket serverSocket = new ServerSocket(4000);
-            while (globalRunning.get())
+            try
             {
-                Socket socket = serverSocket.accept();
-                ConnectionHandler handler = new ConnectionHandler(socket);
-                handler.run();
+                ServerSocket serverSocket = new ServerSocket(4000);
+                while (globalRunning.get())
+                {
+                    Socket socket = serverSocket.accept();
+                    ConnectionHandler handler = new ConnectionHandler(socket);
+                    handler.run();
+                }
             }
-        }
-        catch(java.io.IOException ex)
-        {
-            ex.printStackTrace();
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
         }
     }
 
