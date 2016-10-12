@@ -17,7 +17,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.untitledapps.meetasweedt.ProfileActivity">
 
-        <TextView
+        <!--<TextView
             android:text="Age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,7 +101,17 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignRight="@+id/twWelcome2"
-            android:layout_alignEnd="@+id/twWelcome2" />
+            android:layout_alignEnd="@+id/twWelcome2" />-->
+
+        <Button
+            android:text="Map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mapButton"
+            android:layout_alignTop="@+id/buttonChat"
+            android:layout_alignLeft="@+id/buttonChat"
+            android:layout_alignStart="@+id/buttonChat"
+            android:layout_marginTop="83dp" />
 
         <Button
             android:text="Chat"
@@ -109,34 +119,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonChat"
             android:background="@android:color/holo_purple"
-            android:layout_marginBottom="81dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/etCountry"
-            android:layout_toRightOf="@+id/etCountry"/>
-
-        <Button
-            android:text="Map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mapButton"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="24dp"
-            android:layout_marginEnd="24dp" />
-
-        <Button
-            android:text="Matches"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonMatches"
-            android:background="@android:color/holo_purple"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/buttonMatch"
-            android:layout_alignEnd="@+id/buttonMatch"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginTop="52dp"
+            android:layout_below="@+id/buttonMatches"
+            android:layout_alignLeft="@+id/buttonMatches"
+            android:layout_alignStart="@+id/buttonMatches" />
 
         <Button
             android:text="Match with people"
@@ -144,10 +130,19 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonMatch"
             android:background="@android:color/holo_purple"
-            android:layout_alignBaseline="@+id/buttonChat"
-            android:layout_alignBottom="@+id/buttonChat"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_marginTop="71dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:text="Matches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonMatches"
+            android:background="@android:color/holo_purple"
+            android:layout_marginTop="50dp"
+            android:layout_below="@+id/buttonMatch"
+            android:layout_centerHorizontal="true" />
 
 
     </RelativeLayout>

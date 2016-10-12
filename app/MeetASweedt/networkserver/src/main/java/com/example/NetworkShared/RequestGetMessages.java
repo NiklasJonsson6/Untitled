@@ -5,7 +5,6 @@ package com.example.NetworkShared;
  */
 
 public class RequestGetMessages extends Request<ResponseGetMessages> {
-    private int index;
     private String to_id;
     private String from_id;
 
@@ -18,7 +17,6 @@ public class RequestGetMessages extends Request<ResponseGetMessages> {
         super(MessageType.GetMessages);
         this.to_id = to_id;
         this.from_id = from_id;
-        this.index = index;
     }
 
     public String getTo_id() {
@@ -29,20 +27,11 @@ public class RequestGetMessages extends Request<ResponseGetMessages> {
         return from_id;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
-    public void incIndex() {
-        index++;
-    }
-
     @Override
     public String toString() {
         return "RequestGetMessages{" +
                 "to_id=" + to_id +
                 ", from_id=" + from_id +
-                ", index=" + index +
                 '}';
     }
 }
