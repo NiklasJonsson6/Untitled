@@ -1,10 +1,17 @@
 package  com.untitledapps.meetasweedt;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.NetworkShared.RequestCreateUser;
+import com.example.NetworkShared.RequestVerifyPassword;
+import com.untitledapps.Client.RequestBuilder;
+
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -85,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     //sign up activity
     private void goToSignUpActivity() {
-        Intent intent = new Intent(this, SignUpActivity.class);
+        Intent intent = new Intent(this, MatchesActivity.class);//change this back to SignUpActivity
         startActivity(intent);
 
     }

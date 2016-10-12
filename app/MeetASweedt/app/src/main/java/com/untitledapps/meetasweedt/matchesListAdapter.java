@@ -33,6 +33,7 @@ public class MatchesListAdapter{
 
         for(int x = 0; x < matchesList.size(); x++) {
             MatchesBlockList.add(new MatchesBlock(matchesList.get(x).getName()));
+            MatchesBlockList.get(x).setName();
             System.out.println(x);
             System.out.println("nigger");
         }
