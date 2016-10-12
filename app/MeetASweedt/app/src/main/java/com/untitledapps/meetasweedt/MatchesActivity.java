@@ -3,8 +3,12 @@ package com.untitledapps.meetasweedt;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ListView;
 
 import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.ResponseMatches;
@@ -12,22 +16,27 @@ import com.untitledapps.Client.RequestBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import static android.os.Build.VERSION_CODES.M;
+import static com.untitledapps.meetasweedt.R.id.gridView;
+import static com.untitledapps.meetasweedt.R.id.matchesList;
 
 public class MatchesActivity extends AppCompatActivity {
-    GridView gridView;
+    ListView listView;
 
     //TODO  get logged in person
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 21);
 
-    ArrayList<Person> matchesList = new ArrayList<Person>();
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setContentView(R.layout.activity_matching);
-
+        this.setContentView(R.layout.activity_matches);
+        listView = (ListView) findViewById(matchesList);
 
         final RequestMatches req = new RequestMatches(user.getUser_id());
 
@@ -103,13 +112,21 @@ public class MatchesActivity extends AppCompatActivity {
         matchesList.add(p5);
         matchesList.add(p6);*/
 
-        populateMatchingView(matches, user);
-    }
+       // MatchesListAdapter MLA = new MatchesListAdapter(matches, message, time);
+        MatchesListAdapter MLA = new MatchesListAdapter(matches);
+        System.out.println("sonofa");
+        final ArrayAdapter<MatchesBlock> arrayAdapter = new ArrayAdapter<MatchesBlock>(this, android.R.layout.simple_list_item_1, MLA.returnList());
+        listView.setAdapter(arrayAdapter);
+        System.out.println("bitch!");
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //showDetailedFragment(arrayAdapter.getItem(position)); //start the corresponding chat
+                System.out.println("fuck" + position);
+            }
 
-    public void populateMatchingView(ArrayList<Person> personArrayList, Person user) {
-        gridView = (GridView) this.findViewById(R.id.gridView);
-        gridView.setAdapter(new MatchViewAdapter(this, personArrayList, user));
+        });
     }
-
 
 }
