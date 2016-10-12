@@ -108,7 +108,7 @@ public class MatchViewAdapter extends BaseAdapter {
 
                     @Override
                     public void onClick(View v) {
-                        
+
                     }
                 });
             }

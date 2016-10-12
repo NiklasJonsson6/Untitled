@@ -1,145 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.untitledapps.meetasweedt.ProfileActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:text="Age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etUsername"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/twAge" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.untitledapps.meetasweedt.ProfileActivity">
 
-    <TextView
-        android:text="TIME TO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/twWeldome1"
-        tools:textSize="20sp"
-        android:textColor="#ba02ed"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:text="Age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etUsername"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/twAge" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Meet a Sweedt"
-        android:id="@+id/twWelcome2"
-        android:textColor="#ba02ed"
-        android:textIsSelectable="false"
-        tools:textSize="25sp"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:layout_below="@+id/twWeldome1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:text="TIME TO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/twWeldome1"
+            tools:textSize="20sp"
+            android:textColor="#ba02ed"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:text="Username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/twUser"
-        android:layout_below="@+id/twWelcome2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="18dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meet a Sweedt"
+            android:id="@+id/twWelcome2"
+            android:textColor="#ba02ed"
+            android:textIsSelectable="false"
+            tools:textSize="25sp"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:layout_below="@+id/twWeldome1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/etCountry"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:text="Username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/twUser"
+            android:layout_below="@+id/twWelcome2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="18dp" />
 
-    <TextView
-        android:text="Country of Origin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/twCountry"
-        android:layout_above="@+id/etCountry"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etCountry"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/etAge"
-        android:layout_below="@+id/twAge"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/etUsername"
-        android:layout_alignEnd="@+id/etUsername" />
+        <TextView
+            android:text="Country of Origin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/twCountry"
+            android:layout_above="@+id/etCountry"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/etUsername"
-        android:layout_below="@+id/twUser"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/twWelcome2"
-        android:layout_alignEnd="@+id/twWelcome2" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/etAge"
+            android:layout_below="@+id/twAge"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/etUsername"
+            android:layout_alignEnd="@+id/etUsername" />
 
-    <Button
-        android:text="Chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonChat"
-        android:background="@android:color/holo_purple"
-        android:layout_marginBottom="81dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/etCountry" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etUsername"
+            android:layout_below="@+id/twUser"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/twWelcome2"
+            android:layout_alignEnd="@+id/twWelcome2" />
 
-    <Button
-        android:text="Map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mapButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="24dp"
-        android:layout_marginEnd="24dp" />
+        <Button
+            android:text="Chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonChat"
+            android:background="@android:color/holo_purple"
+            android:layout_marginBottom="81dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/etCountry"
+            android:layout_toRightOf="@+id/etCountry"/>
 
-    <Button
-        android:text="Matches"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonMatches"
-        android:background="@android:color/holo_purple"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/buttonMatch"
-        android:layout_alignEnd="@+id/buttonMatch"
-        android:layout_marginBottom="16dp" />
+        <Button
+            android:text="Map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mapButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="24dp"
+            android:layout_marginEnd="24dp" />
 
-    <Button
-        android:text="Match with people"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonMatch"
-        android:background="@android:color/holo_purple"
-        android:layout_alignBaseline="@+id/buttonChat"
-        android:layout_alignBottom="@+id/buttonChat"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <Button
+            android:text="Matches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonMatches"
+            android:background="@android:color/holo_purple"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/buttonMatch"
+            android:layout_alignEnd="@+id/buttonMatch"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:text="Match with people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonMatch"
+            android:background="@android:color/holo_purple"
+            android:layout_alignBaseline="@+id/buttonChat"
+            android:layout_alignBottom="@+id/buttonChat"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/navList"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start"
+        android:background="#ffeeeeee"/>
+
+</android.support.v4.widget.DrawerLayout>
