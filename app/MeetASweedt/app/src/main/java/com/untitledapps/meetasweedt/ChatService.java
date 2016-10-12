@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ChatService extends Service {
     private boolean isRunning;
@@ -78,9 +79,17 @@ public class ChatService extends Service {
                     //PostExecute
                     if (req.was_successfull()) {
                         System.out.println("successfull");
+
+                        int i = 0;
                         for (String[] messageContainer: req.getResponse().getMessageContainer()) {
-                            sendResult(messageContainer);
+                            if (i < index) {
+                                i++;
+                            } else {
+                                sendResult(messageContainer);
+                                index++;
+                            }
                         }
+
                     } else {
                         System.out.println("get message request failed");
                     }
@@ -99,7 +108,6 @@ public class ChatService extends Service {
         intent.putExtra("MessageContainer", messageContainer);
         broadcaster.sendBroadcast(intent);
         System.out.println("Broadcaster sent: " + messageContainer[1]);
-        req.incIndex();
     }
 
     @Override

@@ -225,9 +225,6 @@ public class ConnectionHandler implements Runnable
                                 System.out.println("getmessagecase");
                                 RequestGetMessages requestMessage = (RequestGetMessages) msg;
 
-                                requestMessage.getIndex();
-
-                                int index = requestMessage.getIndex();
                                 String to_id = requestMessage.getTo_id();
                                 String from_id = requestMessage.getFrom_id();
 
@@ -247,30 +244,19 @@ public class ConnectionHandler implements Runnable
                                         System.out.println("fid: "+ resultSet.getString("from_id") + ", given " + from_id);
                                         if (resultSet.getString("to_id").equals(to_id) && resultSet.getString("from_id").equals(from_id)) {
                                             //if you're the sender
-                                            System.out.println("if11");
-                                            if (i < index) {
-                                                i++;
-                                                System.out.println("if1");
-                                            } else {
-                                                System.out.println("else1");
-                                                String[] body = new String[2];
-                                                body[0] = from_id;
-                                                body[1] = resultSet.getString("message_body");
-                                                messageContainer.add(body);
-                                            }
+                                            System.out.println("else1");
+                                            String[] body = new String[2];
+                                            body[0] = from_id;
+                                            body[1] = resultSet.getString("message_body");
+                                            messageContainer.add(body);
                                         } else if (resultSet.getString("to_id").equals(from_id) && resultSet.getString("from_id").equals(to_id)) {
                                             System.out.println("if22");
                                             //if you're the receiver
-                                            if (i < index) {
-                                                i++;
-                                                System.out.println("if2");
-                                            } else {
-                                                System.out.println("else2");
-                                                String[] body = new String[2];
-                                                body[0] = to_id;
-                                                body[1] = resultSet.getString("message_body");
-                                                messageContainer.add(body);
-                                            }
+                                            System.out.println("else2");
+                                            String[] body = new String[2];
+                                            body[0] = to_id;
+                                            body[1] = resultSet.getString("message_body");
+                                            messageContainer.add(body);
                                         }
                                     }
 
