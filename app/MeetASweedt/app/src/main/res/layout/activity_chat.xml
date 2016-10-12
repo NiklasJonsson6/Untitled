@@ -36,13 +36,13 @@
         android:scrollbars="vertical"/>
 
     <Button
-        android:text="Button"
+        android:text="Send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sendbutton"
+        android:onClick="sendMessage"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="sendMessage" />
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
