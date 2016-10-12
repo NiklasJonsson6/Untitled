@@ -35,9 +35,7 @@ public class MatchesListAdapter{
             MatchesBlockList.add(new MatchesBlock(matchesList.get(x).getName()));
             MatchesBlockList.get(x).setName();
             System.out.println(x);
-            System.out.println("nigger");
         }
-
     }
 
     public ArrayList<MatchesBlock> returnList(){
