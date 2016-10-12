@@ -131,33 +131,48 @@ public class ConnectionHandler implements Runnable
                                 oos.writeObject(new ResponseUpdateLocation(success));
                             } break;
                             case AddMatch: {
+                                System.out.println("is in addmatch case");
                                 RequestAddMatch requestAddMatch = (RequestAddMatch) msg;
-                                String sql = "update user_table set matches=? where user_id = ?";
-                                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
 
                                 String newIdString = "" + requestAddMatch.getMatchId();
+
+                                System.out.println("newidString: " + newIdString);
 
                                 String oldMatches = "";
 
                                 String query = ("Select matches from user_table where user_id = ?");
-                                PreparedStatement preparedStatementMatch = conn.prepareStatement(sql);
+                                PreparedStatement preparedStatementMatch = conn.prepareStatement(query);
                                 preparedStatementMatch.setInt(1, requestAddMatch.getUserID());
 
-                                ResultSet resultSet = preparedStatementMatch.executeQuery();
+                                ResultSet resultSetMatch = preparedStatementMatch.executeQuery();
 
-                                oldMatches = resultSet.getString("matches");
+
+                                System.out.println("request add match user id: " + requestAddMatch.getUserID());
+
+
+                                if(resultSetMatch.next()) {
+                                    oldMatches = resultSetMatch.getString(1);
+                                    System.out.println("oldmatches: " + oldMatches);
+                                }
 
 
                                 String[]parts = oldMatches.split(newIdString);
 
-                                if(parts.length > 1){
+                                if(parts.length == 1){
+                                    String sql = "update user_table set matches=? where user_id = ?";
+                                    PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                                    preparedStatement.setInt(2, requestAddMatch.getUserID());
+
+
                                     if(oldMatches.equals("")){
                                         preparedStatement.setString(1, oldMatches + requestAddMatch.getMatchId()); //add old string
                                     } else {
                                         preparedStatement.setString(1, oldMatches + "," + requestAddMatch.getMatchId()); //add old string
                                     }
 
-                                    preparedStatement.setInt(3, requestAddMatch.getUserID());
+                                    ResultSet resultSet = preparedStatement.executeQuery();
+                                    //preparedStatement.setInt(3, requestAddMatch.getUserID());
                                     boolean success = preparedStatement.executeUpdate() == 1;
                                     oos.writeObject(new ResponseAddMatch(success));
                                 } else {
