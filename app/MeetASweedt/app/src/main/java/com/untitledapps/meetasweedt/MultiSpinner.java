@@ -1,5 +1,6 @@
 package com.untitledapps.meetasweedt;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import com.example.NetworkShared.RequestCreateUser;
 import com.google.android.gms.maps.model.internal.IPolylineDelegate;
 
 
@@ -57,8 +59,6 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener 
     }
 
 
-
-
     //set adapter items using String[] to spinner
     public void setItem(String[] items) {
         itemlist = items;
@@ -66,7 +66,7 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener 
         selected = new boolean[length];
 
         adapter.clear();
-        adapter.add(itemlist[0]);
+        adapter.add(getSelectedItemStr());
         Arrays.fill(selected, false);
     }
 
@@ -84,8 +84,8 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener 
 
 
     //get selected items as a string
-    public List<String> getSelectedStrings(){
-        List<String> sel = new LinkedList<String>();
+    public ArrayList<String> getSelectedStrings(){
+        ArrayList<String> sel = new ArrayList<>();
 
         for(int i = 0; i < itemlist.length; i++){
             if(selected[i])
@@ -117,14 +117,16 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener 
 
         for (int i = 0; i < itemlist.length; ++i) {
             if (selected[i] && foundOne) {
-                strngbf.append("; ");
+                strngbf.append(", ");
             }
             if (selected[i]) {
                 foundOne = true;
+                strngbf.append(itemlist[i]);
             }
-            strngbf.append(itemlist[i]);
         }
-        return strngbf.toString();
+        if(foundOne)
+            return strngbf.toString();
+        else return "No Interests Selected";
     }
 
 

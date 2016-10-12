@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     //sign up activity
     private void goToSignUpActivity() {
-        Intent intent = new Intent(this, MatchesActivity.class);//change this back to SignUpActivity
+        Intent intent = new Intent(this, SignUpActivity.class);//change this back to SignUpActivity
         startActivity(intent);
 
     }

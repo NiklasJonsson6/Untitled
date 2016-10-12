@@ -116,10 +116,11 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         builder.addRequest(req);
-        builder.execute();
+//        builder.execute();
 
         //after the registration go to interest list
         Intent intent = new Intent(this, SignUp2Activity.class);
+        intent.putExtra("req",req);
         startActivity(intent);
     }
 
