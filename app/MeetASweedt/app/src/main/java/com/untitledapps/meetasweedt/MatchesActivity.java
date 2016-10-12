@@ -1,6 +1,7 @@
 package com.untitledapps.meetasweedt;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import static com.untitledapps.meetasweedt.R.id.matchesList;
 
 public class MatchesActivity extends AppCompatActivity {
     ListView listView;
+    Context context;
 
     //TODO  get logged in person
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 21);
@@ -35,10 +37,10 @@ public class MatchesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.context = this;
         this.setContentView(R.layout.activity_matches);
         listView = (ListView) findViewById(matchesList);
-        /*
+
         final RequestMatches req = new RequestMatches(user.getUser_id());
 
         final ArrayList<Person> personsFromDatabase = MatchingActivity.getAllPeopleDb(this, user);
@@ -68,7 +70,10 @@ public class MatchesActivity extends AppCompatActivity {
                                 }
                             }
 
-                        }*/
+                        }
+                        // MatchesListAdapter MLA = new MatchesListAdapter(matches);
+                        final MatchChatAdapter arrayAdapter = new MatchChatAdapter(context, new MatchesListAdapter(matches).returnList());
+                        listView.setAdapter(arrayAdapter);
 
                         /*for(int i = 0; i < response.getIsLearner().size(); i++) {
                             String interestsString = response.getInterestsString().get(i);
@@ -82,7 +87,7 @@ public class MatchesActivity extends AppCompatActivity {
                         }*/
 
                         //System.out.println("playerStrings(1): " + peopleStrings.get(2).toString());
-              /*      } else {
+                    } else {
                         System.out.println("no response when fetching people from database");
                     }
                 } else {
@@ -95,7 +100,7 @@ public class MatchesActivity extends AppCompatActivity {
         requestBuilder.addRequest(req);
         requestBuilder.execute();
 
-        System.out.println("matches:@@@@@@@@@@@@@@@@@@@@");*/
+        System.out.println("matches:@@@@@@@@@@@@@@@@@@@@");
 
 
 
@@ -118,25 +123,14 @@ public class MatchesActivity extends AppCompatActivity {
         ArrayList<Person>tempList = new ArrayList<>();
         ArrayList<String>interests = new ArrayList<>();
         interests.add("soccer");
-        Person kevin = new Person(true, 12, "Kevin", "Mars", 1.2f, 1.2f, interests, "kevinBOI123", 123 );
-        Person kevin2 = new Person(true, 13, "Kevin2", "Marss", 1.23f, 1.23f, interests, "kevinBOI124", 124 );
-        tempList.add(kevin);
-        tempList.add(kevin2);
+        Person p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 12);
+        Person p2 = new Person(false, 20, "Fredrik Mast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "NiklasJonsson6", 13);
+        MatchesBlock kevin = new MatchesBlock("Kevin", "12/4-2016","Håkan");
+        MatchesBlock kevin2 = new MatchesBlock("Kevin", "12/4-2016","Håkan");
+        tempList.add(p1);
+        tempList.add(p2);
 
 
-       // MatchesListAdapter MLA = new MatchesListAdapter(matches);
-        MatchesListAdapter tempMLA = new MatchesListAdapter(tempList);
-        final ArrayAdapter<MatchesBlock> arrayAdapter = new ArrayAdapter<MatchesBlock>(this, android.R.layout.simple_list_item_1, tempMLA.returnList());
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //showDetailedFragment(arrayAdapter.getItem(position)); //start the corresponding chat
-                System.out.println("position " + position);
-            }
-
-        });
     }
 
 }

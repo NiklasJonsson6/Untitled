@@ -16,6 +16,7 @@ import static com.untitledapps.meetasweedt.MatchingActivity.context;
 
 public class MatchesListAdapter{
 
+    ArrayList<MatchesBlock>MatchesBlockList;
 
     /*public MatchesListAdapter(ArrayList<Person> matchesList, String message, String time) {
         ArrayList<MatchesBlock>MatchesBlockList = new ArrayList<MatchesBlock>();
@@ -26,15 +27,12 @@ public class MatchesListAdapter{
 
     }*/
 
-    ArrayList<MatchesBlock>MatchesBlockList;
 
     public MatchesListAdapter(ArrayList<Person> matchesList) {
         MatchesBlockList = new ArrayList<MatchesBlock>();
 
         for(int x = 0; x < matchesList.size(); x++) {
-            MatchesBlockList.add(new MatchesBlock(matchesList.get(x).getName()));
-            MatchesBlockList.get(x).setName();
-            System.out.println(x);
+            MatchesBlockList.add(new MatchesBlock(matchesList.get(x).getName(),"Message", "Time"));
         }
     }
 
