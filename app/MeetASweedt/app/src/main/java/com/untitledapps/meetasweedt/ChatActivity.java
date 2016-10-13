@@ -34,15 +34,27 @@ public class ChatActivity extends AppCompatActivity {
 
     private BroadcastReceiver receiver;
 
-    //TODO should be self, person to send message to
     Person p1, p2;
+    String from_id, to_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityView = getLayoutInflater().inflate(R.layout.activity_chat, null);
-        p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 12);
-        p2 = new Person(false, 20, "Fredrik Mast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "NiklasJonsson6", 13);
+
+        Intent intent = getIntent();
+        //default case if persons are given from intent
+        if(intent.getParcelableExtra("p1") != null) {
+            p1 = intent.getParcelableExtra("p1");
+            p2 = intent.getParcelableExtra("p2");
+        } else {
+            //if no intent is given, example Persons
+            p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 12);
+            p2 = new Person(false, 20, "Fredrik Mast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "NiklasJonsson6", 13);
+        }
+        from_id = p1.getUsername();
+        to_id = p2.getUsername();
+
         //chatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         setContentView(activityView);
 
@@ -58,9 +70,9 @@ public class ChatActivity extends AppCompatActivity {
         };
 
         Intent serviceIntent = new Intent(this, ChatService.class);
-        serviceIntent.putExtra("from_id", p1.getUsername());
-        serviceIntent.putExtra("to_id", p2.getUsername());
-        serviceIntent.putExtra("index", chatMessages.size());
+        serviceIntent.putExtra("from_id", from_id);
+        serviceIntent.putExtra("to_id", to_id);
+        serviceIntent.putExtra("index", chatMessages.size()); //if there already are messages in the view, will probably be 0
         startService(serviceIntent);
 
         textView = (TextView) activityView.findViewById(R.id.chatText);

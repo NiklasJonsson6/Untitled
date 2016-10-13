@@ -1,11 +1,14 @@
 package com.untitledapps.meetasweedt;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.NetworkShared.RequestCreateUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+public class Person implements Parcelable {
     private boolean isLearner;
 
     private String username;
@@ -33,6 +36,53 @@ public class Person {
         this.username = username;
         this.user_id = user_id;
     }
+
+    //Parcelable constructor
+    private Person(Parcel in) {
+        isLearner = (boolean)in.readValue(null);
+
+        int[] integers = new int[2];
+        in.readIntArray(integers);
+        age = integers[0];
+        user_id = integers[1];
+
+        String[] strings = new String[3];
+        in.readStringArray(strings);
+        username = strings[0];
+        name = strings[1];
+        orginCountry = strings[2];
+
+        float[] floats = new float[2];
+        in.readFloatArray(floats);
+        longitude = floats[0];
+        latitude = floats[1];
+
+        in.readStringList(interests);
+    }
+    /*
+    Parcelable stuff (used in the intent to start ChatActivity)
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(isLearner);
+        dest.writeIntArray(new int[] {age, user_id});
+        dest.writeStringArray(new String[] {username, name, orginCountry});
+        dest.writeFloatArray(new float[] {longitude, latitude});
+        dest.writeStringList(interests);
+    }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {
+        public Person createFromParcel(Parcel in) {
+            return new Person(in);
+        }
+
+        public Person[] newArray(int size) {
+            return new Person[size];
+        }
+    };
 
     public void databaseCreateUser() {
         //TODO Properties of the database person and the person object has to be the same!
