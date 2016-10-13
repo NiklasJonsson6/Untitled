@@ -11,7 +11,8 @@
         android:background="@android:color/background_light"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:id="@+id/drawer_item_background">
 
         <ImageView
             android:layout_width="50dp"

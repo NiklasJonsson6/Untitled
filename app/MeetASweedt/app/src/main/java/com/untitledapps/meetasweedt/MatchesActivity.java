@@ -3,13 +3,18 @@ package com.untitledapps.meetasweedt;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.ResponseMatches;
@@ -27,6 +32,12 @@ import static com.untitledapps.meetasweedt.R.id.matchesList;
 public class MatchesActivity extends AppCompatActivity {
     ListView listView;
     Context context;
+    //Nav variables
+    private ListView mDrawerList;
+    private DrawerAdapter mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
 
     //TODO  get logged in person
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 21);
@@ -118,19 +129,75 @@ public class MatchesActivity extends AppCompatActivity {
         matchesList.add(p5);
         matchesList.add(p6);*/
 
-       // MatchesListAdapter MLA = new MatchesListAdapter(matches, message, time);
+        //Nav
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        addDrawerItems();
 
-        ArrayList<Person>tempList = new ArrayList<>();
-        ArrayList<String>interests = new ArrayList<>();
-        interests.add("soccer");
-        Person p1 = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 12);
-        Person p2 = new Person(false, 20, "Fredrik Mast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "NiklasJonsson6", 13);
-        MatchesBlock kevin = new MatchesBlock("Kevin", "12/4-2016","Håkan");
-        MatchesBlock kevin2 = new MatchesBlock("Kevin", "12/4-2016","Håkan");
-        tempList.add(p1);
-        tempList.add(p2);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+        //TODO add the current logged in person name and choosen icon just change the varibles down below
+        ((TextView)findViewById(R.id.drawer_person_name)).setText("Fredrik Dast");
+        ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        setupDrawer();
 
 
     }
+
+    //Nav classes
+    private void addDrawerItems() {
+        ArrayList<String> activities = new ArrayList<String>();
+        activities.add("My Profile");
+        activities.add("Chat");
+        activities.add("Match");
+        activities.add("Map");
+        mAdapter = new DrawerAdapter(this, activities);
+        mDrawerList.setAdapter(mAdapter);
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setLogo(R.mipmap.ic_drawericon);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+        };
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.intent_action) {
+            return true;
+        }
+
+        // Activate the navigation drawer toggle
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

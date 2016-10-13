@@ -3,6 +3,7 @@ package com.untitledapps.meetasweedt;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,15 +82,27 @@ public class DrawerAdapter extends BaseAdapter {
             switch (result.get(position)) {
                 case "My Profile":
                     holder.navImage.setImageResource(R.mipmap.ic_myprofile);
+                    if(context instanceof  ProfileActivity) {
+                        rowView.get(position).findViewById(R.id.drawer_item_background).setBackgroundColor(Color.parseColor("#DCDCDC"));
+                    }
                     break;
                 case "Chat":
                     holder.navImage.setImageResource(R.mipmap.ic_chat);
+                    if(context instanceof  MatchesActivity) {
+                        rowView.get(position).findViewById(R.id.drawer_item_background).setBackgroundColor(Color.parseColor("#DCDCDC"));
+                    }
                     break;
                 case "Match":
                     holder.navImage.setImageResource(R.mipmap.ic_match);
+                    if(context instanceof  MatchingActivity) {
+                        rowView.get(position).findViewById(R.id.drawer_item_background).setBackgroundColor(Color.parseColor("#DCDCDC"));
+                    }
                     break;
                 case "Map":
                     holder.navImage.setImageResource(R.mipmap.ic_map);
+                    if(context instanceof  FikaMapActivity) {
+                        rowView.get(position).findViewById(R.id.drawer_item_background).setBackgroundColor(Color.parseColor("#DCDCDC"));
+                    }
                     break;
 
             }
@@ -110,8 +123,8 @@ public class DrawerAdapter extends BaseAdapter {
                             }
                             break;
                         case "Chat":
-                            if(!(context instanceof  ChatActivity)) {
-                                intent = new Intent(context, ChatActivity.class);
+                            if(!(context instanceof  MatchesActivity)) {
+                                intent = new Intent(context, MatchesActivity.class);
                                 change = true;
                             }
                             break;

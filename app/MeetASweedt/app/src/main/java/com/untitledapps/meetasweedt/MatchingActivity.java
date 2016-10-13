@@ -18,8 +18,9 @@ import android.view.View;
 import android.widget.GridView;
 
 
-
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.NetworkShared.RequestAddMatch;
 import com.example.NetworkShared.RequestAllPeople;
@@ -90,7 +91,9 @@ public class MatchingActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        //TODO add the current logged in person name and choosen icon just change the varibles down below
+        ((TextView)findViewById(R.id.drawer_person_name)).setText("Fredrik Dast");
+        ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
         setupDrawer();
     }
 
@@ -315,7 +318,7 @@ public class MatchingActivity extends AppCompatActivity {
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setLogo(R.mipmap.ic_drawericon);
+
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
             /** Called when a drawer has settled in a completely closed state. */
