@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class MatchViewAdapter extends BaseAdapter {
     public MatchViewAdapter(Context matchingActivity, ArrayList<Person> personList, final Person matchingPerson) {
         // TODO Auto-generated constructor stub
         result = personList;
+        this.matchingPerson = matchingPerson;
         //Sorting
         Collections.sort(result, new Comparator<Person>() {
             @Override
@@ -42,7 +44,6 @@ public class MatchViewAdapter extends BaseAdapter {
         });
 
         context = matchingActivity;
-        this.matchingPerson = matchingPerson;
         rowView = new ArrayList<View>();
         selectedView = new ArrayList<Integer>();
         inflater = (LayoutInflater) context.
@@ -88,8 +89,11 @@ public class MatchViewAdapter extends BaseAdapter {
         holder.matchProcent = (TextView) rowView.get(position).findViewById(R.id.matchProcent);
         holder.distance = (TextView) rowView.get(position).findViewById(R.id.distance);
         holder.name.setText(result.get(position).getName());
-        holder.matchProcent.setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)) + "%");
+        holder.matchProcent.setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)));
         holder.distance.setText(Float.toString(Math.round((10f * result.get(position).getDistanceTo(matchingPerson) / 1000)) / 10f) + " Km");
+        ((ProgressBar) rowView.get(position).findViewById(R.id.progressBarMatch)).setProgress(((int)(result.get(position).getMatchScore(matchingPerson)*100)));
+        System.out.println(result.get(position).getName() + ": " + (int)(result.get(position).getMatchScore(matchingPerson)*100));
+        System.out.println(result.get(position).getName() + ": " + ((ProgressBar) rowView.get(position).findViewById(R.id.progressBarMatch)).getProgress());
 
 
         rowView.get(position).findViewById(R.id.cardMain).setOnClickListener(new OnClickListener() {
@@ -99,7 +103,7 @@ public class MatchViewAdapter extends BaseAdapter {
                 // TODO Add show profile
                 RelativeLayout temp = (RelativeLayout)inflater.inflate(R.layout.activity_matching_profile, null);
                 ((Activity) context).setContentView(temp);
-                ((TextView) temp.findViewById(R.id.matchingProcent)).setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)) + "%");
+                ((TextView) temp.findViewById(R.id.matchingProcent)).setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)));
                 ((TextView) temp.findViewById(R.id.distance)).setText(Float.toString(Math.round((10f * result.get(position).getDistanceTo(matchingPerson) / 1000)) / 10f) + " Km");
                 ((TextView) temp.findViewById(R.id.name)).setText(result.get(position).getName());
                 ListView listView = (ListView) temp.findViewById(R.id.intrests);

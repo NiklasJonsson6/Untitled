@@ -8,7 +8,7 @@
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="120dp"
-        android:background="#cfbdb6"
+        android:background="@drawable/matchcard_bg"
         android:clickable="true"
         android:id="@+id/cardMain"
         android:layout_centerVertical="true"
@@ -16,33 +16,56 @@
         android:layout_height="150dp"
         android:layout_margin="5dp">
 
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_centerHorizontal="true"
+            android:max="1"
+            android:progress="1"
+            android:progressDrawable="@drawable/circle_progressbar_under"
+            android:layout_centerVertical="true"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_margin="5dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBarMatch"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_centerHorizontal="true"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/circle_progressbar"
+            android:layout_centerVertical="true"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_margin="5dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="99%"
+            android:text="99"
             android:id="@+id/matchProcent"
-            android:textSize="50sp"
+            android:textSize="30sp"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:text="Namn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/name"
-            android:layout_above="@+id/matchProcent"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:text="5km"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/distance"
-            android:layout_below="@+id/matchProcent"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp" />
+            android:layout_marginBottom="5dp" />
 
     </RelativeLayout>
 
