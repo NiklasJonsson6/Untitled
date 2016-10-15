@@ -33,12 +33,12 @@ public class RequestBuilder extends AsyncTask<Void,Void,Void>{
     {
         this.action = action;
         this.context = context;
-        dialog = new ProgressDialog(context);
+        if(context!=null)
+            dialog = new ProgressDialog(context);
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        List<Response> ret=null;
         try
         {
             Socket socket = new Socket("46.239.104.53", 4000);
@@ -69,14 +69,14 @@ public class RequestBuilder extends AsyncTask<Void,Void,Void>{
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-        if(dialog.isShowing())dialog.dismiss();
+        if(dialog!=null&&dialog.isShowing())dialog.dismiss();
         if(action!=null)
             action.PostExecute();
     }
 
     @Override
     protected void onPreExecute() {
-        dialog.show();
+        if(dialog != null)dialog.show();
     }
     public void addRequest(Request request)
     {

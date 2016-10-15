@@ -16,9 +16,18 @@ public class Main
                 ServerSocket serverSocket = new ServerSocket(4000);
                 while (globalRunning.get())
                 {
-                    Socket socket = serverSocket.accept();
-                    ConnectionHandler handler = new ConnectionHandler(socket);
-                    handler.run();
+                    Socket socket=null;
+                    try
+                    {
+                        socket = serverSocket.accept();
+                        ConnectionHandler handler = new ConnectionHandler(socket);
+                        handler.run();
+                    }
+                    catch (Exception ex)
+                    {
+                        if(socket!=null)
+                            socket.close();
+                    }
                 }
             }
             catch(Exception ex)

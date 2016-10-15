@@ -430,7 +430,7 @@ public class ConnectionHandler implements Runnable
                 socket.close();
                 System.out.println("connection terminated");
             }
-            catch (ClassNotFoundException |SQLException ex)
+            catch (Exception ex)
             {
                 if (oos!=null)
                     new Response(ex.toString());
