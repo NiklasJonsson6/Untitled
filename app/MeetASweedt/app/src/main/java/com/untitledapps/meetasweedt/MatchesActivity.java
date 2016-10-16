@@ -137,7 +137,7 @@ public class MatchesActivity extends AppCompatActivity {
         matchesList.add(p6);*/
 
         //Nav
-        mDrawerList = (ListView)findViewById(R.id.navList);
+        mDrawerList = (ListView)findViewById(R.id.matchesList);
 //        addDrawerItems();
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -152,14 +152,14 @@ public class MatchesActivity extends AppCompatActivity {
         setupDrawer();
 
         //why can't i click things tho
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
 
                 System.out.println("fuck");
 
             }
 
-        });
+        });*/
 
     }
 

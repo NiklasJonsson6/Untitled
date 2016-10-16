@@ -1,6 +1,7 @@
 package com.untitledapps.meetasweedt;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,10 @@ public class MatchChatAdapter extends BaseAdapter {
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
+                //TODO: start a single chat for each person
+                Intent intent = new Intent(context, ChatActivity.class);
+                context.startActivity(intent);
             }
         });
         return rowView;
