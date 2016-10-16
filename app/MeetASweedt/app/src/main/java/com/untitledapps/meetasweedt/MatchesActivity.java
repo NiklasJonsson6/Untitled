@@ -17,6 +17,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.ResponseMatches;
@@ -30,6 +31,7 @@ import static android.os.Build.VERSION_CODES.M;
 import static com.untitledapps.meetasweedt.MatchingActivity.context;
 import static com.untitledapps.meetasweedt.R.id.gridView;
 import static com.untitledapps.meetasweedt.R.id.matchesList;
+import static com.untitledapps.meetasweedt.R.layout.matches;
 
 public class MatchesActivity extends AppCompatActivity {
     ListView listView;
@@ -53,12 +55,14 @@ public class MatchesActivity extends AppCompatActivity {
         this.context = this;
         this.setContentView(R.layout.activity_matches);
         listView = (ListView) findViewById(matchesList);
+        listView.setClickable(true);
 
         final RequestMatches req = new RequestMatches(user.getUser_id());
 
         final ArrayList<Person> personsFromDatabase = MatchingActivity.getAllPeopleDb(this, user);
 
         final ArrayList<Person> matches = new ArrayList<>();
+
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
@@ -110,6 +114,7 @@ public class MatchesActivity extends AppCompatActivity {
         });
 
 
+
         requestBuilder.addRequest(req);
         requestBuilder.execute();
 
@@ -133,21 +138,33 @@ public class MatchesActivity extends AppCompatActivity {
 
         //Nav
         mDrawerList = (ListView)findViewById(R.id.navList);
-        addDrawerItems();
+//        addDrawerItems();
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
         //TODO add the current logged in person name and choosen icon just change the varibles down below
-        ((TextView)findViewById(R.id.drawer_person_name)).setText("Fredrik Dast");
-        ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
+//        ((TextView)findViewById(R.id.drawer_person_name)).setText("Fredrik Dast");
+//        ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         setupDrawer();
 
+        //why can't i click things tho
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
+
+                System.out.println("fuck");
+
+            }
+
+        });
 
     }
+
+
+
 
     //Nav classes
     private void addDrawerItems() {

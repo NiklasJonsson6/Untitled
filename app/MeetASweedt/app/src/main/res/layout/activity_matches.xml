@@ -17,44 +17,4 @@
             android:id="@+id/matchesList" />
     </LinearLayout>
 
-    <RelativeLayout
-    android:layout_width="300dp"
-    android:layout_height="match_parent"
-    android:layout_gravity="left|start">
-
-    <ListView
-        android:id="@+id/navList"
-        android:layout_below="@+id/headerDrawer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffeeeeee" />
-
-        <RelativeLayout
-            android:id="@+id/headerDrawer"
-            android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:background="@drawable/backdrop"
-            android:clickable="true">
-
-            <ImageView
-                app:srcCompat="@android:drawable/sym_def_app_icon"
-                android:layout_centerInParent="true"
-                android:background="@drawable/whitecircle"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:id="@+id/drawer_person_pic" />
-
-            <TextView
-                android:text="Fredrik Mast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="0dp"
-                android:textSize="20sp"
-                android:textColor="#e6ffffff"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:id="@+id/drawer_person_name" />
-        </RelativeLayout>
-    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

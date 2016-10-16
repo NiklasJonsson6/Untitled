@@ -15,16 +15,13 @@ import static com.untitledapps.meetasweedt.R.id.entryContainer;
 import static com.untitledapps.meetasweedt.R.layout.matches;
 
 /**
- * Created by User on 10/11/2016.
+ * Created by Shaotime on 10/11/2016.
  */
 
 public class MatchesBlock implements Comparable<MatchesBlock> {
     String mName;
     String mMessage;
     String mTime;
-    TextView tName;
-    TextView tMessage;
-    TextView tTime;
 
 
 
