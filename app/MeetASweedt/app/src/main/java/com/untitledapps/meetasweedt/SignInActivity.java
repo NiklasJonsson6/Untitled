@@ -1,6 +1,7 @@
 package com.untitledapps.meetasweedt;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -44,6 +45,8 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void PostExecute() {
                 if (req.was_successfull()) {
+                    //TODO get one userinfo from database (Niklas monday)
+                    //((MeetASweedt) getApplicationContext()).setLoggedInPerson(personFromdatabase); something like this
                     Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
                     startActivity(intent);
                 } else {
