@@ -25,6 +25,8 @@ public class Person implements Parcelable {
 
     private ArrayList<String> interests = new ArrayList<>();
 
+    public Person() {}
+
     public Person(boolean isLearner, int age, String name, String orginCountry, float longitude, float latitude, ArrayList<String> interests, String username, int user_id) {
         this.isLearner = isLearner;
         this.age = age;

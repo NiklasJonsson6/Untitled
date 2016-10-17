@@ -7,6 +7,7 @@ import com.example.NetworkShared.RequestAddMatch;
 import com.example.NetworkShared.RequestAllPeople;
 import com.example.NetworkShared.RequestCreateUser;
 import com.example.NetworkShared.RequestGetMessages;
+import com.example.NetworkShared.RequestGetPerson;
 import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.RequestSendMessage;
 import com.example.NetworkShared.RequestUpdateLocation;
@@ -17,6 +18,7 @@ import com.example.NetworkShared.ResponseAddMatch;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.example.NetworkShared.ResponseCreateUser;
 import com.example.NetworkShared.ResponseGetMessages;
+import com.example.NetworkShared.ResponseGetPerson;
 import com.example.NetworkShared.ResponseMatches;
 import com.example.NetworkShared.ResponseUpdateLocation;
 import com.sun.corba.se.impl.protocol.giopmsgheaders.RequestMessage;
@@ -346,6 +348,46 @@ public class ConnectionHandler implements Runnable
                                 } catch (Exception ex) {
                                     System.out.println("error in getting all people from db");
                                     //TODO probably some exception handling I guess
+                                    ex.printStackTrace();
+                                }
+                            } break;
+
+                            case GetPerson: {
+                                System.out.println("in get person case");
+                                RequestGetPerson request = (RequestGetPerson) msg;
+
+                                Statement statement = null;
+                                String query = "select isLearner, age, name, orginCountry, longitude, latitude, interests, username, user_id from user_table";
+
+                                try {
+                                    statement = conn.createStatement();
+                                    ResultSet r = statement.executeQuery(query);
+                                    ResponseGetPerson response = null;
+
+                                    while (r.next()) {
+                                        if (r.getString("username").equals(request.getUsername())) {
+                                            response = new ResponseGetPerson(true,
+                                                    r.getBoolean("isLearner"),
+                                                    r.getString("username"),
+                                                    r.getInt("age"),
+                                                    r.getString("name"),
+                                                    r.getString("orginCountry"),
+                                                    r.getFloat("longitude"),
+                                                    r.getFloat("latitude"),
+                                                    r.getString("interests"),
+                                                    r.getInt("user_id"));
+
+                                            request.setRespone(response);
+                                        }
+                                    }
+                                    if (response == null) {
+                                        request.setRespone(new Response(MessageType.GetPerson, false));
+                                    }
+
+                                    oos.writeObject(response);
+
+                                } catch (Exception ex) {
+                                    System.out.println("error in getting person from db");
                                     ex.printStackTrace();
                                 }
                             } break;

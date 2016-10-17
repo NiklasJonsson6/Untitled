@@ -17,4 +17,5 @@ public enum MessageType
     Error,
     VerifyPassword,
     GetMessages,
+    GetPerson,
 }

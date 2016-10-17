@@ -8,10 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.NetworkShared.RequestGetPerson;
 import com.example.NetworkShared.RequestVerifyPassword;
 import com.example.NetworkShared.ResponsVerifyPassword;
+import com.example.NetworkShared.ResponseGetPerson;
 import com.example.Server.PasswordStorage;
 import com.untitledapps.Client.RequestBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -45,10 +50,13 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void PostExecute() {
                 if (req.was_successfull()) {
-                    //TODO get one userinfo from database (Niklas monday)
-                    //((MeetASweedt) getApplicationContext()).setLoggedInPerson(personFromdatabase); something like this
-                    Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+                    ((MeetASweedt) getApplicationContext()).setLoggedInPerson(getPersonFromDatabase(etUsername.getText().toString()));
+                    if (((MeetASweedt) getApplicationContext()).getLoggedInPerson() != null) {
+                        Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
+                        startActivity(intent);
+                    } else {
+                        System.out.println("Userdata for user: " + etUsername.getText().toString() + " not retrieved from database");
+                    }
                 } else {
                     System.out.println("got:'" + etUsername.getText().toString() + "' '" + etPassword.getText().toString() + "'");
                     System.out.println("val:'" + req.username + "' '" + req.password + "'");
@@ -62,4 +70,40 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
+    private Person getPersonFromDatabase(String username) {
+        final Person person = new Person();
+
+        final RequestGetPerson req = new RequestGetPerson(username);
+
+        RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
+            @Override
+            public void PostExecute() {
+                if (req.was_successfull()) {
+                    ResponseGetPerson r = req.getResponse();
+
+                    ArrayList<String> interests = new ArrayList<>(Arrays.asList(r.getInterests().split(",")));
+                    person.setInterests(interests);
+                    person.setLearner(r.getIsLearner());
+                    person.setAge(r.getAge());
+                    person.setName(r.getName());
+                    person.setOrginCountry(r.getOriginCountry());
+                    person.setLongitude(r.getLongitude());
+                    person.setLatitude(r.getLatitude());
+                    person.setUsername(r.getUsername());
+                    person.setUser_id(r.getId());
+                } else {
+                    System.out.println("get person from database not successful");
+                }
+            }
+        });
+
+        requestBuilder.addRequest(req);
+        requestBuilder.execute();
+
+        if (person.getUsername() != null) {
+            return person;
+        } else {
+            return null;
+        }
+    }
 }
