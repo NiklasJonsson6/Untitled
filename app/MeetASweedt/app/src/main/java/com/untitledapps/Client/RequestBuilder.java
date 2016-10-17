@@ -1,7 +1,5 @@
 package com.untitledapps.Client;
 
-import android.app.DownloadManager;
-import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -15,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.NetworkShared.*;
-import com.untitledapps.meetasweedt.MainActivity;
 
 /**
  * Created by Daniel on 26/09/2016.

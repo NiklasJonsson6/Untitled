@@ -1,14 +1,6 @@
 package com.untitledapps.meetasweedt;
 
-import android.content.Context;
-import android.widget.ArrayAdapter;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.R.attr.resource;
-import static android.R.id.message;
-import static com.untitledapps.meetasweedt.MatchingActivity.context;
 
 /**
  * Created by User on 10/11/2016.

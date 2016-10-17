@@ -88,7 +88,17 @@ public class ConnectionHandler implements Runnable
                                 }
 
                                 PreparedStatement preparedStatement = conn.prepareStatement(insert_user_sql);
-                                preparedStatement.setBoolean(1, createUser.isLearner());
+
+                                boolean isLearner = false;
+                                String orginCountry = createUser.getOrginCountry().toLowerCase();
+
+                                if(orginCountry.equals("sweden") || orginCountry.equals("sverige")) {
+                                    isLearner = false;
+                                } else {
+                                    isLearner = true;
+                                }
+
+                                preparedStatement.setBoolean(1,isLearner);
                                 preparedStatement.setInt(2, createUser.getAge());
                                 preparedStatement.setString(3, createUser.getName());
                                 preparedStatement.setString(4, createUser.getOrginCountry());
