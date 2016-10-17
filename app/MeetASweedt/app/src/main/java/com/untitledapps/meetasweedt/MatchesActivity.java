@@ -19,7 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.NetworkShared.RequestAllPeople;
 import com.example.NetworkShared.RequestMatches;
+import com.example.NetworkShared.ResponseAllPeople;
 import com.example.NetworkShared.ResponseMatches;
 import com.untitledapps.Client.RequestBuilder;
 
@@ -59,40 +61,21 @@ public class MatchesActivity extends AppCompatActivity {
 
         final RequestMatches req = new RequestMatches(user.getUser_id());
 
-        final ArrayList<Person> personsFromDatabase = MatchingActivity.getAllPeopleDb(this, user);
 
-        final ArrayList<Person> matches = new ArrayList<>();
+        final RequestAllPeople requestAllPeople = new RequestAllPeople(user.getUsername());
 
+        final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
-                if (req.was_successfull()) {
-                    ResponseMatches response = req.getResponse();
+                if (requestAllPeople.was_successfull()) {
+                    ResponseAllPeople response = requestAllPeople.getResponse();
+
                     if(response != null) {
                         System.out.println("getpeople request successfull");
 
-                        String matchesString = response.getStringOfMatches();
-
-                        String[] idStrings = matchesString.split(",");
-
-                        int[] ids = new int[idStrings.length];
-
-                        for(int i = 0; i < idStrings.length; i++) {
-                            ids[i] = Integer.parseInt(idStrings[i]);
-
-                            for(Person person: personsFromDatabase) {
-                                if(ids[i] == person.getUser_id()){
-                                    matches.add(person);
-                                }
-                            }
-
-                        }
-                        // MatchesListAdapter MLA = new MatchesListAdapter(matches);
-                        final MatchChatAdapter arrayAdapter = new MatchChatAdapter(context, new MatchesListAdapter(matches).returnList());
-                        listView.setAdapter(arrayAdapter);
-
-                        /*for(int i = 0; i < response.getIsLearner().size(); i++) {
+                        for(int i = 0; i < response.getIsLearner().size(); i++) {
                             String interestsString = response.getInterestsString().get(i);
 
                             ArrayList<String> interests = new ArrayList<>();
@@ -101,12 +84,108 @@ public class MatchesActivity extends AppCompatActivity {
                             for(String part: parts) {
                                 interests.add(part);
                             }
-                        }*/
 
+                            Person person = new Person(
+                                    response.getIsLearner().get(i),
+                                    response.getAge().get(i),
+                                    response.getName().get(i),
+                                    response.getOrginCountry().get(i),
+                                    response.getLongitude().get(i),
+                                    response.getLatitude().get(i),
+                                    interests,
+                                    response.getUsername().get(i),
+                                    response.getUser_id().get(i)
+                            );
+                            peopleFromDatabase.add(person);
+                        }
                         //System.out.println("playerStrings(1): " + peopleStrings.get(2).toString());
                     } else {
                         System.out.println("no response when fetching people from database");
                     }
+
+                    //SECTION matchesrequest
+
+                    final ArrayList<Person> matches = new ArrayList<>();
+
+
+                    RequestBuilder requestBuilderMatches = new RequestBuilder(context, new RequestBuilder.Action() {
+                        @Override
+                        public void PostExecute() {
+                            if (req.was_successfull()) {
+                                ResponseMatches response = req.getResponse();
+                                if(response != null) {
+                                    System.out.println("getpeople request successfull");
+
+                                    String matchesString = response.getStringOfMatches();
+
+                                    String[] idStrings = matchesString.split(",");
+
+                                    int[] ids = new int[idStrings.length];
+
+                                    for(int i = 0; i < idStrings.length; i++) {
+                                        ids[i] = Integer.parseInt(idStrings[i]);
+
+                                        for(Person person: peopleFromDatabase) {
+                                            if(ids[i] == person.getUser_id()){
+                                                matches.add(person);
+                                            }
+                                        }
+
+                                    }
+                                    // MatchesListAdapter MLA = new MatchesListAdapter(matches);
+                                    final MatchChatAdapter arrayAdapter = new MatchChatAdapter(context, new MatchesListAdapter(matches).returnList());
+                                    listView.setAdapter(arrayAdapter);
+
+                                } else {
+                                    System.out.println("no response when fetching people from database");
+                                }
+
+
+                                mDrawerList = (ListView)findViewById(R.id.matchesList);
+                                //        addDrawerItems();
+
+                                mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+                                mActivityTitle = getTitle().toString();
+                                //TODO add the current logged in person name and choosen icon just change the varibles down below
+                                //        ((TextView)findViewById(R.id.drawer_person_name)).setText("Fredrik Dast");
+                                //        ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
+
+                                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                                getSupportActionBar().setHomeButtonEnabled(true);
+
+                                setupDrawer();
+
+                                //previously in postcreate
+                                mDrawerToggle.syncState();
+
+                                //why can't i click things tho
+                                    /* mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
+
+                                        System.out.println("Fail");
+
+                                    }
+
+                                    });*/
+
+
+
+                            } else {
+                                System.out.println("getpeople request failed");
+                            }
+                        }
+                    });
+
+                    requestBuilderMatches.addRequest(req);
+                    requestBuilderMatches.execute();
+
+                    //END of section matchesrequest
+
+
+
+
+
+
                 } else {
                     System.out.println("getpeople request failed");
                 }
@@ -114,9 +193,21 @@ public class MatchesActivity extends AppCompatActivity {
         });
 
 
-
-        requestBuilder.addRequest(req);
+        requestBuilder.addRequest(requestAllPeople);
         requestBuilder.execute();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         System.out.println("matches:@@@@@@@@@@@@@@@@@@@@");
 
@@ -137,29 +228,7 @@ public class MatchesActivity extends AppCompatActivity {
         matchesList.add(p6);*/
 
         //Nav
-        mDrawerList = (ListView)findViewById(R.id.matchesList);
-//        addDrawerItems();
 
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        mActivityTitle = getTitle().toString();
-        //TODO add the current logged in person name and choosen icon just change the varibles down below
-//        ((TextView)findViewById(R.id.drawer_person_name)).setText("Fredrik Dast");
-//        ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        setupDrawer();
-
-        //why can't i click things tho
-       /* mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
-
-                System.out.println("fuck");
-
-            }
-
-        });*/
 
     }
 
@@ -203,7 +272,6 @@ public class MatchesActivity extends AppCompatActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
     }
 
     @Override

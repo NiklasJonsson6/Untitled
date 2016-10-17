@@ -60,7 +60,61 @@ public class MatchingActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_matching);
 
 
-        matchesList = getAllPeopleDb(this, user);
+        //chane user?
+        final RequestAllPeople req = new RequestAllPeople(user.getUsername());
+
+        final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
+
+        RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
+            @Override
+            public void PostExecute() {
+                if (req.was_successfull()) {
+                    ResponseAllPeople response = req.getResponse();
+
+                    if(response != null) {
+                        System.out.println("getpeople request successfull");
+
+                        for(int i = 0; i < response.getIsLearner().size(); i++) {
+                            String interestsString = response.getInterestsString().get(i);
+
+                            ArrayList<String> interests = new ArrayList<>();
+                            String[] parts = interestsString.split(",");
+
+                            for(String part: parts) {
+                                interests.add(part);
+                            }
+
+                            Person person = new Person(
+                                    response.getIsLearner().get(i),
+                                    response.getAge().get(i),
+                                    response.getName().get(i),
+                                    response.getOrginCountry().get(i),
+                                    response.getLongitude().get(i),
+                                    response.getLatitude().get(i),
+                                    interests,
+                                    response.getUsername().get(i),
+                                    response.getUser_id().get(i)
+                            );
+                            peopleFromDatabase.add(person);
+                        }
+                        //System.out.println("playerStrings(1): " + peopleStrings.get(2).toString());
+                    } else {
+                        System.out.println("no response when fetching people from database");
+                    }
+
+                    matchesList = peopleFromDatabase;
+                    populateMatchingView(matchesList, user);
+
+                } else {
+                    System.out.println("getpeople request failed");
+                }
+            }
+        });
+
+
+        requestBuilder.addRequest(req);
+        requestBuilder.execute();
+
 
         /*
         Person p2 = new Person(false, 20, "Niklas Jonsson", "sweden", 57.697724f, 11.988327f, new ArrayList<String>(Arrays.asList("computers", "speakers", "wasting money", "code", "chillin")), "nj");
@@ -76,7 +130,6 @@ public class MatchingActivity extends AppCompatActivity {
         matchesList.add(p5);
         matchesList.add(p6);*/
 
-        populateMatchingView(matchesList, user);
 
         matchingProfileView = getLayoutInflater().inflate(R.layout.activity_matching_profile, null);
         System.out.println("hey " + matchingProfileView.findViewById(R.id.matchProcent));
@@ -240,67 +293,10 @@ public class MatchingActivity extends AppCompatActivity {
         requestBuilder.execute();
     }
 
-    public static ArrayList<Person> getAllPeopleDb(Activity activity, Person user) {
-        final RequestAllPeople req = new RequestAllPeople(user.getUsername());
 
-        final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
+//public static ArrayList<Person> getAllPeopleDb(Activity activity, Person user) {
 
-        RequestBuilder requestBuilder = new RequestBuilder(activity, new RequestBuilder.Action() {
-            @Override
-            public void PostExecute() {
-                if (req.was_successfull()) {
-                    ResponseAllPeople response = req.getResponse();
-
-                    if(response != null) {
-                        System.out.println("getpeople request successfull");
-
-                        ArrayList <String> peopleStrings = response.getAllPeopleString();
-
-                        for(int i = 0; i < response.getIsLearner().size(); i++) {
-                            String interestsString = response.getInterestsString().get(i);
-
-                            ArrayList<String> interests = new ArrayList<>();
-                            String[] parts = interestsString.split(",");
-
-                            for(String part: parts) {
-                                interests.add(part);
-                            }
-
-                            Person person = new Person(
-                                    response.getIsLearner().get(i),
-                                    response.getAge().get(i),
-                                    response.getName().get(i),
-                                    response.getOrginCountry().get(i),
-                                    response.getLongitude().get(i),
-                                    response.getLatitude().get(i),
-                                    interests,
-                                    response.getUsername().get(i),
-                                    response.getUser_id().get(i)
-                            );
-
-                            peopleFromDatabase.add(person);
-
-
-
-                        }
-
-                        //System.out.println("playerStrings(1): " + peopleStrings.get(2).toString());
-                    } else {
-                        System.out.println("no response when fetching people from database");
-                    }
-                } else {
-                    System.out.println("getpeople request failed");
-                }
-            }
-        });
-
-
-        requestBuilder.addRequest(req);
-        requestBuilder.execute();
-
-        return peopleFromDatabase;
-
-    }
+    //}
 
     //Nav classes
     private void addDrawerItems() {
