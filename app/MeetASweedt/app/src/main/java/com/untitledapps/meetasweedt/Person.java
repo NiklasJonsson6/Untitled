@@ -130,12 +130,6 @@ public class Person implements Parcelable {
 
     public void setOrginCountry(String orginCountry) {
         this.orginCountry = orginCountry;
-
-        if(orginCountry.toLowerCase().equals("sweden") || orginCountry.toLowerCase().equals("sverige")) {
-            isLearner = false;
-        } else {
-            isLearner = true;
-        }
     }
 
     public float getLongitude() {
