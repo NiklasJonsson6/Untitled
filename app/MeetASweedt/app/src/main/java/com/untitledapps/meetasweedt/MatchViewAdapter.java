@@ -111,7 +111,7 @@ public class MatchViewAdapter extends BaseAdapter {
 
                 //Purple progressbar
                 ProgressBar progressBar = (ProgressBar) temp.findViewById(R.id.progressBarUnder);
-                ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", (int)(result.get(position).getMatchScore(matchingPerson)*100)<30 ? (int)(result.get(position).getMatchScore(matchingPerson)*1000) + 500 : 1000 - (int)(result.get(position).getMatchScore(matchingPerson)*1000), 1000); // see this max value coming back here, we animale towards that value
+                ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", (int)(result.get(position).getMatchScore(matchingPerson)*100)<20 ? (int)(result.get(position).getMatchScore(matchingPerson)*1000) + 650 : 1000 - (int)(result.get(position).getMatchScore(matchingPerson)*1000), 1000); // see this max value coming back here, we animale towards that value
                 animation.setDuration (1000); //in milliseconds
                 animation.setInterpolator (new DecelerateInterpolator());
                 animation.start ();
