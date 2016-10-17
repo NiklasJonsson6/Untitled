@@ -217,7 +217,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
             Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f", latitude, longitude));
 
             //stop location updates
-            if (mGoogleApiClient != null) {
+            if (mGoogleApiClient == null) {
                 LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
                 Log.d("onLocationChanged", "Removing Location Updates");
             }
