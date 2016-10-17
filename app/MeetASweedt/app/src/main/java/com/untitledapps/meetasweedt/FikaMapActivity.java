@@ -29,6 +29,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.untitledapps.MapsAPI.GetNearbyPlacesData;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * Created by Shaotime on 10/2/2016.
  */
@@ -41,9 +44,8 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private double latitude;
     private double longitude;
-    private int PROXIMITY_RADIUS = 10000;
+    private int PROXIMITY_RADIUS = 10000; //change this int to whatever your radius m
     private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
     private Marker mCurrLocationMarker;
     private LocationRequest mLocationRequest;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -143,6 +145,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
         @Override
         public void onConnected(Bundle bundle){
             //used to get quality of service location updates from the FusedLocationProviderApi using requestLocationUpdates
+            System.out.println("onConnected FikaMapActivity");
             mLocationRequest = new LocationRequest();
             mLocationRequest.setInterval(1000);
             mLocationRequest.setFastestInterval(1000);
@@ -195,7 +198,6 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
         public void onLocationChanged(Location location){
             Log.d("onLocationChanged", "entered");
 
-            mLastLocation = location;
             if (mCurrLocationMarker != null) {
                 mCurrLocationMarker.remove();
             }
@@ -215,6 +217,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
             Toast.makeText(FikaMapActivity.this, "Your Current Location", Toast.LENGTH_LONG).show();
 
             Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f", latitude, longitude));
+            System.out.println(DateFormat.getTimeInstance().format(new Date()));
 
             //stop location updates
             if (mGoogleApiClient == null) {

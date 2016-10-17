@@ -8,8 +8,12 @@ import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,18 +25,36 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.NetworkShared.RequestAddMatch;
 import com.example.NetworkShared.RequestAllPeople;
 import com.example.NetworkShared.RequestUpdateLocation;
 import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseAllPeople;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.untitledapps.Client.RequestBuilder;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
-public class MatchingActivity extends AppCompatActivity {
+public class MatchingActivity extends AppCompatActivity implements OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        com.google.android.gms.location.LocationListener {
+
     GridView gridView;
     static Activity context;
     static View matchingProfileView;
@@ -43,12 +65,14 @@ public class MatchingActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
-
+    private GoogleApiClient mGoogleApiClient;
+    private Person person;
+    private Location mLastLocation;
     //TODO  get logged in person
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "asd", 21);
 
     ArrayList<Person> matchesList = new ArrayList<Person>();
-
+    private LocationRequest mLocationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +80,29 @@ public class MatchingActivity extends AppCompatActivity {
 
         this.setContentView(R.layout.activity_matching);
 
+        if (!CheckGooglePlayServices()) {
+            Log.d("onCreate", "Finishing test case since Google Play Services are not available");
+            finish();
+        } else {
+            Log.d("onCreate", "Google Play Services available.");
+        }
+
 
         //chane user?
         final RequestAllPeople req = new RequestAllPeople(user.getUsername());
 
         final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                //mMap.setMyLocationEnabled(true); //enable current user location
+            }
+
+        } else {
+            buildGoogleApiClient();
+            //mMap.setMyLocationEnabled(true);
+        }
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
@@ -81,7 +123,7 @@ public class MatchingActivity extends AppCompatActivity {
                                 interests.add(part);
                             }
 
-                            Person person = new Person(
+                            person = new Person(
                                     response.getIsLearner().get(i),
                                     response.getAge().get(i),
                                     response.getName().get(i),
@@ -116,7 +158,7 @@ public class MatchingActivity extends AppCompatActivity {
         //System.out.println("hey " + matchingProfileView.findViewById(R.id.matchProcent));
         //System.out.println("hey " + matchingProfileView.findViewById(R.id.matchProcent));
 
-        initiateLocationServices(user);
+       // initiateLocationServices(user);
 
         //Nav
         mDrawerList = (ListView)findViewById(R.id.navList);
@@ -146,26 +188,19 @@ public class MatchingActivity extends AppCompatActivity {
         //((TextView) matchingProfileView.findViewById(R.id.distance)).setText(Float.toString(person.getDistanceTo(matchingPerson)) + "Km");
     }
 
-    public void initiateLocationServices(final Person person) {
+  /*  public void initiateLocationServices(final Person person) {
 
         LocationManager locationManager;
         LocationListener locationListener;
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
 
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 Log.d("matchingact", "long: " + location.getLongitude() + " lat: " + location.getLatitude());
 
-                person.setLatitude((float)location.getLongitude());
-                person.setLongitude((float)location.getLatitude());
-
                 final RequestUpdateLocation req =
-                        new RequestUpdateLocation(
-                                person.getUser_id(),
-                                (float)location.getLongitude(),
-                                (float)location.getLatitude());
+                        new RequestUpdateLocation(person.getUser_id(), (float)location.getLongitude(), (float)location.getLatitude());
 
                 RequestBuilder requestBuilder = new RequestBuilder(context, new RequestBuilder.Action() {
                     @Override
@@ -223,7 +258,7 @@ public class MatchingActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
 
         //locationManager.removeUpdates(locationListener);
-    }
+    }*/
 
     public static void requestAddMatch(Context context, int matchId, int userId){
         final RequestAddMatch req = new RequestAddMatch(matchId, userId);
@@ -318,4 +353,91 @@ public class MatchingActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        //used to get quality of service location updates from the FusedLocationProviderApi using requestLocationUpdates
+        System.out.println("onConnected MatchingActivity was called");
+
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            person.setLatitude((float)mLastLocation.getLongitude());
+            person.setLongitude((float)mLastLocation.getLatitude());
+            System.out.println(String.format("latitude:%.3f longitude:%.3f", mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+        }
+
+        if (mLastLocation == null) {
+            System.out.println("LAST LOCATION IS NULL");
+        }
+
+
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.d("onLocationChanged", "entered");
+
+        person.setLatitude((float)location.getLongitude());
+        person.setLongitude((float)location.getLatitude());
+
+        //getting coordinates of current location
+
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f", location.getLatitude(), location.getLongitude()));
+        System.out.println(DateFormat.getTimeInstance().format(new Date()));
+
+        //stop location updates
+        if (mGoogleApiClient == null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            Log.d("onLocationChanged", "Removing Location Updates");
+        }
+        Log.d("onLocationChanged", "Exit");
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+    }
+
+    protected synchronized void buildGoogleApiClient(){
+        System.out.println("buildGoogleApiClient MatchingActivity");
+        mGoogleApiClient = new GoogleApiClient.Builder(this) //used to configure client
+                .addConnectionCallbacks(this) //provides callbacks that are called when client connected or disconnected
+                .addOnConnectionFailedListener(this) //covers scenarios of failed attempt of connect client to service
+                .addApi(LocationServices.API) //adds the LocationServices API endpoint from Google Play Services
+                .build();
+        mGoogleApiClient.connect(); //A client must be connected before executing any operation
+    }
+
+    private boolean CheckGooglePlayServices () {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance(); //this is the Helper class for verifying that the Google Play Services APk is available and up-to-date
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if (result != ConnectionResult.SUCCESS) {
+            if (googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(this, result, 0).show();
+            }
+            return false;
+        }
+        return true;
+    }
+
 }

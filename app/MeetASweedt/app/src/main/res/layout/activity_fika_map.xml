@@ -23,7 +23,7 @@
             android:id="@+id/btnCafe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show Nearby Cafes(On/Off)"/>
+            android:text="Visa Cafes i Närheten (On/Off)"/>
 
 
 

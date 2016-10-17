@@ -24,7 +24,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SIGN IN"
+        android:text="Logga In"
         android:id="@+id/buttonSignIn"
         android:layout_below="@+id/editText"
         android:layout_marginTop="88dp"
@@ -47,7 +47,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SIGN UP"
+        android:text="Bli Medlem"
         android:id="@+id/buttonSignUp"
         android:layout_marginTop="29dp"
         android:backgroundTint="#cd85e3"
