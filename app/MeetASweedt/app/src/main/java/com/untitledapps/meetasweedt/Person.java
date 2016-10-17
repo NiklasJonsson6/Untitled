@@ -131,14 +131,11 @@ public class Person implements Parcelable {
     public void setOrginCountry(String orginCountry) {
         this.orginCountry = orginCountry;
 
-        //shoudld we check this?
-        //should we accept people from other countries to be "teachers" if they know swedish, Finland for example?
-        /*
-        if(orginCountry.toLowerCase().equals("sweden")) {
+        if(orginCountry.toLowerCase().equals("sweden") || orginCountry.toLowerCase().equals("sverige")) {
             isLearner = false;
         } else {
             isLearner = true;
-        }*/
+        }
     }
 
     public float getLongitude() {
