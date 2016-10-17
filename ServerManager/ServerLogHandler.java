@@ -75,6 +75,16 @@ public class ServerLogHandler extends Thread
             {
                 ex.printStackTrace();
             }
+
+            try
+            {
+                Thread.sleep(200);
+            }
+            catch (InterruptedException ex)
+            {
+                // do nothing
+            }
+
         }
     }
 

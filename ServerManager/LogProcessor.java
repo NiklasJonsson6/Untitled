@@ -10,11 +10,11 @@ public class LogProcessor extends Thread
 {
     InputStream out,err;
     ServerLogHandler handler;
-    AtomicBoolean pause;
+    volatile boolean pause;
 
     public LogProcessor(ServerLogHandler logHandler)
     {
-        pause = new AtomicBoolean(false);
+        pause = false;
         handler = logHandler;
         this.setDaemon(true);
     }
@@ -33,32 +33,46 @@ public class LogProcessor extends Thread
     {
         while(true)
         {
-            if(pause.get())continue;
-            try
+            if(!pause)
             {
-                synchronized (this)
+                try
                 {
-                    byte buffer[]= new byte[1024];
-                    if(out!= null && out.available()!=0)
+                    synchronized (this)
                     {
-                        System.out.println("processor: got out");
-                        int read = out.read(buffer);
-                        System.out.write(buffer,0,read);
-                        handler.write_to_all_sockets(buffer,read);
-                    }
+                        byte buffer[]= new byte[1024];
+                        if(out!= null && out.available()!=0)
+                        {
+                            System.out.println("processor: got out");
+                            int read = out.read(buffer);
+                            System.out.write(buffer,0,read);
+                            handler.write_to_all_sockets(buffer,read);
+                        }
 
-                    if(err !=null && err.available()!=0)
-                    {
-                        System.out.println("processor: got err");
-                        int read = err.read(buffer);
-                        System.err.write(buffer, 0, read);
-                        handler.write_to_all_sockets(buffer,read);
+                        if(err !=null && err.available()!=0)
+                        {
+                            System.out.println("processor: got err");
+                            int read = err.read(buffer);
+                            System.err.write(buffer, 0, read);
+                            handler.write_to_all_sockets(buffer,read);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                ex.printStackTrace();
+                System.out.println("processor paused.");
+            }
+            try
+            {
+                Thread.sleep(500);
+            }
+            catch (InterruptedException ex)
+            {
+                // do shit all.
             }
         }
     }

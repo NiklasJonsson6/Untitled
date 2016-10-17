@@ -43,7 +43,8 @@ public class Send_Server
                         {
                             // we only get to send one message to the server heh...
                             //it's bad but I don't really care...
-                            socket = new Socket("46.239.104.53",4001);
+                            socket.close();
+                            socket = new Socket("46.239.104.53",4002);
                             os = socket.getOutputStream();
                             is = socket.getInputStream();
                             os.write(MessageType.send_server.id);
@@ -56,6 +57,7 @@ public class Send_Server
                                 os.write(buffer,0,read);
                             }
                             fis.close();
+                            socket.shutdownOutput();
                         }break;
                         case "exit":
                         case "e":
@@ -75,6 +77,15 @@ public class Send_Server
             {
                 System.out.println(ex.toString());
                 ex.printStackTrace();
+            }
+
+            try
+            {
+                Thread.sleep(200);
+            }
+            catch (InterruptedException ex)
+            {
+                //do nothing
             }
         }
     }
