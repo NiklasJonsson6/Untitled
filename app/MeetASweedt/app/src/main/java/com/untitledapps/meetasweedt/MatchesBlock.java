@@ -22,15 +22,16 @@ public class MatchesBlock implements Comparable<MatchesBlock> {
     String mName;
     String mMessage;
     String mTime;
+    Person person;
 
 
 
-    public MatchesBlock(String name , String message, String time){
+    public MatchesBlock(String message, String time, Person p){
         System.out.println("MatchesBlock Constructor");
-        mName = name;
+        mName = p.getName();
         mMessage = message;
         mTime = time;
-
+        person = p;
     }
 
 
@@ -49,5 +50,9 @@ public class MatchesBlock implements Comparable<MatchesBlock> {
 
     public String getmTime() {
         return mTime;
+    }
+
+    public Person getPerson() {
+        return person;
     }
 }

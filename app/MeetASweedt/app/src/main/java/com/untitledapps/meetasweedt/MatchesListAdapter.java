@@ -32,7 +32,7 @@ public class MatchesListAdapter{
         MatchesBlockList = new ArrayList<MatchesBlock>();
 
         for(int x = 0; x < matchesList.size(); x++) {
-            MatchesBlockList.add(new MatchesBlock(matchesList.get(x).getName(),"Message", "Time"));
+            MatchesBlockList.add(new MatchesBlock("Message", "Time", matchesList.get(x)));
         }
     }
 

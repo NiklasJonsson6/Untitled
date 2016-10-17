@@ -71,6 +71,8 @@ public class MatchChatAdapter extends BaseAdapter {
 
                 //TODO: start a single chat for each person
                 Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("p1", ((MeetASweedt) context.getApplicationContext()).getLoggedInPerson());
+                intent.putExtra("p2", matchesBlock.get(position).getPerson());
                 context.startActivity(intent);
             }
         });
