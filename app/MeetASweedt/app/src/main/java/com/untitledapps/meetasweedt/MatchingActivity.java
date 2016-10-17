@@ -18,8 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
-
-
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,7 +29,6 @@ import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.untitledapps.Client.RequestBuilder;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -115,25 +112,9 @@ public class MatchingActivity extends AppCompatActivity {
         requestBuilder.addRequest(req);
         requestBuilder.execute();
 
-
-        /*
-        Person p2 = new Person(false, 20, "Niklas Jonsson", "sweden", 57.697724f, 11.988327f, new ArrayList<String>(Arrays.asList("computers", "speakers", "wasting money", "code", "chillin")), "nj");
-        Person p3 = new Person(false, 21, "Ajla Cano", "sweden", 57.677724f, 11.968327f, new ArrayList<String>(Arrays.asList("computers", "learning android studio", "code", "unknown")), "ac");
-        Person p4 = new Person(true, 20, "Fredrik Lindevall", "Syria", 57.72509804f, 11.77373512f, new ArrayList<String>(Arrays.asList("computers", "code", "ida", "stocks", "chillin")), "fli");
-        Person p5 = new Person(true, 20, "Daniel Hesslow", "usa", 57.687724f, 11.968327f, new ArrayList<String>(Arrays.asList("computers", "climbing", "code", "not chilling")), "dh");
-        Person p6 = new Person(true, 20, "Eric Shao", "russia", 57.697724f, 11.978327f, new ArrayList<String>(Arrays.asList("computers", "djing", "code", "unknown")), "dj");
-        context = this;
-
-        matchesList.add(p2);
-        matchesList.add(p3);
-        matchesList.add(p4);
-        matchesList.add(p5);
-        matchesList.add(p6);*/
-
-
         matchingProfileView = getLayoutInflater().inflate(R.layout.activity_matching_profile, null);
-        System.out.println("hey " + matchingProfileView.findViewById(R.id.matchProcent));
-        System.out.println("hey " + matchingProfileView.findViewById(R.id.matchProcent));
+        //System.out.println("hey " + matchingProfileView.findViewById(R.id.matchProcent));
+        //System.out.println("hey " + matchingProfileView.findViewById(R.id.matchProcent));
 
         initiateLocationServices(user);
 
@@ -247,8 +228,6 @@ public class MatchingActivity extends AppCompatActivity {
     public static void requestAddMatch(Context context, int matchId, int userId){
         final RequestAddMatch req = new RequestAddMatch(matchId, userId);
 
-        final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
-
         RequestBuilder requestBuilder = new RequestBuilder(context, new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
@@ -256,32 +235,7 @@ public class MatchingActivity extends AppCompatActivity {
                     Response response = req.getResponse();
                     if (response != null) {
                         System.out.println("addmatch request successfull");
-
-                        /*for(int i = 0; i < response.getIsLearner().size(); i++) {
-                            String interestsString = response.getInterestsString().get(i);
-
-                            ArrayList<String> interests = new ArrayList<>();
-                            String[] parts = interestsString.split(",");
-
-                            for(String part: parts) {
-                                interests.add(part);
-                            }
-
-                            peopleFromDatabase.add(new Person(
-                                    response.getIsLearner().get(i),
-                                    response.getAge().get(i),
-                                    response.getName().get(i),
-                                    response.getOrginCountry().get(i),
-                                    response.getLongitude().get(i),
-                                    response.getLatitude().get(i),
-                                    interests,
-                                    response.getUsername().get(i),
-                                    response.getUser_id().get(i)
-                            ));*/
-
                     }
-
-                    //System.out.println("playerStrings(1): " + peopleStrings.get(2).toString());
                 } else {
                     System.out.println("fail adding match");
                 }
@@ -292,11 +246,6 @@ public class MatchingActivity extends AppCompatActivity {
         requestBuilder.addRequest(req);
         requestBuilder.execute();
     }
-
-
-//public static ArrayList<Person> getAllPeopleDb(Activity activity, Person user) {
-
-    //}
 
     //Nav classes
     private void addDrawerItems() {

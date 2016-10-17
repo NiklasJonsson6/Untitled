@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.example.NetworkShared.Request;
 import com.example.NetworkShared.RequestConnectionTermination;
 import com.example.NetworkShared.RequestGetMessages;
 import com.example.NetworkShared.Response;
@@ -16,7 +15,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ChatService extends Service {
     private boolean isRunning;
