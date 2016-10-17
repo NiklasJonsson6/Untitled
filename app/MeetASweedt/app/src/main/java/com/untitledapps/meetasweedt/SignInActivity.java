@@ -1,5 +1,6 @@
 package com.untitledapps.meetasweedt;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,11 +19,13 @@ import java.util.Arrays;
 public class SignInActivity extends AppCompatActivity {
 
     EditText etUsername,etPassword;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        this.context = this;
 
 
         etUsername = (EditText) findViewById(R.id.etUsername);
@@ -47,13 +50,60 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void PostExecute() {
                 if (req.was_successfull()) {
-                    ((MeetASweedt) getApplicationContext()).setLoggedInPerson(getPersonFromDatabase(etUsername.getText().toString()));
-                    if (((MeetASweedt) getApplicationContext()).getLoggedInPerson() != null) {
-                        Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
-                        startActivity(intent);
-                    } else {
-                        System.out.println("Userdata for user: " + etUsername.getText().toString() + " not retrieved from database");
-                    }
+
+                    System.out.println("postexe 1");
+
+                    final Person person = new Person();
+
+                    final RequestGetPerson requestGetPerson = new RequestGetPerson(etUsername.getText().toString());
+
+                    RequestBuilder requestBuilderGetPerson = new RequestBuilder(context, new RequestBuilder.Action() {
+                        @Override
+                        public void PostExecute() {
+                            if (requestGetPerson.was_successfull()) {
+
+                                System.out.println("postexe2");
+
+                                ResponseGetPerson r = requestGetPerson.getResponse();
+
+                                ArrayList<String> interests = new ArrayList<>(Arrays.asList(r.getInterests().split(",")));
+                                person.setInterests(interests);
+                                person.setLearner(r.getIsLearner());
+                                person.setAge(r.getAge());
+                                person.setName(r.getName());
+                                person.setOrginCountry(r.getOriginCountry());
+                                person.setLongitude(r.getLongitude());
+                                person.setLatitude(r.getLatitude());
+                                person.setUsername(r.getUsername());
+                                person.setUser_id(r.getId());
+
+
+                                System.out.println("setting person in sign in");
+
+
+                                if (person.getUsername() != null) {
+                                    ((MeetASweedt) getApplicationContext()).setLoggedInPerson(person);
+                                } else {
+                                    //handle
+                                }
+
+                                if (((MeetASweedt) getApplicationContext()).getLoggedInPerson() != null) {
+                                    Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    System.out.println("Userdata for user: " + etUsername.getText().toString() + " not retrieved from database");
+                                }
+
+                            } else {
+                                System.out.println("get person from database not successful");
+                            }
+                        }
+                    });
+
+                    requestBuilderGetPerson.addRequest(requestGetPerson);
+                    requestBuilderGetPerson.execute();
+
+                    //((MeetASweedt) getApplicationContext()).setLoggedInPerson(getPersonFromDatabase(etUsername.getText().toString()));
                 } else {
                     System.out.println("got:'" + etUsername.getText().toString() + "' '" + etPassword.getText().toString() + "'");
                     System.out.println("val:'" + req.username + "' '" + req.password + "'");
@@ -65,42 +115,5 @@ public class SignInActivity extends AppCompatActivity {
         requestBuilder.addRequest(req);
         requestBuilder.execute();
 
-    }
-
-    private Person getPersonFromDatabase(String username) {
-        final Person person = new Person();
-
-        final RequestGetPerson req = new RequestGetPerson(username);
-
-        RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
-            @Override
-            public void PostExecute() {
-                if (req.was_successfull()) {
-                    ResponseGetPerson r = req.getResponse();
-
-                    ArrayList<String> interests = new ArrayList<>(Arrays.asList(r.getInterests().split(",")));
-                    person.setInterests(interests);
-                    person.setLearner(r.getIsLearner());
-                    person.setAge(r.getAge());
-                    person.setName(r.getName());
-                    person.setOrginCountry(r.getOriginCountry());
-                    person.setLongitude(r.getLongitude());
-                    person.setLatitude(r.getLatitude());
-                    person.setUsername(r.getUsername());
-                    person.setUser_id(r.getId());
-                } else {
-                    System.out.println("get person from database not successful");
-                }
-            }
-        });
-
-        requestBuilder.addRequest(req);
-        requestBuilder.execute();
-
-        if (person.getUsername() != null) {
-            return person;
-        } else {
-            return null;
-        }
     }
 }

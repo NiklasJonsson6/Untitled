@@ -391,7 +391,7 @@ public class ConnectionHandler implements Runnable
                                         }
                                     }
                                     if (response == null) {
-                                        request.setRespone(new Response(MessageType.GetPerson, false));
+                                        request.setRespone(new Response(MessageType.GetPerson, true));
                                     }
 
                                     oos.writeObject(response);
