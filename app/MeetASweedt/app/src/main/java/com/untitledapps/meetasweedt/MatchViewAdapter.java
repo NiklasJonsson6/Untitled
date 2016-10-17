@@ -4,12 +4,14 @@ package com.untitledapps.meetasweedt;
  * Created by fredr on 2016-09-24.
  */
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -106,6 +108,20 @@ public class MatchViewAdapter extends BaseAdapter {
                 ((TextView) temp.findViewById(R.id.matchingProcent)).setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)));
                 ((TextView) temp.findViewById(R.id.distance)).setText(Float.toString(Math.round((10f * result.get(position).getDistanceTo(matchingPerson) / 1000)) / 10f) + " Km");
                 ((TextView) temp.findViewById(R.id.name)).setText(result.get(position).getName());
+
+                //Purple progressbar
+                ProgressBar progressBar = (ProgressBar) temp.findViewById(R.id.progressBarUnder);
+                ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", (int)(result.get(position).getMatchScore(matchingPerson)*100)<20 ? (int)(result.get(position).getMatchScore(matchingPerson)*1000) + 650 : 1000 - (int)(result.get(position).getMatchScore(matchingPerson)*1000), 1000); // see this max value coming back here, we animale towards that value
+                animation.setDuration (1000); //in milliseconds
+                animation.setInterpolator (new DecelerateInterpolator());
+                animation.start ();
+                //Grey progressbar
+                progressBar = (ProgressBar) temp.findViewById(R.id.progressBarMatch);
+                animation = ObjectAnimator.ofInt (progressBar, "progress", 0, (int)(result.get(position).getMatchScore(matchingPerson)*1000)); // see this max value coming back here, we animale towards that value
+                animation.setDuration (1000); //in milliseconds
+                animation.setInterpolator (new DecelerateInterpolator());
+                animation.start ();
+
                 ListView listView = (ListView) temp.findViewById(R.id.intrests);
                 listView.setAdapter(new InterestListAdapter(context, result.get(position).getInterests(), matchingPerson.getInterests()));
                 temp.findViewById(R.id.matchButton).setOnClickListener(new OnClickListener() {

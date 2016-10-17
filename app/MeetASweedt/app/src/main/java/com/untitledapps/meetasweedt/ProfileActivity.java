@@ -82,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
         //TODO add the current logged in person name and choosen icon just change the varibles down below
-        ((TextView)findViewById(R.id.drawer_person_name)).setText("Fredrik Dast");
+        ((TextView)findViewById(R.id.drawer_person_name)).setText(((MeetASweedt) getApplicationContext()).getLoggedInPerson().getName());
         ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

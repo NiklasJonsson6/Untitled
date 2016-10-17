@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.NetworkShared.RequestAllPeople;
 import com.example.NetworkShared.RequestMatches;
@@ -20,6 +21,7 @@ import com.untitledapps.Client.RequestBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static com.untitledapps.meetasweedt.R.id.drawer_layout;
 import static com.untitledapps.meetasweedt.R.id.matchesList;
 
 public class MatchesActivity extends AppCompatActivity {
@@ -129,14 +131,14 @@ public class MatchesActivity extends AppCompatActivity {
                                 }
 
 
-                                mDrawerList = (ListView)findViewById(R.id.matchesList);
-                                //        addDrawerItems();
+                                mDrawerList = (ListView)findViewById(R.id.navList);
+                                addDrawerItems();
 
                                 mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
                                 mActivityTitle = getTitle().toString();
-                                //TODO add the current logged in person name and choosen icon just change the varibles down below
-                                //        ((TextView)findViewById(R.id.drawer_person_name)).setText("Fredrik Dast");
-                                //        ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
+
+                                ((TextView)findViewById(R.id.drawer_person_name)).setText(((MeetASweedt) getApplicationContext()).getLoggedInPerson().getName());
+                                //((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
 
                                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                                 getSupportActionBar().setHomeButtonEnabled(true);
@@ -205,6 +207,8 @@ public class MatchesActivity extends AppCompatActivity {
         };
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+
     }
 
     @Override

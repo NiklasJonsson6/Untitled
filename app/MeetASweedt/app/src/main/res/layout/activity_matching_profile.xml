@@ -18,10 +18,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/distance"
-        android:textSize="40sp"
-        android:layout_below="@+id/matchingProcent"
+        android:textSize="36sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp" />
+        android:layout_below="@+id/name"
+        android:layout_marginTop="170dp" />
 
     <ListView
         android:layout_width="match_parent"
@@ -36,19 +36,45 @@
         android:text="Fredrik"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
         android:id="@+id/name"
         android:textSize="30sp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
     <TextView
-        android:text="56%"
+        android:text="56"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/matchingProcent"
-        android:textSize="100sp"
-        android:layout_below="@+id/name"
-        android:layout_centerHorizontal="true" />
+        android:textSize="60sp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/distance"
+        android:layout_marginBottom="-125dp"
+        android:textColor="@color/colorPrimaryDark" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/progressBarUnder"
+        android:max="1000"
+        android:progress="1"
+        android:progressDrawable="@drawable/circle_progressbar_under_big"
+        android:layout_above="@+id/distance"
+        android:layout_centerHorizontal="true"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_marginBottom="-175dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarMatch"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:max="1000"
+        android:progress="50"
+        android:progressDrawable="@drawable/circle_progressbar_big"
+        android:layout_above="@+id/distance"
+        android:layout_centerHorizontal="true"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_marginBottom="-175dp" />
 
 </RelativeLayout>
