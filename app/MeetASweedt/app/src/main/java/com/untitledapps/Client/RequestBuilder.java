@@ -43,7 +43,18 @@ public class RequestBuilder extends AsyncTask<Void,Void,Void>{
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
             for(Request request : requests)
-                request.sendRequest(ois,oos);
+                oos.writeObject(request);
+            for(Request request : requests)
+            {
+                try
+                {
+                    request.setRespone((Response)ois.readObject());
+                }catch (ClassNotFoundException ex)
+                {
+                    //do shit all
+                }
+
+            }
 
             new RequestConnectionTermination().sendRequest(ois,oos);
             socket.close();
