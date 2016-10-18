@@ -70,7 +70,7 @@ public class MatchChatAdapter extends BaseAdapter {
         holder.tv.setText(matchesBlock.get(position).getmName());
         holder.img = (ImageView) rowView.findViewById(emojiIcon);
         if(token != 1) {
-            holder.img.setImageResource(matchesBlock.get(position).getMresID()); //setting the image
+        //    holder.img.setImageResource(matchesBlock.get(position).getMresID()); //setting the image
             token++;
         }
         System.out.println("Made it");
@@ -86,7 +86,6 @@ public class MatchChatAdapter extends BaseAdapter {
             }
         });
         return rowView;
-
     }
 
 }

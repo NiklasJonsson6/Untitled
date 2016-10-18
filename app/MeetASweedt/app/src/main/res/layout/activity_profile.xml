@@ -124,7 +124,7 @@
             android:layout_centerHorizontal="true" />
 
         <Button
-            android:text="Karta"
+            android:text="Cafe Karta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mapButton"
