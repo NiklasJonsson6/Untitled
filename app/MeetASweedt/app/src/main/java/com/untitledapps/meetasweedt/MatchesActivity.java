@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.NetworkShared.RequestAllPeople;
+import com.example.NetworkShared.RequestLastMessage;
 import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.example.NetworkShared.ResponseMatches;
@@ -57,6 +58,7 @@ public class MatchesActivity extends AppCompatActivity {
         final RequestAllPeople requestAllPeople = new RequestAllPeople(user.getUsername());
 
         final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
+        final Context cc = this;
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
@@ -99,7 +101,6 @@ public class MatchesActivity extends AppCompatActivity {
 
                     final ArrayList<Person> matches = new ArrayList<>();
 
-
                     RequestBuilder requestBuilderMatches = new RequestBuilder(context, new RequestBuilder.Action() {
                         @Override
                         public void PostExecute() {
@@ -124,9 +125,42 @@ public class MatchesActivity extends AppCompatActivity {
                                         }
 
                                     }
-                                    // MatchesListAdapter MLA = new MatchesListAdapter(matches);
-                                    final MatchChatAdapter arrayAdapter = new MatchChatAdapter(context, new MatchesListAdapter(matches).returnList());
-                                    listView.setAdapter(arrayAdapter);
+
+
+                                    final ArrayList<MatchesBlock> MatchesBlockList;
+                                    {
+                                        MatchesBlockList = new ArrayList<MatchesBlock>();
+
+                                        Person loggedInPerson= ((MeetASweedt) context.getApplicationContext()).getLoggedInPerson();
+
+
+                                        final RequestLastMessage reqs[] = new RequestLastMessage[matches.size()];
+                                        RequestBuilder builder = new RequestBuilder(context, new RequestBuilder.Action() {
+                                            @Override
+                                            public void PostExecute() {
+                                                for(int x = 0; x < matches.size(); x++) {
+                                                    if(reqs[x].was_successfull())
+                                                    {
+                                                        MatchesBlockList.add(new MatchesBlock(reqs[x].getResponse().getMessage().body, reqs[x].getResponse().getMessage().time_stamp.toString(), matches.get(x)));
+                                                    }
+                                                    else {
+                                                        MatchesBlockList.add(new MatchesBlock("","", matches.get(x)));
+                                                    }
+                                                }
+
+                                                final MatchChatAdapter arrayAdapter = new MatchChatAdapter(context,MatchesBlockList);
+                                                listView.setAdapter(arrayAdapter);
+                                            }
+                                        });
+
+                                        for(int i = 0; i<reqs.length;i++)
+                                        {
+                                            reqs[i] = new RequestLastMessage(loggedInPerson.getUsername(),matches.get(i).getUsername());
+                                            builder.addRequest(reqs[i]);
+                                        }
+
+                                        builder.execute();
+                                    }
 
                                 } else {
                                     System.out.println("no response when fetching people from database");

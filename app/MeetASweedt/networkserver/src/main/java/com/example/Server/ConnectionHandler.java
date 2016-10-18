@@ -8,6 +8,7 @@ import com.example.NetworkShared.RequestAllPeople;
 import com.example.NetworkShared.RequestCreateUser;
 import com.example.NetworkShared.RequestGetMessages;
 import com.example.NetworkShared.RequestGetPerson;
+import com.example.NetworkShared.RequestLastMessage;
 import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.RequestSendMessage;
 import com.example.NetworkShared.RequestUpdateLocation;
@@ -17,6 +18,7 @@ import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseAddMatch;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.example.NetworkShared.ResponseCreateUser;
+import com.example.NetworkShared.ResponseGetLastMessage;
 import com.example.NetworkShared.ResponseGetMessages;
 import com.example.NetworkShared.ResponseGetPerson;
 import com.example.NetworkShared.ResponseMatches;
@@ -227,7 +229,43 @@ public class ConnectionHandler implements Runnable
                             case TerminateConnection:
                                 running = false;
                                 break;
+                            case GetLastMessages:
+                            {
+                                RequestLastMessage lastMessage = (RequestLastMessage) msg;
+                                PreparedStatement statement;
 
+                                String sql =
+                                        "SELECT `message_body`,`date`,`from_id`\n" +
+                                        "FROM `message_table`\n" +
+                                        "WHERE to_id in (?, ?) \n" +
+                                        "AND from_id in (?, ?)\n" +
+                                        "ORDER BY `message_id` DESC \n" +
+                                        "LIMIT 1;\n";
+
+                                statement = conn.prepareStatement(sql);
+                                statement.setString(1,lastMessage.getFrom_id());
+                                statement.setString(3,lastMessage.getFrom_id());
+                                statement.setString(2,lastMessage.getTo_id());
+                                statement.setString(4,lastMessage.getTo_id());
+
+                                ResultSet resultSet = statement.executeQuery();
+                                if(resultSet.next())
+                                {
+                                    ResponseGetLastMessage response = new ResponseGetLastMessage(true, new ResponseGetMessages.Message(
+                                            resultSet.getTimestamp("date"),
+                                            resultSet.getString("message_body"),
+                                            resultSet.getString("from_id")
+                                    ));
+                                    oos.writeObject(response);
+                                }
+                                else
+                                {
+                                    oos.writeObject(new Response("fail"));
+                                }
+
+
+
+                            }break;
                             case GetMessages: {
                                 System.out.println("getmessagecase");
                                 RequestGetMessages requestMessage = (RequestGetMessages) msg;
@@ -300,7 +338,6 @@ public class ConnectionHandler implements Runnable
 
                                         response.getUsername().add(resultSet.getString("username"));
 
-                                        System.out.println("response usn:" + response.getUsername().get(i) + " usn:" + requestAllPeople.getUsername());
                                         if(!response.getUsername().get(i).equals(requestAllPeople.getUsername())) {
 
 
