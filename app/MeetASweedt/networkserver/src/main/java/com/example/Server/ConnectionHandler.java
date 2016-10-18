@@ -243,7 +243,7 @@ public class ConnectionHandler implements Runnable
                                 ArrayList<String[]> messageContainer = new ArrayList<>();
 
                                 Statement statement = null;
-                                String query = ("Select to_id, from_id, message_body from message_table");
+                                String query = ("Select to_id, from_id, message_body, date from message_table");
 
                                 try {
                                     statement = conn.createStatement();
@@ -265,9 +265,10 @@ public class ConnectionHandler implements Runnable
                                             System.out.println("if22");
                                             //if you're the receiver
                                             System.out.println("else2");
-                                            String[] body = new String[2];
+                                            String[] body = new String[ 2];
                                             body[0] = to_id;
                                             body[1] = resultSet.getString("message_body");
+
                                             messageContainer.add(body);
                                         }
                                     }

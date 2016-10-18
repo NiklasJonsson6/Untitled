@@ -85,6 +85,7 @@ public class ChatService extends Service {
                             } else {
                                 sendResult(messageContainer);
                                 index++;
+                                i++;
                             }
                         }
 

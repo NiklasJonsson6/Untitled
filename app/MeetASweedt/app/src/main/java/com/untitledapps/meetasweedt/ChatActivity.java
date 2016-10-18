@@ -117,22 +117,7 @@ public class ChatActivity extends AppCompatActivity {
 
     public void sendMessage(View v) {
         System.out.println("Message: " + textView.getText().toString());
-        Calendar c = GregorianCalendar.getInstance();
-        Message message;
-
-        /*
-        Test code to send message from either person
-         */
-        Random r = new Random();
-        if(true && r.nextBoolean()){
-            message = new Message(textView.getText().toString(), p1, c);
-        } else {
-            message = new Message(textView.getText().toString(), p2, c);
-        }
-        //String message = textView.getText().toString();
-
-        reqSendMessage(message);
-        updateChatView(message);
+        reqSendMessage(textView.getText().toString());
     }
 
     public void updateChatView(Message message) {
@@ -143,8 +128,8 @@ public class ChatActivity extends AppCompatActivity {
         textView.setText("");
     }
 
-    private void reqSendMessage(Message message) {
-        final RequestSendMessage req = new RequestSendMessage(p1.getUsername(), p2.getUsername(), message.getMessage());
+    private void reqSendMessage(String msg) {
+        final RequestSendMessage req = new RequestSendMessage(p1.getUsername(), p2.getUsername(), msg);
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
