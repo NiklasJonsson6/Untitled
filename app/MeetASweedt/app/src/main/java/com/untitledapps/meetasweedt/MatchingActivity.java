@@ -2,6 +2,7 @@ package com.untitledapps.meetasweedt;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -67,7 +68,6 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
     private String mActivityTitle;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
-    //TODO  get logged in person
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "asd", 21);
 
     ArrayList<Person> matchesList = new ArrayList<Person>();
@@ -76,6 +76,8 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        user = ((MeetASweedt) getApplicationContext()).getLoggedInPerson();
 
         this.setContentView(R.layout.activity_matching);
 
@@ -169,7 +171,7 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         //TODO add the current logged in person name and choosen icon just change the varibles down below
-        ((TextView)findViewById(R.id.drawer_person_name)).setText(((MeetASweedt) getApplicationContext()).getLoggedInPerson().getName());
+        ((TextView)findViewById(R.id.drawer_person_name)).setText(user.getName());
         ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
         setupDrawer();
     }

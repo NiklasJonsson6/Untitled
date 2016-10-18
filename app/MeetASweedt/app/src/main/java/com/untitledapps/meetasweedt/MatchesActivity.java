@@ -35,7 +35,6 @@ public class MatchesActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
 
-    //TODO  get logged in person
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 21);
 
 
@@ -44,6 +43,9 @@ public class MatchesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        user = ((MeetASweedt) getApplicationContext()).getLoggedInPerson();
+
         this.context = this;
         this.setContentView(R.layout.activity_matches);
         listView = (ListView) findViewById(matchesList);
