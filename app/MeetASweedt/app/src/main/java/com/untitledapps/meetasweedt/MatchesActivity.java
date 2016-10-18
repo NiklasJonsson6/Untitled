@@ -16,6 +16,8 @@ import com.example.NetworkShared.RequestAllPeople;
 import com.example.NetworkShared.RequestLastMessage;
 import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.ResponseAllPeople;
+import com.example.NetworkShared.ResponseGetLastMessage;
+import com.example.NetworkShared.ResponseGetMessages;
 import com.example.NetworkShared.ResponseMatches;
 import com.untitledapps.Client.RequestBuilder;
 
@@ -141,7 +143,9 @@ public class MatchesActivity extends AppCompatActivity {
                                                 for(int x = 0; x < matches.size(); x++) {
                                                     if(reqs[x].was_successfull())
                                                     {
-                                                        MatchesBlockList.add(new MatchesBlock(reqs[x].getResponse().getMessage().body, reqs[x].getResponse().getMessage().time_stamp.toString(), matches.get(x)));
+                                                        ResponseGetMessages.Message msg= reqs[x].getResponse().getMessage();
+
+                                                    MatchesBlockList.add(new MatchesBlock(msg.body, msg.time_stamp != null?msg.time_stamp.toString():"", matches.get(x)));
                                                     }
                                                     else {
                                                         MatchesBlockList.add(new MatchesBlock("","", matches.get(x)));
