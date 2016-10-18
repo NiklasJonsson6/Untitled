@@ -67,7 +67,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String[] messageContainer = intent.getStringArrayExtra("MessageContainer");
-                addMessageFromContainer(messageContainer);
+                Calendar calendar = (Calendar) intent.getSerializableExtra("calendar");
+                addMessageFromContainer(messageContainer,calendar);
             }
         };
 
@@ -103,14 +104,13 @@ public class ChatActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    public void addMessageFromContainer(String[] messageContainer) {
+    public void addMessageFromContainer(String[] messageContainer, Calendar calendar) {
         Message message;
-        Calendar c = GregorianCalendar.getInstance();
         if (messageContainer[0].equals(p1.getUsername())) {
-            message = new Message(messageContainer[1], p1, c);
+            message = new Message(messageContainer[1], p1, calendar);
             updateChatView(message);
         } else if (messageContainer[0].equals(p2.getUsername())) {
-            message = new Message(messageContainer[1], p2, c);
+            message = new Message(messageContainer[1], p2, calendar);
             updateChatView(message);
         }
     }

@@ -240,7 +240,7 @@ public class ConnectionHandler implements Runnable
                                 String to_id = requestMessage.getTo_id();
                                 String from_id = requestMessage.getFrom_id();
 
-                                ArrayList<String[]> messageContainer = new ArrayList<>();
+                                ArrayList<ResponseGetMessages.Message> messageContainer = new ArrayList<>();
 
                                 Statement statement = null;
                                 String query = ("Select to_id, from_id, message_body, date from message_table");
@@ -251,29 +251,25 @@ public class ConnectionHandler implements Runnable
 
                                     int i = 0;
                                     while (resultSet.next()) {
-                                        System.out.println("in while conhandl getmesg");
-                                        System.out.println("2id: "+ resultSet.getString("to_id") + ", given " + to_id);
-                                        System.out.println("fid: "+ resultSet.getString("from_id") + ", given " + from_id);
                                         if (resultSet.getString("to_id").equals(to_id) && resultSet.getString("from_id").equals(from_id)) {
                                             //if you're the sender
-                                            System.out.println("else1");
-                                            String[] body = new String[2];
-                                            body[0] = from_id;
-                                            body[1] = resultSet.getString("message_body");
-                                            messageContainer.add(body);
-                                        } else if (resultSet.getString("to_id").equals(from_id) && resultSet.getString("from_id").equals(to_id)) {
-                                            System.out.println("if22");
-                                            //if you're the receiver
-                                            System.out.println("else2");
-                                            String[] body = new String[ 2];
-                                            body[0] = to_id;
-                                            body[1] = resultSet.getString("message_body");
+                                            messageContainer.add(
+                                                    new ResponseGetMessages.Message(
+                                                            resultSet.getTimestamp("date"),
+                                                            resultSet.getString("message_body"),
+                                                            from_id
+                                                    ));
 
-                                            messageContainer.add(body);
+                                        } else if (resultSet.getString("to_id").equals(from_id) && resultSet.getString("from_id").equals(to_id)) {
+                                            //if you're the receiver
+                                            messageContainer.add(
+                                                    new ResponseGetMessages.Message(
+                                                            resultSet.getTimestamp("date"),
+                                                            resultSet.getString("message_body"),
+                                                            to_id
+                                            ));
                                         }
                                     }
-
-                                    System.out.println("messagecontainer: length on server: " + messageContainer.size());
 
                                     ResponseGetMessages response = new ResponseGetMessages(true, messageContainer);
 

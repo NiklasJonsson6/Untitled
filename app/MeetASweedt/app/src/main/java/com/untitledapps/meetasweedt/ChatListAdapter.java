@@ -85,7 +85,7 @@ public class ChatListAdapter extends BaseAdapter {
             holder.tv.setText(messageList.get(position).getCalendar().get(Calendar.HOUR_OF_DAY) + ":" +((messageList.get(position).getCalendar().get(Calendar.MINUTE)<10) ? "0" + messageList.get(position).getCalendar().get(Calendar.MINUTE) : messageList.get(position).getCalendar().get(Calendar.MINUTE)));
 
             holder.tv = (TextView) rowView.findViewById(R.id.chat_this_date);
-            holder.tv.setText(messageList.get(position).getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + messageList.get(position).getCalendar().get(Calendar.MONTH) + "-" + messageList.get(position).getCalendar().get(Calendar.YEAR));
+            holder.tv.setText(messageList.get(position).getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + (messageList.get(position).getCalendar().get(Calendar.MONTH)+1) + "-" + messageList.get(position).getCalendar().get(Calendar.YEAR));
 
 
             holder.tv = (TextView) rowView.findViewById(R.id.chat_this);

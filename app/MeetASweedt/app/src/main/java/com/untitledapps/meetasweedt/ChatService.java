@@ -9,12 +9,15 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.example.NetworkShared.RequestConnectionTermination;
 import com.example.NetworkShared.RequestGetMessages;
 import com.example.NetworkShared.Response;
+import com.example.NetworkShared.ResponseGetMessages;
 import com.untitledapps.Client.RequestBuilder;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class ChatService extends Service {
     private boolean isRunning;
@@ -79,7 +82,7 @@ public class ChatService extends Service {
                         System.out.println("successfull");
 
                         int i = 0;
-                        for (String[] messageContainer: req.getResponse().getMessageContainer()) {
+                        for (ResponseGetMessages.Message messageContainer: req.getResponse().getMessageContainer()) {
                             if (i < index) {
                                 i++;
                             } else {
@@ -102,11 +105,15 @@ public class ChatService extends Service {
         }
     };
 
-    private void sendResult(String[] messageContainer) {
+    private void sendResult(ResponseGetMessages.Message messageContainer) {
         Intent intent = new Intent(CHAT_ACTION);
-        intent.putExtra("MessageContainer", messageContainer);
+        String[] msgc = new String[]{messageContainer.from_id,messageContainer.body};
+        intent.putExtra("MessageContainer", msgc);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(messageContainer.time_stamp.getTime());
+        intent.putExtra("calendar",calendar);
         broadcaster.sendBroadcast(intent);
-        System.out.println("Broadcaster sent: " + messageContainer[1]);
+        System.out.println("Broadcaster sent: " + messageContainer.body);
     }
 
     @Override
