@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="arrayyylmao">
+        <item>@drawable/sweedt1</item>
+        <item>@drawable/sweedt2</item>
+        <item>@drawable/sweedt3</item>
+        <item>@drawable/sweedt4</item>
+        <item>@drawable/sweedt5</item>
+        <item>@drawable/sweedt6</item>
+        <item>@drawable/sweedt7</item>
+        <item>@drawable/sweedt8</item>
+        <item>@drawable/sweedt9</item>
+        <item>@drawable/sweedt10</item>
+        <item>@drawable/sweedt11</item>
+        <item>@drawable/sweedt12</item>
+        <item>@drawable/sweedt13</item>
+        <item>@drawable/sweedt14</item>
+        <item>@drawable/sweedt15</item>
+        <item>@drawable/sweedt16</item>
+        <item>@drawable/sweedt17</item>
+        <item>@drawable/sweedt18</item>
+    </array>
+
+</resources>
