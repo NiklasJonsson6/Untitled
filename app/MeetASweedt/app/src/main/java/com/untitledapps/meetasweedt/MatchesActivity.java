@@ -2,6 +2,7 @@ package com.untitledapps.meetasweedt;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,7 +24,9 @@ import com.untitledapps.Client.RequestBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
+import static com.untitledapps.meetasweedt.MatchingActivity.context;
 import static com.untitledapps.meetasweedt.R.id.drawer_layout;
 import static com.untitledapps.meetasweedt.R.id.matchesList;
 
@@ -37,7 +40,7 @@ public class MatchesActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
-
+    private int mresID;
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 21);
 
 
@@ -144,11 +147,11 @@ public class MatchesActivity extends AppCompatActivity {
                                                     if(reqs[x].was_successfull())
                                                     {
                                                         ResponseGetMessages.Message msg= reqs[x].getResponse().getMessage();
-    
-                                                    MatchesBlockList.add(new MatchesBlock(msg.body, msg.time_stamp != null?msg.time_stamp.toString():"", matches.get(x)));
+
+                                                    MatchesBlockList.add(new MatchesBlock(msg.body, msg.time_stamp != null?msg.time_stamp.toString():"", matches.get(x), createRandomProfilePic()));
                                                     }
                                                     else {
-                                                        MatchesBlockList.add(new MatchesBlock("","", matches.get(x)));
+                                                        MatchesBlockList.add(new MatchesBlock("","", matches.get(x),createRandomProfilePic()));
                                                     }
                                                 }
 
@@ -287,6 +290,17 @@ public class MatchesActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public int createRandomProfilePic(){
+
+        final TypedArray imgs = context.getResources().obtainTypedArray(R.array.arrayyylmao);
+        final Random rand = new Random();
+        final int rndInt = rand.nextInt(imgs.length());
+        mresID = imgs.getResourceId(rndInt, 0);
+        System.out.println(mresID);
+        return mresID;
+
     }
 
 

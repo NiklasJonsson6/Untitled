@@ -6,24 +6,26 @@ import android.media.Image;
 
 import java.util.Random;
 
+import static com.untitledapps.meetasweedt.MatchingActivity.context;
+
 /**
  * Created by Shaotime on 10/11/2016.
  */
 
 public class MatchesBlock implements Comparable<MatchesBlock> {
-    String mName;
-    String mMessage;
-    String mTime;
-    Person person;
-    int resID;
+    private String mName;
+    private String mMessage;
+    private String mTime;
+    private Person person;
+    private int mresID;
 
-
-    public MatchesBlock(String message, String time, Person p){
+    public MatchesBlock(String message, String time, Person p, int resID){
         System.out.println("MatchesBlock Constructor");
         mName = p.getName();
         mMessage = message;
         mTime = time;
         person = p;
+        mresID = resID;
     }
 
 
@@ -48,6 +50,8 @@ public class MatchesBlock implements Comparable<MatchesBlock> {
         return person;
     }
 
-
+    public int getMresID(){
+        return mresID;
+    }
 
 }

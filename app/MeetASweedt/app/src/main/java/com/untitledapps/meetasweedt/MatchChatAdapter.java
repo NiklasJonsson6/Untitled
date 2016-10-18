@@ -23,8 +23,7 @@ public class MatchChatAdapter extends BaseAdapter {
     ArrayList<MatchesBlock> matchesBlock;
     Context context;
     private static LayoutInflater inflater = null;
-    int resID;
-    
+    int token = 0;
     public MatchChatAdapter(Context mainActivity, ArrayList<MatchesBlock> matchesBlock) {
         // TODO Auto-generated constructor stub
         this.matchesBlock = matchesBlock;
@@ -69,10 +68,11 @@ public class MatchChatAdapter extends BaseAdapter {
         holder.tv.setText(matchesBlock.get(position).getmTime());
         holder.tv = (TextView) rowView.findViewById(R.id.nameText);
         holder.tv.setText(matchesBlock.get(position).getmName());
-        createRandomProfilePic();
         holder.img = (ImageView) rowView.findViewById(emojiIcon);
-        holder.img.setImageResource(resID); //setting the image
-
+        if(token != 1) {
+            holder.img.setImageResource(matchesBlock.get(position).getMresID()); //setting the image
+            token++;
+        }
         System.out.println("Made it");
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,14 +89,4 @@ public class MatchChatAdapter extends BaseAdapter {
 
     }
 
-    public void createRandomProfilePic(){
-
-            final TypedArray imgs = context.getResources().obtainTypedArray(R.array.arrayyylmao);
-            final Random rand = new Random();
-            final int rndInt = rand.nextInt(imgs.length());
-            resID = imgs.getResourceId(rndInt, 0);
-            System.out.println("tits" + resID);
-
-
-    }
 }
