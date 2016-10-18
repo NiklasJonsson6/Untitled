@@ -8,6 +8,7 @@ import com.example.NetworkShared.RequestAllPeople;
 import com.example.NetworkShared.RequestCreateUser;
 import com.example.NetworkShared.RequestGetMessages;
 import com.example.NetworkShared.RequestGetPerson;
+import com.example.NetworkShared.RequestLastMessage;
 import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.RequestSendMessage;
 import com.example.NetworkShared.RequestUpdateLocation;
@@ -17,6 +18,7 @@ import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseAddMatch;
 import com.example.NetworkShared.ResponseAllPeople;
 import com.example.NetworkShared.ResponseCreateUser;
+import com.example.NetworkShared.ResponseGetLastMessage;
 import com.example.NetworkShared.ResponseGetMessages;
 import com.example.NetworkShared.ResponseGetPerson;
 import com.example.NetworkShared.ResponseMatches;
@@ -40,6 +42,43 @@ import java.util.ArrayList;
  */
 public class ConnectionHandler implements Runnable
 {
+
+    private boolean addMatch(Connection conn, int userId, int matchId) throws SQLException
+    {
+
+        String oldMatches = "";
+        String query = ("Select matches from user_table where user_id = ?");
+        PreparedStatement preparedStatementMatch = conn.prepareStatement(query);
+        preparedStatementMatch.setInt(1, userId);
+
+        ResultSet resultSetMatch = preparedStatementMatch.executeQuery();
+
+        System.out.println("request add match user id: " + userId);
+
+        if(resultSetMatch.next()) {
+            oldMatches = resultSetMatch.getString(1);
+        }
+        else return false;
+
+
+        boolean already_mached = oldMatches.contains(Integer.toString(matchId)); //should really not be displayed...
+        if(already_mached)
+            return true;
+        else{
+            String sql = "update user_table set matches=? where user_id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(2, userId);
+
+            if(oldMatches.equals("")){
+                preparedStatement.setString(1, oldMatches + matchId); //add old string
+            } else {
+                preparedStatement.setString(1, oldMatches + "," + matchId); //add old string
+            }
+
+            return preparedStatement.executeUpdate() == 1;
+        }
+    }
+
     private Socket socket;
     @Override
     public void run()
@@ -133,6 +172,7 @@ public class ConnectionHandler implements Runnable
                             break;
 
                             case UpdateLocation: {
+
                                 RequestUpdateLocation updateLocation = (RequestUpdateLocation) msg;
                                 String sql = "update user_table set longitude=?, latitude=? where user_id = ?";
                                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -143,57 +183,14 @@ public class ConnectionHandler implements Runnable
                                 oos.writeObject(new ResponseUpdateLocation(success));
 
                                 System.out.println("updating user " + updateLocation.getUser_id() +" location, longitude: " + updateLocation.getLongitude() + ", latitude: " + updateLocation.getLatitude());
-
                             } break;
                             case AddMatch: {
-                                System.out.println("is in addmatch case");
                                 RequestAddMatch requestAddMatch = (RequestAddMatch) msg;
+                                //symmetry.
+                                boolean s1 = addMatch(conn,requestAddMatch.getUserID(),requestAddMatch.getMatchId());
+                                boolean s2 = addMatch(conn,requestAddMatch.getMatchId(),requestAddMatch.getUserID());
+                                oos.writeObject(new ResponseAddMatch(s1&&s2));
 
-
-                                String newIdString = "" + requestAddMatch.getMatchId();
-
-                                System.out.println("newidString: " + newIdString);
-
-                                String oldMatches = "";
-
-                                String query = ("Select matches from user_table where user_id = ?");
-                                PreparedStatement preparedStatementMatch = conn.prepareStatement(query);
-                                preparedStatementMatch.setInt(1, requestAddMatch.getUserID());
-
-                                ResultSet resultSetMatch = preparedStatementMatch.executeQuery();
-
-
-                                System.out.println("request add match user id: " + requestAddMatch.getUserID());
-
-
-                                if(resultSetMatch.next()) {
-                                    oldMatches = resultSetMatch.getString(1);
-                                    System.out.println("oldmatches: " + oldMatches);
-                                }
-
-
-                                String[]parts = oldMatches.split(newIdString);
-
-                                if(parts.length == 1){
-                                    String sql = "update user_table set matches=? where user_id = ?";
-                                    PreparedStatement preparedStatement = conn.prepareStatement(sql);
-                                    preparedStatement.setInt(2, requestAddMatch.getUserID());
-
-
-                                    if(oldMatches.equals("")){
-                                        preparedStatement.setString(1, oldMatches + requestAddMatch.getMatchId()); //add old string
-                                    } else {
-                                        preparedStatement.setString(1, oldMatches + "," + requestAddMatch.getMatchId()); //add old string
-                                    }
-
-                                    ResultSet resultSet = preparedStatement.executeQuery();
-                                    //preparedStatement.setInt(3, requestAddMatch.getUserID());
-                                    boolean success = preparedStatement.executeUpdate() == 1;
-                                    oos.writeObject(new ResponseAddMatch(success));
-                                } else {
-                                    //already in matches
-                                    oos.writeObject(new ResponseUpdateLocation(true));
-                                }
                             } break;
                             case VerifyPassword:
                             {
@@ -232,7 +229,43 @@ public class ConnectionHandler implements Runnable
                             case TerminateConnection:
                                 running = false;
                                 break;
+                            case GetLastMessages:
+                            {
+                                RequestLastMessage lastMessage = (RequestLastMessage) msg;
+                                PreparedStatement statement;
 
+                                String sql =
+                                        "SELECT `message_body`,`date`,`from_id`\n" +
+                                        "FROM `message_table`\n" +
+                                        "WHERE to_id in (?, ?) \n" +
+                                        "AND from_id in (?, ?)\n" +
+                                        "ORDER BY `message_id` DESC \n" +
+                                        "LIMIT 1;\n";
+
+                                statement = conn.prepareStatement(sql);
+                                statement.setString(1,lastMessage.getFrom_id());
+                                statement.setString(3,lastMessage.getFrom_id());
+                                statement.setString(2,lastMessage.getTo_id());
+                                statement.setString(4,lastMessage.getTo_id());
+
+                                ResultSet resultSet = statement.executeQuery();
+                                if(resultSet.next())
+                                {
+                                    ResponseGetLastMessage response = new ResponseGetLastMessage(true, new ResponseGetMessages.Message(
+                                            resultSet.getTimestamp("date"),
+                                            resultSet.getString("message_body"),
+                                            resultSet.getString("from_id")
+                                    ));
+                                    oos.writeObject(response);
+                                }
+                                else
+                                {
+                                    oos.writeObject(new Response("fail"));
+                                }
+
+
+
+                            }break;
                             case GetMessages: {
                                 System.out.println("getmessagecase");
                                 RequestGetMessages requestMessage = (RequestGetMessages) msg;
@@ -305,7 +338,6 @@ public class ConnectionHandler implements Runnable
 
                                         response.getUsername().add(resultSet.getString("username"));
 
-                                        System.out.println("response usn:" + response.getUsername().get(i) + " usn:" + requestAllPeople.getUsername());
                                         if(!response.getUsername().get(i).equals(requestAllPeople.getUsername())) {
 
 
@@ -479,10 +511,10 @@ public class ConnectionHandler implements Runnable
                 socket.close();
                 System.out.println("connection terminated");
             }
-            catch (Exception ex)
+            catch (SQLException|RuntimeException|ClassNotFoundException ex)
             {
                 if (oos!=null)
-                    new Response(ex.toString());
+                    oos.writeObject(new Response(ex.toString()));
                 socket.close();
             }
         }

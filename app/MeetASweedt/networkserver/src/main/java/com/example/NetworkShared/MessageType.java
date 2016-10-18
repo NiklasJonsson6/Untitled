@@ -17,5 +17,6 @@ public enum MessageType
     SendMessage,
     Error,
     VerifyPassword,
-    GetMessages
+    GetMessages,
+    GetLastMessages
 }

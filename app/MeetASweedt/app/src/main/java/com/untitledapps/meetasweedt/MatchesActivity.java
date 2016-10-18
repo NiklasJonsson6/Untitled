@@ -13,8 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.NetworkShared.RequestAllPeople;
+import com.example.NetworkShared.RequestLastMessage;
 import com.example.NetworkShared.RequestMatches;
 import com.example.NetworkShared.ResponseAllPeople;
+import com.example.NetworkShared.ResponseGetLastMessage;
+import com.example.NetworkShared.ResponseGetMessages;
 import com.example.NetworkShared.ResponseMatches;
 import com.untitledapps.Client.RequestBuilder;
 
@@ -35,7 +38,6 @@ public class MatchesActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
 
-    //TODO  get logged in person
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "qwe", 21);
 
 
@@ -44,6 +46,9 @@ public class MatchesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        user = ((MeetASweedt) getApplicationContext()).getLoggedInPerson();
+
         this.context = this;
         this.setContentView(R.layout.activity_matches);
         listView = (ListView) findViewById(matchesList);
@@ -55,6 +60,7 @@ public class MatchesActivity extends AppCompatActivity {
         final RequestAllPeople requestAllPeople = new RequestAllPeople(user.getUsername());
 
         final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
+        final Context cc = this;
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
@@ -97,7 +103,6 @@ public class MatchesActivity extends AppCompatActivity {
 
                     final ArrayList<Person> matches = new ArrayList<>();
 
-
                     RequestBuilder requestBuilderMatches = new RequestBuilder(context, new RequestBuilder.Action() {
                         @Override
                         public void PostExecute() {
@@ -122,9 +127,44 @@ public class MatchesActivity extends AppCompatActivity {
                                         }
 
                                     }
-                                    // MatchesListAdapter MLA = new MatchesListAdapter(matches);
-                                    final MatchChatAdapter arrayAdapter = new MatchChatAdapter(context, new MatchesListAdapter(matches).returnList());
-                                    listView.setAdapter(arrayAdapter);
+
+
+                                    final ArrayList<MatchesBlock> MatchesBlockList;
+                                    {
+                                        MatchesBlockList = new ArrayList<MatchesBlock>();
+
+                                        Person loggedInPerson= ((MeetASweedt) context.getApplicationContext()).getLoggedInPerson();
+
+
+                                        final RequestLastMessage reqs[] = new RequestLastMessage[matches.size()];
+                                        RequestBuilder builder = new RequestBuilder(context, new RequestBuilder.Action() {
+                                            @Override
+                                            public void PostExecute() {
+                                                for(int x = 0; x < matches.size(); x++) {
+                                                    if(reqs[x].was_successfull())
+                                                    {
+                                                        ResponseGetMessages.Message msg= reqs[x].getResponse().getMessage();
+    
+                                                    MatchesBlockList.add(new MatchesBlock(msg.body, msg.time_stamp != null?msg.time_stamp.toString():"", matches.get(x)));
+                                                    }
+                                                    else {
+                                                        MatchesBlockList.add(new MatchesBlock("","", matches.get(x)));
+                                                    }
+                                                }
+
+                                                final MatchChatAdapter arrayAdapter = new MatchChatAdapter(context,MatchesBlockList);
+                                                listView.setAdapter(arrayAdapter);
+                                            }
+                                        });
+
+                                        for(int i = 0; i<reqs.length;i++)
+                                        {
+                                            reqs[i] = new RequestLastMessage(loggedInPerson.getUsername(),matches.get(i).getUsername());
+                                            builder.addRequest(reqs[i]);
+                                        }
+
+                                        builder.execute();
+                                    }
 
                                 } else {
                                     System.out.println("no response when fetching people from database");

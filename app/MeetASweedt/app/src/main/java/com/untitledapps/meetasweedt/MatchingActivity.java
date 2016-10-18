@@ -2,6 +2,7 @@ package com.untitledapps.meetasweedt;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -67,7 +68,6 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
     private String mActivityTitle;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
-    //TODO  get logged in person
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "asd", 21);
 
     ArrayList<Person> matchesList = new ArrayList<Person>();
@@ -77,6 +77,8 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
+
+        user = ((MeetASweedt) getApplicationContext()).getLoggedInPerson();
 
         this.setContentView(R.layout.activity_matching);
 
@@ -170,7 +172,7 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         //TODO add the current logged in person name and choosen icon just change the varibles down below
-        ((TextView)findViewById(R.id.drawer_person_name)).setText(((MeetASweedt) getApplicationContext()).getLoggedInPerson().getName());
+        ((TextView)findViewById(R.id.drawer_person_name)).setText(user.getName());
         ((ImageView)findViewById(R.id.drawer_person_pic)).setImageResource(R.mipmap.ic_launcher);
         setupDrawer();
     }
@@ -188,77 +190,25 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
         //((TextView) matchingProfileView.findViewById(R.id.distance)).setText(Float.toString(person.getDistanceTo(matchingPerson)) + "Km");
     }
 
-  /*  public void initiateLocationServices(final Person person) {
+    public void updateDataBaseCoordinates(Person person, float longitude, float latitude) {
+        final RequestUpdateLocation req =
+                new RequestUpdateLocation(person.getUser_id(), longitude, latitude);
 
-        LocationManager locationManager;
-        LocationListener locationListener;
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        locationListener = new LocationListener() {
+        RequestBuilder requestBuilder = new RequestBuilder(context, new RequestBuilder.Action() {
             @Override
-            public void onLocationChanged(Location location) {
-                Log.d("matchingact", "long: " + location.getLongitude() + " lat: " + location.getLatitude());
-
-                final RequestUpdateLocation req =
-                        new RequestUpdateLocation(person.getUser_id(), (float)location.getLongitude(), (float)location.getLatitude());
-
-                RequestBuilder requestBuilder = new RequestBuilder(context, new RequestBuilder.Action() {
-                    @Override
-                    public void PostExecute() {
-                        if (req.was_successfull()) {
-                            System.out.println("successfully updated location of user");
-                        } else {
-                            System.out.println("error when updating position");
-                        }
-                    }
-                });
-
-                requestBuilder.addRequest(req);
-                requestBuilder.execute();
-
-
-                //update gui after gps coordinates are updated (to update distance)
-                //assums matchesList is already populated
-                populateMatchingView(matchesList, user);
+            public void PostExecute() {
+                if (req.was_successfull()) {
+                    System.out.println("successfully updated location of user");
+                } else {
+                    System.out.println("error when updating position");
+                }
             }
+        });
 
-            @Override
-            public void onProviderDisabled(String s) {
-                //TODO notify
-                //Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS); ??
-                //startActivity(i);
+        requestBuilder.addRequest(req);
+        requestBuilder.execute();
 
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-                //TODO maybe
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-                //TODO maybe
-            }
-
-
-        };
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-
-        //TODO lower update freq after working 100%
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
-
-        //locationManager.removeUpdates(locationListener);
-    }*/
+    }
 
     public static void requestAddMatch(Context context, int matchId, int userId){
         final RequestAddMatch req = new RequestAddMatch(matchId, userId);
@@ -363,6 +313,8 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
         if (mLastLocation != null) {
             user.setLatitude((float)mLastLocation.getLatitude());
             user.setLongitude((float)mLastLocation.getLongitude());
+            updateDataBaseCoordinates(user, user.getLongitude(), user.getLatitude());
+
             System.out.println(String.format("latitude:%.3f longitude:%.3f", mLastLocation.getLatitude(), mLastLocation.getLongitude()));
         }
 
@@ -395,6 +347,7 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
 
         user.setLatitude((float)location.getLatitude());
         user.setLongitude((float)location.getLongitude());
+        updateDataBaseCoordinates(user, user.getLongitude(), user.getLatitude());
 
         //getting coordinates of current location
 
@@ -437,5 +390,4 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
         }
         return true;
     }
-
 }

@@ -66,7 +66,7 @@ public class SignUp2Activity extends AppCompatActivity {
                     public void PostExecute() {
                         if(req.was_successfull())
                         {
-                            goToProfileActivity();
+                            goToSignInActivity();
                         }
                         else
                         {
@@ -86,8 +86,8 @@ public class SignUp2Activity extends AppCompatActivity {
 
     }
 
-    private void goToProfileActivity() {
-        Intent intent = new Intent(this, ProfileActivity.class);
+    private void goToSignInActivity() {
+        Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
 
