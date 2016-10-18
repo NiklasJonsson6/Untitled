@@ -12,7 +12,7 @@
 
     <!-- TITLE -->
     <TextView
-        android:text="SIGN UP TO"
+        android:text="Registrera dig till"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textSingUp"
@@ -49,7 +49,7 @@
         android:id="@+id/buttonSINGUPNOW"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SIGN UP NOW!"
+        android:text="Registrera!"
         android:background="#cd85e3"
         android:layout_marginBottom="121dp"
         android:layout_alignParentBottom="true"

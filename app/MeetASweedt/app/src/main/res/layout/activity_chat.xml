@@ -26,7 +26,7 @@
         android:background="@drawable/chat_bottom_background">
 
         <Button
-            android:text="Send"
+            android:text="Skicka"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sendbutton"
@@ -39,7 +39,6 @@
         <EditText
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:text="Name"
             android:ems="10"
             android:id="@+id/chatText"
             android:layout_width="250dp"
@@ -53,7 +52,8 @@
             android:layout_marginTop="1dp"
             android:layout_toLeftOf="@+id/sendbutton"
             android:layout_toStartOf="@+id/sendbutton"
-            android:background="@drawable/chat_white_text_border" />
+            android:background="@drawable/chat_white_text_border"
+            android:hint="Skriv Här" />
     </RelativeLayout>
 
 </RelativeLayout>

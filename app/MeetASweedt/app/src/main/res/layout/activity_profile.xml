@@ -104,7 +104,7 @@
             android:layout_alignEnd="@+id/twWelcome2" />-->
 
         <Button
-            android:text="Map"
+            android:text="Karta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mapButton"
@@ -114,7 +114,7 @@
             android:layout_marginTop="83dp" />
 
         <Button
-            android:text="Chat"
+            android:text="Chatt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buttonChat"
@@ -125,7 +125,7 @@
             android:layout_alignStart="@+id/buttonMatches" />
 
         <Button
-            android:text="Match with people"
+            android:text="Matcha med folk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buttonMatch"
@@ -135,7 +135,7 @@
             android:layout_centerHorizontal="true" />
 
         <Button
-            android:text="Matches"
+            android:text="Matcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buttonMatches"

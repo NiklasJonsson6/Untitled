@@ -123,7 +123,7 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener 
         }
         if(foundOne)
             return strngbf.toString();
-        else return "No Interests Selected";
+        else return "Välj Intressen Här";
     }
 
 

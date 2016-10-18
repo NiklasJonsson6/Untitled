@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         spCountry = (Spinner)findViewById(R.id.spCountry);
 
         //currently only the countries with most immigrants
-        String[] countries = new String[]{"Afghanistan", "Irak", "Somalia", "Syria", "Turkey", "Sweden", "Country of Origin"};
+        String[] countries = new String[]{"Afghanistan", "Irak", "Somalia", "Syrien", "Turkiet", "Sverige", "Ursprungsland"};
 
         final int countrylistsize = countries.length - 1;
 
@@ -69,12 +69,12 @@ public class SignUpActivity extends AppCompatActivity {
         spCountry.setAdapter(countryAdapter);
         spCountry.setSelection(countrylistsize);
 
-        addListenerOnRaingBar();
+        addListenerOnRatingBar();
 
     }
 
     ////hur visa upp på profile activity????
-    public void addListenerOnRaingBar(){
+    public void addListenerOnRatingBar(){
         sweLvl = (RatingBar) findViewById(R.id.ratingBar);
         //valueLvl = (TextView) findViewById(R.id.txtRatingvalue);
 
