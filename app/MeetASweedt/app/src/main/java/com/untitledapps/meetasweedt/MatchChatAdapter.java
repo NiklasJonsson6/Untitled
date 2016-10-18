@@ -2,6 +2,7 @@ package com.untitledapps.meetasweedt;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
+
+import static com.untitledapps.meetasweedt.R.id.emojiIcon;
 
 /**
  * Created by Fredrik on 2016-10-12.
@@ -19,7 +23,8 @@ public class MatchChatAdapter extends BaseAdapter {
     ArrayList<MatchesBlock> matchesBlock;
     Context context;
     private static LayoutInflater inflater = null;
-
+    int resID;
+    
     public MatchChatAdapter(Context mainActivity, ArrayList<MatchesBlock> matchesBlock) {
         // TODO Auto-generated constructor stub
         this.matchesBlock = matchesBlock;
@@ -64,6 +69,10 @@ public class MatchChatAdapter extends BaseAdapter {
         holder.tv.setText(matchesBlock.get(position).getmTime());
         holder.tv = (TextView) rowView.findViewById(R.id.nameText);
         holder.tv.setText(matchesBlock.get(position).getmName());
+        createRandomProfilePic();
+        holder.img = (ImageView) rowView.findViewById(emojiIcon);
+        holder.img.setImageResource(resID); //setting the image
+
         System.out.println("Made it");
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +86,17 @@ public class MatchChatAdapter extends BaseAdapter {
             }
         });
         return rowView;
+
+    }
+
+    public void createRandomProfilePic(){
+
+            final TypedArray imgs = context.getResources().obtainTypedArray(R.array.arrayyylmao);
+            final Random rand = new Random();
+            final int rndInt = rand.nextInt(imgs.length());
+            resID = imgs.getResourceId(rndInt, 0);
+            System.out.println("tits" + resID);
+
 
     }
 }

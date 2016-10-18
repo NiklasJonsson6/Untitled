@@ -357,7 +357,7 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
         System.out.println(DateFormat.getTimeInstance().format(new Date()));
 
         //stop location updates
-        if (mGoogleApiClient == null) {
+        if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             Log.d("onLocationChanged", "Removing Location Updates");
         }

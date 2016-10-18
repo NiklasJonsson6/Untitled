@@ -1,5 +1,11 @@
 package com.untitledapps.meetasweedt;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.media.Image;
+
+import java.util.Random;
+
 /**
  * Created by Shaotime on 10/11/2016.
  */
@@ -9,7 +15,7 @@ public class MatchesBlock implements Comparable<MatchesBlock> {
     String mMessage;
     String mTime;
     Person person;
-
+    int resID;
 
 
     public MatchesBlock(String message, String time, Person p){
@@ -41,4 +47,7 @@ public class MatchesBlock implements Comparable<MatchesBlock> {
     public Person getPerson() {
         return person;
     }
+
+
+
 }
