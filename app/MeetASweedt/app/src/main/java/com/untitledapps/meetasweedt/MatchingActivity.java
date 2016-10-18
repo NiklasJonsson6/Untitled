@@ -360,8 +360,8 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
 
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            user.setLatitude((float)mLastLocation.getLongitude());
-            user.setLongitude((float)mLastLocation.getLatitude());
+            user.setLatitude((float)mLastLocation.getLatitude());
+            user.setLongitude((float)mLastLocation.getLongitude());
             System.out.println(String.format("latitude:%.3f longitude:%.3f", mLastLocation.getLatitude(), mLastLocation.getLongitude()));
         }
 
@@ -392,8 +392,8 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
     public void onLocationChanged(Location location) {
         Log.d("onLocationChanged", "entered");
 
-        user.setLatitude((float)location.getLongitude());
-        user.setLongitude((float)location.getLatitude());
+        user.setLatitude((float)location.getLatitude());
+        user.setLongitude((float)location.getLongitude());
 
         //getting coordinates of current location
 
