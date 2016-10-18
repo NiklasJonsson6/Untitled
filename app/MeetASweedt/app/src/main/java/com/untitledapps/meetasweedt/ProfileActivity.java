@@ -36,13 +36,12 @@ public class ProfileActivity extends AppCompatActivity {
         //final TextView titleMsg = (TextView) findViewById(R.id.twWelcome2);
         //final TextView titleMsg2 = (TextView) findViewById(R.id.twWelcome2);
 
-        final Button buttonMatches = (Button) findViewById(R.id.buttonMatches);
         final Button buttonChat = (Button) findViewById(R.id.buttonChat);
         final Button mapButton = (Button) findViewById(R.id.mapButton);
         final Button buttonMatch = (Button) findViewById(R.id.buttonMatch);
 
         //////MATCHES
-        buttonMatches.setOnClickListener(new View.OnClickListener() {
+        buttonChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToMatchesActivity();
@@ -58,12 +57,12 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         //////MATCHES
-        buttonChat.setOnClickListener(new View.OnClickListener() {
+        /*buttonChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToChatActivity();
             }
-        });
+        });*/
 
         mapButton.setOnClickListener(new View.OnClickListener(){
             @Override

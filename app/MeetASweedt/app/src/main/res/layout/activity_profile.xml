@@ -104,27 +104,6 @@
             android:layout_alignEnd="@+id/twWelcome2" />-->
 
         <Button
-            android:text="Karta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mapButton"
-            android:layout_alignTop="@+id/buttonChat"
-            android:layout_alignLeft="@+id/buttonChat"
-            android:layout_alignStart="@+id/buttonChat"
-            android:layout_marginTop="83dp" />
-
-        <Button
-            android:text="Chatt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonChat"
-            android:background="@android:color/holo_purple"
-            android:layout_marginTop="52dp"
-            android:layout_below="@+id/buttonMatches"
-            android:layout_alignLeft="@+id/buttonMatches"
-            android:layout_alignStart="@+id/buttonMatches" />
-
-        <Button
             android:text="Matcha med folk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -135,14 +114,25 @@
             android:layout_centerHorizontal="true" />
 
         <Button
-            android:text="Matcher"
+            android:text="Chatt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonMatches"
+            android:id="@+id/buttonChat"
             android:background="@android:color/holo_purple"
             android:layout_marginTop="50dp"
             android:layout_below="@+id/buttonMatch"
             android:layout_centerHorizontal="true" />
+
+        <Button
+            android:text="Karta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mapButton"
+            android:layout_marginTop="55dp"
+            android:background="@android:color/holo_purple"
+            android:layout_below="@+id/buttonChat"
+            android:layout_alignLeft="@+id/buttonChat"
+            android:layout_alignStart="@+id/buttonChat" />
 
 
     </RelativeLayout>
