@@ -153,6 +153,9 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
             }
+
+            Toast.makeText(FikaMapActivity.this, "din nuvarande position", Toast.LENGTH_LONG).show();
+
         }
 
 
@@ -214,7 +217,6 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
             //animates the camera to current location
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-            Toast.makeText(FikaMapActivity.this, "Your Current Location", Toast.LENGTH_LONG).show();
 
             Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f", latitude, longitude));
             System.out.println(DateFormat.getTimeInstance().format(new Date()));
