@@ -70,7 +70,7 @@ public class ConnectionHandler implements Runnable
             if(oldMatches.equals("")){
                 preparedStatement.setString(1, oldMatches + matchId); //add old string
             } else {
-                preparedStatement.setString(1, oldMatches + "," + userId); //add old string
+                preparedStatement.setString(1, oldMatches + "," + matchId); //add old string
             }
 
             return preparedStatement.executeUpdate() == 1;
