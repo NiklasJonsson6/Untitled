@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.NetworkShared.RequestGetPerson;
 import com.example.NetworkShared.RequestVerifyPassword;
@@ -105,6 +106,8 @@ public class SignInActivity extends AppCompatActivity {
 
                     //((MeetASweedt) getApplicationContext()).setLoggedInPerson(getPersonFromDatabase(etUsername.getText().toString()));
                 } else {
+                    Toast.makeText(SignInActivity.this, "fel användarnamn eller lösenord", Toast.LENGTH_LONG).show();
+
                     System.out.println("got:'" + etUsername.getText().toString() + "' '" + etPassword.getText().toString() + "'");
                     System.out.println("val:'" + req.username + "' '" + req.password + "'");
                     System.out.println("invalid password or username!");

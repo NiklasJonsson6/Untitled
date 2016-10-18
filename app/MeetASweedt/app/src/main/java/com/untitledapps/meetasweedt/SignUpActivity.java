@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.NetworkShared.RequestCreateUser;
 import com.untitledapps.Client.RequestBuilder;
@@ -115,13 +116,26 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        builder.addRequest(req);
+        //builder.addRequest(req);
 //        builder.execute();
 
         //after the registration go to interest list
-        Intent intent = new Intent(this, SignUp2Activity.class);
-        intent.putExtra("req",req);
-        startActivity(intent);
+
+        if(
+        req.getAge() != 0 &&
+                !req.getName().equals("") &&
+                !req.getOrginCountry().equals("Ursprungsland") &&
+                !req.getUsername().equals("") &&
+                !req.getPassword().equals("")) {
+
+            Intent intent = new Intent(this, SignUp2Activity.class);
+            intent.putExtra("req",req);
+            startActivity(intent);
+        } else {
+            Toast.makeText(SignUpActivity.this, "kunde inte fortsätta, fyll i alla fält", Toast.LENGTH_LONG).show();
+
+        }
+
     }
 
 
