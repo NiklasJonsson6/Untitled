@@ -75,25 +75,25 @@ public class DrawerAdapter extends BaseAdapter {
             holder.name.setText(result.get(position));
             holder.navImage = (ImageView) rowView.get(position).findViewById(R.id.navImage);
             switch (result.get(position)) {
-                case "My Profile":
+                case "Min Profil":
                     holder.navImage.setImageResource(R.mipmap.ic_myprofile);
                     if(context instanceof  ProfileActivity) {
                         rowView.get(position).findViewById(R.id.drawer_item_background).setBackgroundColor(Color.parseColor("#DCDCDC"));
                     }
                     break;
-                case "Chat":
+                case "Meddelanden":
                     holder.navImage.setImageResource(R.mipmap.ic_chat);
                     if(context instanceof  MatchesActivity) {
                         rowView.get(position).findViewById(R.id.drawer_item_background).setBackgroundColor(Color.parseColor("#DCDCDC"));
                     }
                     break;
-                case "Match":
+                case "Hitta vänner":
                     holder.navImage.setImageResource(R.mipmap.ic_match);
                     if(context instanceof  MatchingActivity) {
                         rowView.get(position).findViewById(R.id.drawer_item_background).setBackgroundColor(Color.parseColor("#DCDCDC"));
                     }
                     break;
-                case "Map":
+                case "Karta":
                     holder.navImage.setImageResource(R.mipmap.ic_map);
                     if(context instanceof  FikaMapActivity) {
                         rowView.get(position).findViewById(R.id.drawer_item_background).setBackgroundColor(Color.parseColor("#DCDCDC"));
@@ -111,25 +111,25 @@ public class DrawerAdapter extends BaseAdapter {
                     Intent intent = null;
                     Boolean change = false;
                     switch (result.get(position)) {
-                        case "My Profile":
+                        case "Min Profil":
                             if(!(context instanceof  ProfileActivity)) {
                                 intent = new Intent(context, ProfileActivity.class);
                                 change = true;
                             }
                             break;
-                        case "Chat":
+                        case "Meddelanden":
                             if(!(context instanceof  MatchesActivity)) {
                                 intent = new Intent(context, MatchesActivity.class);
                                 change = true;
                             }
                             break;
-                        case "Match":
+                        case "Hitta vänner":
                             if(!(context instanceof  MatchingActivity)) {
                                 intent = new Intent(context, MatchingActivity.class);
                                 change = true;
                             }
                             break;
-                        case "Map":
+                        case "Karta":
                             if(!(context instanceof  FikaMapActivity)) {
                                 intent = new Intent(context, FikaMapActivity.class);
                                 change = true;

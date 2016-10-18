@@ -21,13 +21,15 @@ public class InterestListAdapter extends BaseAdapter {
     Context context;
     private static LayoutInflater inflater = null;
 
-    public InterestListAdapter(Context mainActivity, ArrayList<String> interest, ArrayList<String> matchingInterest) {
+    public InterestListAdapter(LayoutInflater inflater, ArrayList<String> interest, ArrayList<String> matchingInterest) {
         // TODO Auto-generated constructor stub
         this.interest = interest;
         this.matchingInterest = matchingInterest;
-        context = mainActivity;
-        inflater = (LayoutInflater) context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //context = mainActivity;
+        /*this.inflater = (LayoutInflater) context.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);*/
+        this.inflater = inflater;
+
     }
 
     @Override

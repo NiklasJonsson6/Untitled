@@ -76,6 +76,7 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
 
         this.setContentView(R.layout.activity_matching);
 
@@ -284,10 +285,10 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
     //Nav classes
     private void addDrawerItems() {
         ArrayList<String> activities = new ArrayList<String>();
-        activities.add("My Profile");
-        activities.add("Chat");
-        activities.add("Match");
-        activities.add("Map");
+        activities.add("Min Profil");
+        activities.add("Meddelanden");
+        activities.add("Hitta vänner");
+        activities.add("Karta");
         mAdapter = new DrawerAdapter(this, activities);
         mDrawerList.setAdapter(mAdapter);
     }

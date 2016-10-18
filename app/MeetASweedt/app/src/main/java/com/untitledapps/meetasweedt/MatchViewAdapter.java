@@ -7,6 +7,8 @@ package com.untitledapps.meetasweedt;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -122,8 +124,17 @@ public class MatchViewAdapter extends BaseAdapter {
                 animation.setInterpolator (new DecelerateInterpolator());
                 animation.start ();
 
-                ListView listView = (ListView) temp.findViewById(R.id.intrests);
-                listView.setAdapter(new InterestListAdapter(context, result.get(position).getInterests(), matchingPerson.getInterests()));
+                // Get the ViewPager and set it's PagerAdapter so that it can display items
+                ViewPager viewPager = (ViewPager) temp.findViewById(R.id.viewpager);
+                viewPager.setAdapter(new FragmentMatchingProfileAdapter(((MatchingActivity) context).getSupportFragmentManager(),
+                        MatchingActivity.context, result.get(position), matchingPerson));
+
+                // Give the TabLayout the ViewPager
+                TabLayout tabLayout = (TabLayout) temp.findViewById(R.id.sliding_tabs);
+                tabLayout.setupWithViewPager(viewPager);
+
+                /*ListView listView = (ListView) temp.findViewById(R.id.intrests);
+                listView.setAdapter(new InterestListAdapter(context, result.get(position).getInterests(), matchingPerson.getInterests()));*/
                 temp.findViewById(R.id.matchButton).setOnClickListener(new OnClickListener() {
 
                     @Override

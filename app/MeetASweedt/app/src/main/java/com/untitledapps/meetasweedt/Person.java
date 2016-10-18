@@ -266,4 +266,22 @@ public class Person implements Parcelable {
         }
         return commonIntersts;
     }
+
+    public String getCommonIntrestsAsString(Person other){
+        List<String> l = getCommonInterests(other);
+        String intrestAsString = "";
+        for(String intrest : l) {
+            intrestAsString += intrest + "/";
+        }
+        return intrestAsString;
+    }
+
+    public String getIntrestAsString(){
+        List<String> l = getInterests();
+        String intrestAsString = "";
+        for(String intrest : l) {
+            intrestAsString += intrest + "/";
+        }
+        return intrestAsString;
+    }
 }

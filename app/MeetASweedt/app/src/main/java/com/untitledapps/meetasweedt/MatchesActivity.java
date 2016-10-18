@@ -179,10 +179,10 @@ public class MatchesActivity extends AppCompatActivity {
     //Nav classes
     private void addDrawerItems() {
         ArrayList<String> activities = new ArrayList<String>();
-        activities.add("My Profile");
-        activities.add("Chat");
-        activities.add("Match");
-        activities.add("Map");
+        activities.add("Min Profil");
+        activities.add("Meddelanden");
+        activities.add("Hitta vänner");
+        activities.add("Karta");
         mAdapter = new DrawerAdapter(this, activities);
         mDrawerList.setAdapter(mAdapter);
     }
