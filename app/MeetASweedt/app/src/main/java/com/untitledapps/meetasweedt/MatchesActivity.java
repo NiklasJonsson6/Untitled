@@ -144,7 +144,7 @@ public class MatchesActivity extends AppCompatActivity {
                                                     if(reqs[x].was_successfull())
                                                     {
                                                         ResponseGetMessages.Message msg= reqs[x].getResponse().getMessage();
-
+    
                                                     MatchesBlockList.add(new MatchesBlock(msg.body, msg.time_stamp != null?msg.time_stamp.toString():"", matches.get(x)));
                                                     }
                                                     else {
