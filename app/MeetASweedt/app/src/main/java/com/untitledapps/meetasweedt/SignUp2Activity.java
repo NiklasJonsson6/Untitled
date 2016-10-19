@@ -30,7 +30,7 @@ public class SignUp2Activity extends AppCompatActivity {
         
         //MULTISPINNER
         multisp = (MultiSpinner) findViewById(R.id.spInterests);
-        final String[] interests = new String[]{"Fotboll", "Äta Mat", "Fika", "Speaka", "Lära mig svenska", "Spela spel", "Kolla TV", "Netflix", "Chill", "Gasquen", "DJ Shaotime boiiii"};
+        final String[] interests = new String[]{"Fotboll", "Hockey", "Handboll", "Kampsport", "Träning", "Laga Mat", "Fika", "Språk", "Spel", "Musik", "Film", "Konst", "Resor", "Natur", "Politik"};
         final int interestsize = interests.length;
 
         ArrayAdapter<String> interestAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, interests){
