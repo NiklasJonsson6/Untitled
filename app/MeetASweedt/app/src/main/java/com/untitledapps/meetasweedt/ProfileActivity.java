@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
         final Button buttonChat = (Button) findViewById(R.id.buttonChat);
         final Button mapButton = (Button) findViewById(R.id.mapButton);
         final Button buttonMatch = (Button) findViewById(R.id.buttonMatch);
-
+        final Button logOutButton = (Button) findViewById(R.id.logOutButton);
         //////MATCHES
         buttonChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +74,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         //String selCountry = SignUpActivity.spCountry.getSelectedItem().toString();
 
+        logOutButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                goToSignInActivity();
+            }
+        });
 
         //Nav
         mDrawerList = (ListView)findViewById(R.id.navList);
@@ -110,6 +117,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void goToMapActivity(){
         Intent intent = new Intent(this, FikaMapActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToSignInActivity(){
+        Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
 
@@ -183,6 +195,11 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(ProfileActivity.this, "Använd utloggningsknappen!", Toast.LENGTH_LONG).show();
     }
 
 }

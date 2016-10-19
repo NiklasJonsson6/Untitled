@@ -32,6 +32,10 @@ public class SignInActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
 
+        etUsername.setText("");
+        etPassword.setText("");
+
+
         final Button buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
 
         buttonSignIn.setOnClickListener(new View.OnClickListener() {

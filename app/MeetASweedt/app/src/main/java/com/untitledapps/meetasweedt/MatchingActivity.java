@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -68,6 +69,7 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
     private String mActivityTitle;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
+    private boolean isUserAtList;
     Person user = new Person(false, 19, "Arvid Hast", "sweden", 58, 13, new ArrayList<String>(Arrays.asList("computers", "staring into the abyss", "code", "stocks", "not chilling")), "asd", 21);
 
     ArrayList<Person> matchesList = new ArrayList<Person>();
@@ -81,7 +83,7 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
         user = ((MeetASweedt) getApplicationContext()).getLoggedInPerson();
 
         this.setContentView(R.layout.activity_matching);
-
+        isUserAtList=true;
         if (!CheckGooglePlayServices()) {
             Log.d("onCreate", "Finishing test case since Google Play Services are not available");
             finish();
@@ -389,5 +391,25 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!isUserAtList) {
+            Intent intent = new Intent(this, MatchingActivity.class);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public boolean getIsUserAtList(){
+        return isUserAtList;
+    }
+
+    public void setIsUserAtList(boolean isUserAtList){
+        this.isUserAtList = isUserAtList;
     }
 }

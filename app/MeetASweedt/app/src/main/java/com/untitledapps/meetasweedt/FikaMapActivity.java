@@ -121,7 +121,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
                     Log.d("onClick", url);
                     GetNearbyPlacesData gnpData = new GetNearbyPlacesData();
                     gnpData.execute(DataTransfer); //markers are added on nearby restaurants using this method
-                    Toast.makeText(FikaMapActivity.this, "Nearby Cafes", Toast.LENGTH_LONG).show();
+                    Toast.makeText(FikaMapActivity.this, "Cafes i närheten", Toast.LENGTH_LONG).show();
                     visible = true;
                 } else {
 
@@ -154,7 +154,7 @@ public class FikaMapActivity extends FragmentActivity implements OnMapReadyCallb
                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
             }
 
-            Toast.makeText(FikaMapActivity.this, "din nuvarande position", Toast.LENGTH_LONG).show();
+            Toast.makeText(FikaMapActivity.this, "Din nuvarande position", Toast.LENGTH_LONG).show();
 
         }
 

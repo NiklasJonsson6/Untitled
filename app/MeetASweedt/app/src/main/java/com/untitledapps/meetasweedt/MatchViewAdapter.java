@@ -19,7 +19,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,6 +36,7 @@ public class MatchViewAdapter extends BaseAdapter {
     ArrayList<Boolean> isClicked;
     ArrayList<View> rowView;
     ArrayList<Integer> selectedView;
+
 
     public MatchViewAdapter(Context matchingActivity, ArrayList<Person> personList, final Person matchingPerson) {
         // TODO Auto-generated constructor stub
@@ -111,6 +114,10 @@ public class MatchViewAdapter extends BaseAdapter {
                 ((TextView) temp.findViewById(R.id.distance)).setText(Float.toString(Math.round((10f * result.get(position).getDistanceTo(matchingPerson) / 1000)) / 10f) + " Km");
                 ((TextView) temp.findViewById(R.id.name)).setText(result.get(position).getName());
 
+                if(context instanceof MatchingActivity){
+                    ((MatchingActivity)context).setIsUserAtList(false);
+                }
+
                 //Purple progressbar
                 ProgressBar progressBar = (ProgressBar) temp.findViewById(R.id.progressBarUnder);
                 ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", (int)(result.get(position).getMatchScore(matchingPerson)*100)<20 ? (int)(result.get(position).getMatchScore(matchingPerson)*1000) + 650 : 1000 - (int)(result.get(position).getMatchScore(matchingPerson)*1000), 1000); // see this max value coming back here, we animale towards that value
@@ -140,6 +147,8 @@ public class MatchViewAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         MatchingActivity.requestAddMatch(context, result.get(position).getUser_id(), matchingPerson.getUser_id());
+                        Toast.makeText(v.getContext(), "You just matched with this person!", Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
