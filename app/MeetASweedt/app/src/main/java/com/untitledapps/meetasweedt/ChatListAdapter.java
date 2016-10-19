@@ -246,6 +246,7 @@ public class ChatListAdapter extends BaseAdapter {
         Language language;
         String message;
         TranslationRequest(int to, String message){
+            System.out.println("In translation");
             switch (to){
                 case 0:
                     language = Language.ARABIC;
@@ -254,9 +255,30 @@ public class ChatListAdapter extends BaseAdapter {
                     language = Language.ENGLISH;
                     break;
                 case 2:
-                    language = Language.PERSIAN;
+                    System.out.println("FRENCH");
+                    language = Language.FRENCH;
                     break;
                 case 3:
+                    language = Language.HEBREW;
+                    break;
+                case 4:
+                    System.out.println("Japanska");
+                    language = Language.JAPANESE;
+                    break;
+                case 5:
+                    language = Language.CHINESE_TRADITIONAL;
+                    break;
+                case 6:
+                    language = Language.KOREAN;
+                    break;
+                case 7:
+                    language = Language.PERSIAN;
+                    break;
+                case 8:
+                    language = Language.TURKISH;
+                    break;
+                case 9:
+                    System.out.println("SWEDISH");
                     language = Language.SWEDISH;
                     break;
             }

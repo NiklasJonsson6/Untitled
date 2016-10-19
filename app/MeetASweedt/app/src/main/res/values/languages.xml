@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="language_array">
-        <item>Arabic</item>
-        <item>English</item>
-        <item>Persian</item>
-        <item>Swedish</item>
+        <item>Arabiska</item>
+        <item>Engelska</item>
+        <item>Franska</item>
+        <item>Hebreiska</item>
+        <item>Japanska</item>
+        <item>Kinesiska</item>
+        <item>Koreanska</item>
+        <item>Persiska</item>
+        <item>Turskiska</item>
+        <item>Svenska</item>
     </string-array>
 </resources>
