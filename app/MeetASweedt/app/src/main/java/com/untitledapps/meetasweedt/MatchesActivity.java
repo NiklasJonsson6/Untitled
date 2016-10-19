@@ -120,7 +120,7 @@ public class MatchesActivity extends AppCompatActivity {
                                     String[] idStrings = matchesString.split(",");
 
                                     int[] ids = new int[idStrings.length];
-                                   // if(idStrings.equals("")) {
+                                   if(!matchesString.equals("")) {
                                         for (int i = 0; i < idStrings.length; i++) {
                                             ids[i] = Integer.parseInt(idStrings[i]);
 
@@ -131,10 +131,10 @@ public class MatchesActivity extends AppCompatActivity {
                                             }
 
                                         }
-                                   // }
-                                  //  else{
-                                        //Toast.makeText(MatchesActivity.this, "Hitta en matchning först innan du kan chatta!", Toast.LENGTH_LONG).show();
-                                  //  }
+                                   }
+                                   else{
+                                        Toast.makeText(MatchesActivity.this, "Hitta en matchning först innan du kan chatta!", Toast.LENGTH_LONG).show();
+                                   }
 
                                     final ArrayList<MatchesBlock> MatchesBlockList;
                                     {

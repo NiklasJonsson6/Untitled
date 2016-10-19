@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -184,6 +185,8 @@ public class ChatListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(messageList.get(position).getSender() == loggedIn) {
+                    textView = ((TextView) v.findViewById(R.id.chat_this));
+                    spinner = ((Spinner) v.findViewById(R.id.chat_this_spinner));
                     if (v.findViewById(R.id.chat_this_message_time).getVisibility() == View.VISIBLE) {
                         v.findViewById(R.id.chat_this_message_time).setVisibility(View.INVISIBLE);
                         v.findViewById(R.id.chat_this_translate_layout).setVisibility(View.GONE);
@@ -191,9 +194,9 @@ public class ChatListAdapter extends BaseAdapter {
                         v.findViewById(R.id.chat_this_message_time).setVisibility(View.VISIBLE);
                         v.findViewById(R.id.chat_this_translate_layout).setVisibility(View.VISIBLE);
                     }
-                    textView = ((TextView) v.findViewById(R.id.chat_this));
-                    spinner = ((Spinner) v.findViewById(R.id.chat_this_spinner));
                 } else {
+                    textView = ((TextView) v.findViewById(R.id.chat_other));
+                    spinner = ((Spinner) v.findViewById(R.id.chat_other_spinner));
                     if (v.findViewById(R.id.chat_other_message_time).getVisibility() == View.VISIBLE) {
                         v.findViewById(R.id.chat_other_message_time).setVisibility(View.INVISIBLE);
                         v.findViewById(R.id.chat_other_translate_layout).setVisibility(View.GONE);
@@ -201,8 +204,6 @@ public class ChatListAdapter extends BaseAdapter {
                         v.findViewById(R.id.chat_other_message_time).setVisibility(View.VISIBLE);
                         v.findViewById(R.id.chat_other_translate_layout).setVisibility(View.VISIBLE);
                     }
-                    textView = ((TextView) v.findViewById(R.id.chat_other));
-                    spinner = ((Spinner) v.findViewById(R.id.chat_other_spinner));
                 }
                 if(lastClickedView != v) {
                     if (lastClickedView != null) {
@@ -245,6 +246,7 @@ public class ChatListAdapter extends BaseAdapter {
         Language language;
         String message;
         TranslationRequest(int to, String message){
+            System.out.println("In translation");
             switch (to){
                 case 0:
                     language = Language.ARABIC;
@@ -253,9 +255,30 @@ public class ChatListAdapter extends BaseAdapter {
                     language = Language.ENGLISH;
                     break;
                 case 2:
-                    language = Language.PERSIAN;
+                    System.out.println("FRENCH");
+                    language = Language.FRENCH;
                     break;
                 case 3:
+                    language = Language.HEBREW;
+                    break;
+                case 4:
+                    System.out.println("Japanska");
+                    language = Language.JAPANESE;
+                    break;
+                case 5:
+                    language = Language.CHINESE_TRADITIONAL;
+                    break;
+                case 6:
+                    language = Language.KOREAN;
+                    break;
+                case 7:
+                    language = Language.PERSIAN;
+                    break;
+                case 8:
+                    language = Language.TURKISH;
+                    break;
+                case 9:
+                    System.out.println("SWEDISH");
                     language = Language.SWEDISH;
                     break;
             }

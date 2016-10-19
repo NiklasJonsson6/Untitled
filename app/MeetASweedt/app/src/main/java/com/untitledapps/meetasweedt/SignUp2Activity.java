@@ -1,5 +1,6 @@
 package com.untitledapps.meetasweedt;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.NetworkShared.RequestCreateUser;
+import com.example.NetworkShared.RequestGetPerson;
+import com.example.NetworkShared.ResponseGetPerson;
 import com.untitledapps.Client.RequestBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class SignUp2Activity extends AppCompatActivity {
@@ -17,6 +23,7 @@ public class SignUp2Activity extends AppCompatActivity {
     public static MultiSpinner multisp;
     public Button buttonSIGNUPNOW;
 
+    Context context;
 
     RequestCreateUser requestCreateUser;
 
@@ -24,6 +31,8 @@ public class SignUp2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up2);
+
+        context = this;
 
         Intent intent = getIntent();
         requestCreateUser =(RequestCreateUser)intent.getSerializableExtra("req");
@@ -73,7 +82,57 @@ public class SignUp2Activity extends AppCompatActivity {
 
 
                             if (req.was_successfull()) {
-                                goToSignInActivity();
+
+
+
+
+                                final RequestGetPerson requestGetPerson = new RequestGetPerson(requestCreateUser.getUsername());
+
+                                RequestBuilder requestBuilderGetPerson = new RequestBuilder(context, new RequestBuilder.Action() {
+                                    @Override
+                                    public void PostExecute() {
+                                        if (requestGetPerson.was_successfull()) {
+
+                                            ResponseGetPerson responseGetPerson = requestGetPerson.getResponse();
+
+                                            System.out.println("setting person in sign in");
+
+                                            Person person = new Person(
+                                                    responseGetPerson.getIsLearner(),
+                                                    responseGetPerson.getAge(),
+                                                    responseGetPerson.getName(),
+                                                    responseGetPerson.getOriginCountry(),
+                                                    responseGetPerson.getLongitude(),
+                                                    responseGetPerson.getLatitude(),
+                                                    multisp.getSelectedStrings(),
+                                                    responseGetPerson.getUsername(),
+                                                    responseGetPerson.getId()
+                                            );
+
+
+                                            if (person.getUsername() != null) {
+                                                ((MeetASweedt) getApplicationContext()).setLoggedInPerson(person);
+                                            } else {
+                                                //handle
+                                            }
+
+                                            if (((MeetASweedt) getApplicationContext()).getLoggedInPerson() != null) {
+                                                Intent intent = new Intent(SignUp2Activity.this, ProfileActivity.class);
+                                                startActivity(intent);
+                                            } else {
+
+                                            }
+
+                                        } else {
+                                            System.out.println("get person from database not successful");
+                                        }
+                                    }
+                                });
+
+                                requestBuilderGetPerson.addRequest(requestGetPerson);
+                                requestBuilderGetPerson.execute();
+
+                                //goToSignInActivity();
 
                             } else {
                                 System.out.println("stuff:" +

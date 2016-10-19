@@ -95,7 +95,12 @@ public class MatchViewAdapter extends BaseAdapter {
         holder.name = (TextView) rowView.get(position).findViewById(R.id.name);
         holder.matchProcent = (TextView) rowView.get(position).findViewById(R.id.matchProcent);
         holder.distance = (TextView) rowView.get(position).findViewById(R.id.distance);
-        holder.name.setText(result.get(position).getName());
+        if(result.get(position).getName().contains(" ")){
+            String[] s = result.get(position).getName().split(" ");
+            holder.name.setText(s[0]);
+        } else {
+            holder.name.setText(result.get(position).getName());
+        }
         holder.matchProcent.setText(Integer.toString((int)(result.get(position).getMatchScore(matchingPerson)*100)));
         holder.distance.setText(Float.toString(Math.round((10f * result.get(position).getDistanceTo(matchingPerson) / 1000)) / 10f) + " Km");
         ((ProgressBar) rowView.get(position).findViewById(R.id.progressBarMatch)).setProgress(((int)(result.get(position).getMatchScore(matchingPerson)*100)));
