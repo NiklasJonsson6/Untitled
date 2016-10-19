@@ -123,4 +123,9 @@ public class SignInActivity extends AppCompatActivity {
         requestBuilder.execute();
 
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
