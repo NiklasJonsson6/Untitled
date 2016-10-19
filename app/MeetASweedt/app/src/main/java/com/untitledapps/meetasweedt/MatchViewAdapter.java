@@ -139,7 +139,7 @@ public class MatchViewAdapter extends BaseAdapter {
                 // Give the TabLayout the ViewPager
                 TabLayout tabLayout = (TabLayout) temp.findViewById(R.id.sliding_tabs);
                 tabLayout.setupWithViewPager(viewPager);
-
+                
                 /*ListView listView = (ListView) temp.findViewById(R.id.intrests);
                 listView.setAdapter(new InterestListAdapter(context, result.get(position).getInterests(), matchingPerson.getInterests()));*/
                 temp.findViewById(R.id.matchButton).setOnClickListener(new OnClickListener() {

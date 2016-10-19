@@ -5,6 +5,7 @@ import com.example.NetworkShared.MessageType;
 import com.example.NetworkShared.Request;
 import com.example.NetworkShared.RequestAddMatch;
 import com.example.NetworkShared.RequestAllPeople;
+import com.example.NetworkShared.RequestAllPeopleExcludeMatches;
 import com.example.NetworkShared.RequestCreateUser;
 import com.example.NetworkShared.RequestGetMessages;
 import com.example.NetworkShared.RequestGetPerson;
@@ -314,13 +315,51 @@ public class ConnectionHandler implements Runnable
                                     ex.printStackTrace();
                                 }
                             } break;
+                            case GetAllPeopleExcludeMatches:
+                            {
+                                RequestAllPeopleExcludeMatches requestAllPeople = (RequestAllPeopleExcludeMatches) msg;
 
+                                String query = "select isLearner, age, name, orginCountry, longitude, latitude, interests, username, user_id " +
+                                        "from user_table where not " +
+                                        "find_in_set((select user_id from user_table where username = ?),matches)" +
+                                        "limit 500";
+                                PreparedStatement statement = conn.prepareStatement(query);
+                                statement.setString(1,requestAllPeople.getUsername());
+                                ResultSet resultSet = statement.executeQuery();
+
+                                ResponseAllPeople response = new ResponseAllPeople(true);
+                                int i = 0;
+                                int FETCH_LIMIT = 500;
+                                while (resultSet.next() && i < FETCH_LIMIT) {
+
+                                    response.getUsername().add(resultSet.getString("username"));
+
+                                    if(!response.getUsername().get(i).equals(requestAllPeople.getUsername())) {
+                                        response.getIsLearner().add(resultSet.getBoolean("isLearner"));
+                                        response.getAge().add(resultSet.getInt("age"));
+                                        response.getName().add(resultSet.getString("name"));
+                                        response.getOrginCountry().add(resultSet.getString("orginCountry"));
+                                        response.getLongitude().add(resultSet.getFloat("longitude"));
+                                        response.getLatitude().add(resultSet.getFloat("latitude"));
+                                        response.getInterestsString().add(resultSet.getString("interests"));
+                                        response.getUser_id().add(resultSet.getInt("user_id"));
+                                        i++;
+
+                                    } else {
+                                        response.getUsername().remove(resultSet.getString("username"));
+                                    }
+                                }
+
+                                requestAllPeople.setRespone(response);
+                                oos.writeObject(response);
+
+                            }break;
                             case GetAllPeople: {
                                 System.out.println("is in get all people case");
 
                                 RequestAllPeople requestAllPeople = (RequestAllPeople) msg;
 
-                                Statement statement = null;
+                                Statement statement;
                                 String query = ("select isLearner, age, name, orginCountry, longitude, latitude, interests, username, user_id from user_table");
 
                                 try {
@@ -339,10 +378,6 @@ public class ConnectionHandler implements Runnable
                                         response.getUsername().add(resultSet.getString("username"));
 
                                         if(!response.getUsername().get(i).equals(requestAllPeople.getUsername())) {
-
-
-                                            //String personString = "";
-
                                             response.getIsLearner().add(resultSet.getBoolean("isLearner"));
                                             response.getAge().add(resultSet.getInt("age"));
                                             response.getName().add(resultSet.getString("name"));
@@ -350,21 +385,7 @@ public class ConnectionHandler implements Runnable
                                             response.getLongitude().add(resultSet.getFloat("longitude"));
                                             response.getLatitude().add(resultSet.getFloat("latitude"));
                                             response.getInterestsString().add(resultSet.getString("interests"));
-                                            //response.getUsername().add(resultSet.getString("username"));
                                             response.getUser_id().add(resultSet.getInt("user_id"));
-
-                                            /*personString += resultSet.getBoolean("isLearner");
-                                            personString += "," + resultSet.getInt("age");
-                                            personString += "," + resultSet.getString("name");
-                                            personString += "," + resultSet.getString("orginCountry");
-                                            personString += "," + resultSet.getFloat("longitude");
-                                            personString += "," + resultSet.getFloat("latitude");
-                                            personString += "," + resultSet.getString("interests");
-                                            personString += "," + resultSet.getString("username");
-                                            personString += "," + resultSet.getInt("user_id");*/
-
-                                            //System.out.printf("personString: " + personString);
-
                                             i++;
 
                                         } else {
@@ -372,16 +393,8 @@ public class ConnectionHandler implements Runnable
                                         }
                                     }
 
-                                    //boolean success = response.getIsLearner().size() > 0;
-
-                                    res = conn.createStatement().executeQuery("SELECT @@IDENTITY");
-                                    res.next();
-
-
                                     requestAllPeople.setRespone(response);
                                     oos.writeObject(response);
-
-                                    //oos.writeObject(new ResponseAllPeople(true, requestAllPeople.getAllPersonStrings()));
 
                                     System.out.println("got all users from db");
                                 } catch (Exception ex) {

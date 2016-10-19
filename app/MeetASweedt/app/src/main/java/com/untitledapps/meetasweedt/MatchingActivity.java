@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.NetworkShared.RequestAddMatch;
 import com.example.NetworkShared.RequestAllPeople;
+import com.example.NetworkShared.RequestAllPeopleExcludeMatches;
 import com.example.NetworkShared.RequestUpdateLocation;
 import com.example.NetworkShared.Response;
 import com.example.NetworkShared.ResponseAllPeople;
@@ -93,7 +94,7 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
 
 
         //chane user?
-        final RequestAllPeople req = new RequestAllPeople(user.getUsername());
+        final RequestAllPeopleExcludeMatches req = new RequestAllPeopleExcludeMatches(user.getUsername());
 
         final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
 

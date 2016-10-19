@@ -10,6 +10,7 @@ public enum MessageType
     GetMatches,
     AddMatch,
     GetAllPeople,
+    GetAllPeopleExcludeMatches,
     ValidUserName,
     CreateUser,
     UpdateLocation,
@@ -18,5 +19,5 @@ public enum MessageType
     Error,
     VerifyPassword,
     GetMessages,
-    GetLastMessages
+    GetLastMessages,
 }
