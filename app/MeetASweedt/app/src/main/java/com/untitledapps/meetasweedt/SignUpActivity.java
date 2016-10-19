@@ -55,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
         spCountry = (Spinner)findViewById(R.id.spCountry);
 
         //currently only the countries with most immigrants
-        String[] countries = new String[]{"Afghanistan", "Irak", "Somalia", "Syrien", "Turkiet", "Sverige", "Ursprungsland"};
+        String[] countries = new String[]{"Afghanistan", "Irak", "Israel", "Lebanon","Pakistan", "Jordan", "Kuwait", "Egypten", "Somalia", "Syrien", "Turkiet", "Sverige", "Kina", "Japan", "Korea", "Italien" ,"Ursprungsland"};
 
         final int countrylistsize = countries.length - 1;
 
