@@ -86,9 +86,11 @@ public class Person implements Parcelable {
         }
     };
 
-    public void databaseCreateUser() {
+    /*public void databaseCreateUser() {
         //TODO Properties of the database person and the person object has to be the same!
         RequestCreateUser req = new RequestCreateUser(this.isLearner, this.age, this.name, this.orginCountry, this.longitude, this.latitude, this.interests, this.username, "password");
+
+
         /*RequestBuilder requestBuilder = new RequestBuilder(this, RequestBuilder.Action());
         requestBuilder.addRequest(req);
         try {
@@ -96,7 +98,7 @@ public class Person implements Parcelable {
         } catch (InterruptedException|ExecutionException ex) {
             ex.printStackTrace();
         }*/
-    }
+    //}
 
     public Person(String personString) {
 

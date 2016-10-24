@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 
 public class FragmentMatchingProfileAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 2;
+    static final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[]{"Information", "Intressen"};
     private Person person;
     private Person loggedInPerson;
