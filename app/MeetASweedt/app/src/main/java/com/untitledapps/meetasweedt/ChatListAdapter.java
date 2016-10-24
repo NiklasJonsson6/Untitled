@@ -27,22 +27,17 @@ import java.util.TimeZone;
 
 public class ChatListAdapter extends BaseAdapter {
     ArrayList<Message> messageList;
-    ArrayList<String> translatedText;
-    ArrayList<View> translateView;
-    int translationIndex;
     Spinner spinner;
     Person loggedIn;
     Context context;
     View lastClickedView;
     TextView textView;
-    private static LayoutInflater inflater = null;
+    private LayoutInflater inflater = null;
 
     public ChatListAdapter(Context mainActivity, ArrayList<Message> messageList, Person loggedIn) {
         // TODO Auto-generated constructor stub
         this.messageList = messageList;
         this.loggedIn = loggedIn;
-        translationIndex = 0;
-        translatedText = new ArrayList<String>();
         context = mainActivity;
         inflater = (LayoutInflater) context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -66,47 +61,43 @@ public class ChatListAdapter extends BaseAdapter {
         return position;
     }
 
-    public class Holder {
-        TextView tv;
-        TextView name;
-        RelativeLayout rl;
-        ImageView img;
-    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        Holder holder = new Holder();
+        TextView tv;
+        TextView name;
+        RelativeLayout rl;
         View rowView;
-        if(messageList.get(position).getSender() == loggedIn) {
+        if (messageList.get(position).getSender() == loggedIn) {
             rowView = inflater.inflate(R.layout.activity_chat_this_message, null);
 
-            holder.tv = (TextView) rowView.findViewById(R.id.chat_this_time);
+            tv = (TextView) rowView.findViewById(R.id.chat_this_time);
             System.out.println(TimeZone.getDefault().getRawOffset());
-            holder.tv.setText(messageList.get(position).getCalendar().get(Calendar.HOUR_OF_DAY) + ":" +((messageList.get(position).getCalendar().get(Calendar.MINUTE)<10) ? "0" + messageList.get(position).getCalendar().get(Calendar.MINUTE) : messageList.get(position).getCalendar().get(Calendar.MINUTE)));
+            tv.setText(messageList.get(position).getCalendar().get(Calendar.HOUR_OF_DAY) + ":" + ((messageList.get(position).getCalendar().get(Calendar.MINUTE) < 10) ? "0" + messageList.get(position).getCalendar().get(Calendar.MINUTE) : messageList.get(position).getCalendar().get(Calendar.MINUTE)));
 
-            holder.tv = (TextView) rowView.findViewById(R.id.chat_this_date);
-            holder.tv.setText(messageList.get(position).getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + (messageList.get(position).getCalendar().get(Calendar.MONTH)+1) + "-" + messageList.get(position).getCalendar().get(Calendar.YEAR));
+            tv = (TextView) rowView.findViewById(R.id.chat_this_date);
+            tv.setText(messageList.get(position).getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + (messageList.get(position).getCalendar().get(Calendar.MONTH) + 1) + "-" + messageList.get(position).getCalendar().get(Calendar.YEAR));
 
 
-            holder.tv = (TextView) rowView.findViewById(R.id.chat_this);
-            holder.rl = (RelativeLayout) rowView.findViewById(R.id.chat_this_background);
-            if((position < getCount()-1 && position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender()
-                    && messageList.get(position).getSender() == messageList.get(position + 1).getSender())){
-                holder.rl.setBackgroundResource(R.drawable.chat_background_this_both);
+            tv = (TextView) rowView.findViewById(R.id.chat_this);
+            rl = (RelativeLayout) rowView.findViewById(R.id.chat_this_background);
+            if ((position < getCount() - 1 && position != 0) && (messageList.get(position).getSender() == messageList.get(position - 1).getSender()
+                    && messageList.get(position).getSender() == messageList.get(position + 1).getSender())) {
+                rl.setBackgroundResource(R.drawable.chat_background_this_both);
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rowView.findViewById(R.id.chat_this_main).getLayoutParams();
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                ((RelativeLayout)rowView.findViewById(R.id.chat_this_main)).setLayoutParams(layoutParams);
-            } else if((position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender())){
-                holder.rl.setBackgroundResource(R.drawable.chat_background_this_top);
+                ((RelativeLayout) rowView.findViewById(R.id.chat_this_main)).setLayoutParams(layoutParams);
+            } else if ((position != 0) && (messageList.get(position).getSender() == messageList.get(position - 1).getSender())) {
+                rl.setBackgroundResource(R.drawable.chat_background_this_top);
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rowView.findViewById(R.id.chat_this_main).getLayoutParams();
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                ((RelativeLayout)rowView.findViewById(R.id.chat_this_main)).setLayoutParams(layoutParams);
+                ((RelativeLayout) rowView.findViewById(R.id.chat_this_main)).setLayoutParams(layoutParams);
             } else {
-                holder.name = (TextView) rowView.findViewById(R.id.chat_this_name);
-                holder.name.setVisibility(View.VISIBLE);
-                holder.name.setText(messageList.get(position).getSender().getName());
-                holder.rl.setBackgroundResource(R.drawable.chat_background_this);
+                name = (TextView) rowView.findViewById(R.id.chat_this_name);
+                name.setVisibility(View.VISIBLE);
+                name.setText(messageList.get(position).getSender().getName());
+                rl.setBackgroundResource(R.drawable.chat_background_this);
             }
             //Spinner content
             Spinner spinner = (Spinner) rowView.findViewById(R.id.chat_this_spinner);
@@ -117,32 +108,32 @@ public class ChatListAdapter extends BaseAdapter {
         } else {
             rowView = inflater.inflate(R.layout.activity_chat_other_message, null);
 
-            holder.tv = (TextView) rowView.findViewById(R.id.chat_other_time);
+            tv = (TextView) rowView.findViewById(R.id.chat_other_time);
             System.out.println(TimeZone.getDefault().getRawOffset());
-            holder.tv.setText(messageList.get(position).getCalendar().get(Calendar.HOUR_OF_DAY) + ":" +((messageList.get(position).getCalendar().get(Calendar.MINUTE)<10) ? "0" + messageList.get(position).getCalendar().get(Calendar.MINUTE) : messageList.get(position).getCalendar().get(Calendar.MINUTE)));
+            tv.setText(messageList.get(position).getCalendar().get(Calendar.HOUR_OF_DAY) + ":" + ((messageList.get(position).getCalendar().get(Calendar.MINUTE) < 10) ? "0" + messageList.get(position).getCalendar().get(Calendar.MINUTE) : messageList.get(position).getCalendar().get(Calendar.MINUTE)));
 
-            holder.tv = (TextView) rowView.findViewById(R.id.chat_other_date);
-            holder.tv.setText(messageList.get(position).getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + messageList.get(position).getCalendar().get(Calendar.MONTH) + "-" + messageList.get(position).getCalendar().get(Calendar.YEAR));
+            tv = (TextView) rowView.findViewById(R.id.chat_other_date);
+            tv.setText(messageList.get(position).getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + messageList.get(position).getCalendar().get(Calendar.MONTH) + "-" + messageList.get(position).getCalendar().get(Calendar.YEAR));
 
 
-            holder.tv = (TextView) rowView.findViewById(R.id.chat_other);
-            holder.rl = (RelativeLayout) rowView.findViewById(R.id.chat_other_background);
-            if((position < getCount()-1 && position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender()
-                    && messageList.get(position).getSender() == messageList.get(position + 1).getSender())){
-                holder.rl.setBackgroundResource(R.drawable.chat_background_other_both);
+            tv = (TextView) rowView.findViewById(R.id.chat_other);
+            rl = (RelativeLayout) rowView.findViewById(R.id.chat_other_background);
+            if ((position < getCount() - 1 && position != 0) && (messageList.get(position).getSender() == messageList.get(position - 1).getSender()
+                    && messageList.get(position).getSender() == messageList.get(position + 1).getSender())) {
+                rl.setBackgroundResource(R.drawable.chat_background_other_both);
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rowView.findViewById(R.id.chat_other_main).getLayoutParams();
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                ((RelativeLayout)rowView.findViewById(R.id.chat_other_main)).setLayoutParams(layoutParams);
-            } else if((position != 0) && (messageList.get(position).getSender() == messageList.get(position-1).getSender())){
-                holder.rl.setBackgroundResource(R.drawable.chat_background_other_top);
+                ((RelativeLayout) rowView.findViewById(R.id.chat_other_main)).setLayoutParams(layoutParams);
+            } else if ((position != 0) && (messageList.get(position).getSender() == messageList.get(position - 1).getSender())) {
+                rl.setBackgroundResource(R.drawable.chat_background_other_top);
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rowView.findViewById(R.id.chat_other_main).getLayoutParams();
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                ((RelativeLayout)rowView.findViewById(R.id.chat_other_main)).setLayoutParams(layoutParams);
+                ((RelativeLayout) rowView.findViewById(R.id.chat_other_main)).setLayoutParams(layoutParams);
             } else {
-                holder.name = (TextView) rowView.findViewById(R.id.chat_other_name);
-                holder.name.setVisibility(View.VISIBLE);
-                holder.name.setText(messageList.get(position).getSender().getName());
-                holder.rl.setBackgroundResource(R.drawable.chat_background_other);
+                name = (TextView) rowView.findViewById(R.id.chat_other_name);
+                name.setVisibility(View.VISIBLE);
+                name.setText(messageList.get(position).getSender().getName());
+                rl.setBackgroundResource(R.drawable.chat_background_other);
             }
             //Spinner content
             Spinner spinner = (Spinner) rowView.findViewById(R.id.chat_other_spinner);
@@ -151,14 +142,11 @@ public class ChatListAdapter extends BaseAdapter {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
         }
-        if(messageList.get(position).getMessage() != null && messageList.get(position).getMessage().toString() != "") {
-            System.out.println("IN IF: " + messageList.get(position).getMessage());
-            holder.tv.setText(messageList.get(position).getMessage());
-        } else {
-            System.out.printf("IN ELSE");
-            holder.tv.setText(" ");
-        }
-        if(messageList.get(position).getSender() == loggedIn) {
+        //Kan bugga
+        System.out.println("IN IF: " + messageList.get(position).getMessage());
+        tv.setText(messageList.get(position).getMessage());
+
+        if (messageList.get(position).getSender() == loggedIn) {
             rowView.findViewById(R.id.chat_this_translate_button).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -166,7 +154,7 @@ public class ChatListAdapter extends BaseAdapter {
                         protected void onPostExecute(String result) {
                             textView.setText(result);
                         }
-                    }.execute(new TranslationRequest(spinner.getSelectedItemPosition(),messageList.get(position).getMessage()));
+                    }.execute(new TranslationRequest(spinner.getSelectedItemPosition(), messageList.get(position).getMessage()));
                 }
             });
         } else {
@@ -177,14 +165,14 @@ public class ChatListAdapter extends BaseAdapter {
                         protected void onPostExecute(String result) {
                             textView.setText(result);
                         }
-                    }.execute(new TranslationRequest(spinner.getSelectedItemPosition(),messageList.get(position).getMessage()));
+                    }.execute(new TranslationRequest(spinner.getSelectedItemPosition(), messageList.get(position).getMessage()));
                 }
             });
         }
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(messageList.get(position).getSender() == loggedIn) {
+                if (messageList.get(position).getSender() == loggedIn) {
                     textView = ((TextView) v.findViewById(R.id.chat_this));
                     spinner = ((Spinner) v.findViewById(R.id.chat_this_spinner));
                     if (v.findViewById(R.id.chat_this_message_time).getVisibility() == View.VISIBLE) {
@@ -205,7 +193,7 @@ public class ChatListAdapter extends BaseAdapter {
                         v.findViewById(R.id.chat_other_translate_layout).setVisibility(View.VISIBLE);
                     }
                 }
-                if(lastClickedView != v) {
+                if (lastClickedView != v) {
                     if (lastClickedView != null) {
                         if (lastClickedView.findViewById(R.id.chat_this_message_time) != null) {
                             lastClickedView.findViewById(R.id.chat_this_message_time).setVisibility(View.INVISIBLE);
@@ -227,7 +215,7 @@ public class ChatListAdapter extends BaseAdapter {
         return rowView;
     }
 
-      class MyAsyncTask extends AsyncTask<TranslationRequest, Integer, String> {
+    class MyAsyncTask extends AsyncTask<TranslationRequest, Integer, String> {
         @Override
         protected String doInBackground(TranslationRequest... arg0) {
             Translate.setClientId("MeetASweedt");
@@ -235,19 +223,20 @@ public class ChatListAdapter extends BaseAdapter {
             String s;
             try {
                 s = Translate.execute(arg0[0].getMessage(), Language.AUTO_DETECT, arg0[0].getLanguage());
-            } catch(Exception e) {
+            } catch (Exception e) {
                 s = e.toString();
             }
             return s;
         }
     }
-
-    class TranslationRequest{
+    //Maybe not static check on restart
+    static class TranslationRequest {
         Language language;
         String message;
-        TranslationRequest(int to, String message){
+
+        TranslationRequest(int to, String message) {
             System.out.println("In translation");
-            switch (to){
+            switch (to) {
                 case 0:
                     language = Language.ARABIC;
                     break;
@@ -280,6 +269,8 @@ public class ChatListAdapter extends BaseAdapter {
                 case 9:
                     System.out.println("SWEDISH");
                     language = Language.SWEDISH;
+                    break;
+                default:
                     break;
             }
             this.message = message;

@@ -64,7 +64,6 @@ public class MatchesActivity extends AppCompatActivity {
         final RequestAllPeople requestAllPeople = new RequestAllPeople(user.getUsername());
 
         final ArrayList<Person> peopleFromDatabase = new ArrayList<>();
-        final Context cc = this;
 
         RequestBuilder requestBuilder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override

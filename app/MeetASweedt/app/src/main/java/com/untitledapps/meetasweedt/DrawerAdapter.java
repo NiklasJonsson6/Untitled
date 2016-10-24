@@ -12,19 +12,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by fredr on 2016-10-12.
- */
-
 public class DrawerAdapter extends BaseAdapter {
         ArrayList<String> result;
         Context context;
-        ArrayList<Integer> matchProcent;
-        Person matchingPerson;
-        private static LayoutInflater inflater = null;
-        ArrayList<Boolean> isClicked;
+        private LayoutInflater inflater = null;
         ArrayList<View> rowView;
-        ArrayList<Integer> selectedView;
 
         public DrawerAdapter(Context context, ArrayList<String> activityStrings) {
             // TODO Auto-generated constructor stub
@@ -32,7 +24,6 @@ public class DrawerAdapter extends BaseAdapter {
             //Sorting
             this.context = context;
             rowView = new ArrayList<View>();
-            selectedView = new ArrayList<Integer>();
             inflater = (LayoutInflater) context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -56,11 +47,7 @@ public class DrawerAdapter extends BaseAdapter {
             return position;
         }
 
-        public ArrayList<Integer> getCardIndexList() {
-            return selectedView;
-        }
-
-        public class Holder {
+        public static class Holder {
             TextView name;
             ImageView navImage;
         }
@@ -99,6 +86,8 @@ public class DrawerAdapter extends BaseAdapter {
                         rowView.get(position).findViewById(R.id.drawer_item_background).setBackgroundColor(Color.parseColor("#DCDCDC"));
                     }
                     break;
+                default:
+                    break;
 
             }
 
@@ -134,6 +123,8 @@ public class DrawerAdapter extends BaseAdapter {
                                 intent = new Intent(context, FikaMapActivity.class);
                                 change = true;
                             }
+                            break;
+                        default:
                             break;
                     }
                     if(change) {

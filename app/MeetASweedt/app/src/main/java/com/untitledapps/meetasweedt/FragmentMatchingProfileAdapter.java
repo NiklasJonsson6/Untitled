@@ -12,13 +12,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class FragmentMatchingProfileAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[]{"Information", "Intressen"};
-    private Context context;
     private Person person;
     private Person loggedInPerson;
 
     public FragmentMatchingProfileAdapter(FragmentManager fm, Context context, Person person, Person loggedInPerson) {
         super(fm);
-        this.context = context;
         this.person = person;
         this.loggedInPerson = loggedInPerson;
     }

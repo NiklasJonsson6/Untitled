@@ -8,19 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-/**
- * Created by fredr on 2016-10-18.
- */
 
 public class MatchingProfileFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
-    public static final String ARG_USERNAME = "ARG_USERNAME";
     public static final String ARG_AGE = "ARG_AGE";
     public static final String ARG_FROM = "ARG_FROM";
 
-    private int mPage;
     private String mAge;
-    private String mUsername;
     private String mFrom;
 
     public static MatchingProfileFragment newInstance(int page, String age, String from) {
@@ -36,7 +30,6 @@ public class MatchingProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPage = getArguments().getInt(ARG_PAGE);
         mAge = getArguments().getString(ARG_AGE);
         mFrom = getArguments().getString(ARG_FROM);
     }
