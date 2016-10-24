@@ -58,7 +58,7 @@ public class MultiSpinner extends Spinner implements OnMultiChoiceClickListener 
 
     //set adapter items using String[] to spinner
     public void setItem(String[] items) {
-        itemlist = items;
+        itemlist = items.clone();
         int length = itemlist.length;
         selected = new boolean[length];
 
