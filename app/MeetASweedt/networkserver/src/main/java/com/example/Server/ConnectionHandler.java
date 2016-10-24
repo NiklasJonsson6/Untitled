@@ -25,6 +25,7 @@ import com.example.NetworkShared.ResponseGetPerson;
 import com.example.NetworkShared.ResponseMatches;
 import com.example.NetworkShared.ResponseUpdateLocation;
 import com.sun.corba.se.impl.protocol.giopmsgheaders.RequestMessage;
+import com.sun.corba.se.spi.orbutil.fsm.State;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -63,9 +64,11 @@ public class ConnectionHandler implements Runnable
 
 
         boolean already_mached = oldMatches.contains(Integer.toString(matchId)); //should really not be displayed...
-        if(already_mached)
+        if(already_mached) {
+            preparedStatementMatch.close();
             return true;
-        else{
+        }
+            else{
             String sql = "update user_table set matches=? where user_id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(2, userId);
@@ -76,6 +79,7 @@ public class ConnectionHandler implements Runnable
                 preparedStatement.setString(1, oldMatches + "," + matchId); //add old string
             }
 
+            preparedStatementMatch.close();
             return preparedStatement.executeUpdate() == 1;
         }
     }
@@ -159,7 +163,9 @@ public class ConnectionHandler implements Runnable
 
                                 boolean success = 1 == preparedStatement.executeUpdate();
 
-                                res = conn.createStatement().executeQuery("SELECT @@IDENTITY");
+
+                                Statement tempStatement = conn.createStatement();
+                                res = tempStatement.executeQuery("SELECT @@IDENTITY");
                                 res.next();
                                 if(success)
                                     oos.writeObject(new ResponseCreateUser(success, res.getInt(1)));
@@ -169,6 +175,9 @@ public class ConnectionHandler implements Runnable
                                     resp.setError("could not insert user, duplicate username?");
                                     oos.writeObject(resp);
                                 }
+                                res.close();
+                                tempStatement.close();
+                                preparedStatement.close();
                             }
                             break;
 
@@ -184,6 +193,7 @@ public class ConnectionHandler implements Runnable
                                 oos.writeObject(new ResponseUpdateLocation(success));
 
                                 System.out.println("updating user " + updateLocation.getUser_id() +" location, longitude: " + updateLocation.getLongitude() + ", latitude: " + updateLocation.getLatitude());
+                                preparedStatement.close();
                             } break;
                             case AddMatch: {
                                 RequestAddMatch requestAddMatch = (RequestAddMatch) msg;
@@ -215,6 +225,7 @@ public class ConnectionHandler implements Runnable
                                 } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException ex) {
                                     oos.writeObject(new Response(ex.toString()));
                                 }
+                                preparedStatement.close();
                             }break;
 
                             case SendMessage: {
@@ -225,6 +236,7 @@ public class ConnectionHandler implements Runnable
                                 preparedStatement.setString(2, sendMessage.from_id);
                                 preparedStatement.setString(3, sendMessage.message);
                                 oos.writeObject(new Response(MessageType.SendMessage,1==preparedStatement.executeUpdate()));
+                                preparedStatement.close();
                             }
                             break;
                             case TerminateConnection:
@@ -265,7 +277,7 @@ public class ConnectionHandler implements Runnable
                                 }
 
 
-
+                                statement.close();
                             }break;
                             case GetMessages: {
                                 System.out.println("getmessagecase");
@@ -310,6 +322,7 @@ public class ConnectionHandler implements Runnable
                                     requestMessage.setRespone(response);
 
                                     oos.writeObject(response);
+                                    statement.close();
                                 } catch (Exception ex) {
                                     //TODO probably some exception handling I guess
                                     ex.printStackTrace();
@@ -353,6 +366,7 @@ public class ConnectionHandler implements Runnable
                                 requestAllPeople.setRespone(response);
                                 oos.writeObject(response);
 
+                                statement.close();
                             }break;
                             case GetAllPeople: {
                                 System.out.println("is in get all people case");
@@ -397,6 +411,7 @@ public class ConnectionHandler implements Runnable
                                     oos.writeObject(response);
 
                                     System.out.println("got all users from db");
+                                    statement.close();
                                 } catch (Exception ex) {
                                     System.out.println("error in getting all people from db");
                                     //TODO probably some exception handling I guess
@@ -437,7 +452,7 @@ public class ConnectionHandler implements Runnable
                                     }
 
                                     oos.writeObject(response);
-
+                                    statement.close();
                                 } catch (Exception ex) {
                                     System.out.println("error in getting person from db");
                                     ex.printStackTrace();
@@ -497,7 +512,7 @@ public class ConnectionHandler implements Runnable
 
                                     requestMatches.setRespone(response);
                                     oos.writeObject(response);
-
+                                    preparedStatement.close();
                                     //oos.writeObject(new ResponseAllPeople(true, requestAllPeople.getAllPersonStrings()));
 
                                     System.out.println("got all matchesssssssssssssssssssssss from db");
@@ -506,6 +521,7 @@ public class ConnectionHandler implements Runnable
                                     //TODO probably some exception handling I guess
                                     ex.printStackTrace();
                                 }
+
 
                             } break;
 
