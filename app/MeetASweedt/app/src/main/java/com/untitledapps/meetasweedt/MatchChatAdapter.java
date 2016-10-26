@@ -22,7 +22,7 @@ import static com.untitledapps.meetasweedt.R.id.emojiIcon;
 public class MatchChatAdapter extends BaseAdapter {
     ArrayList<MatchesBlock> matchesBlock;
     Context context;
-    private static LayoutInflater inflater = null;
+    private LayoutInflater inflater = null;
     int token = 0;
     public MatchChatAdapter(Context mainActivity, ArrayList<MatchesBlock> matchesBlock) {
         // TODO Auto-generated constructor stub
@@ -50,25 +50,22 @@ public class MatchChatAdapter extends BaseAdapter {
         return position;
     }
 
-    public class Holder {
-        TextView tv;
-        ImageView img;
-    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        Holder holder = new Holder();
+        TextView tv;
+        ImageView img;
         View rowView;
         rowView = inflater.inflate(R.layout.matches, null);
-        holder.tv = (TextView) rowView.findViewById(R.id.recentMessageText);
+        tv = (TextView) rowView.findViewById(R.id.recentMessageText);
         System.out.println(rowView.toString());
-        holder.tv.setText(matchesBlock.get(position).getmMessage());
-        holder.tv = (TextView) rowView.findViewById(R.id.timeText);
-        holder.tv.setText(matchesBlock.get(position).getmTime());
-        holder.tv = (TextView) rowView.findViewById(R.id.nameText);
-        holder.tv.setText(matchesBlock.get(position).getmName());
-        holder.img = (ImageView) rowView.findViewById(emojiIcon);
+        tv.setText(matchesBlock.get(position).getmMessage());
+        tv = (TextView) rowView.findViewById(R.id.timeText);
+        tv.setText(matchesBlock.get(position).getmTime());
+        tv = (TextView) rowView.findViewById(R.id.nameText);
+        tv.setText(matchesBlock.get(position).getmName());
+        //img = (ImageView) rowView.findViewById(emojiIcon);
         if(token != 1) {
         //    holder.img.setImageResource(matchesBlock.get(position).getMresID()); //setting the image
             token++;

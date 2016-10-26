@@ -30,10 +30,8 @@ public class MatchViewAdapter extends BaseAdapter {
 
     ArrayList<Person> result;
     Context context;
-    ArrayList<Integer> matchProcent;
     Person matchingPerson;
-    private static LayoutInflater inflater = null;
-    ArrayList<Boolean> isClicked;
+    private LayoutInflater inflater = null;
     ArrayList<View> rowView;
     ArrayList<Integer> selectedView;
 
@@ -80,7 +78,7 @@ public class MatchViewAdapter extends BaseAdapter {
         return selectedView;
     }
 
-    public class Holder {
+    public static class Holder {
         TextView name;
         TextView matchProcent;
         TextView distance;

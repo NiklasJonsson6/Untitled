@@ -87,14 +87,15 @@ public class RequestCreateUser extends Request<ResponseCreateUser>
     }
 
     public String getInterestsString() {
-        String s = "";
+        StringBuffer buf = new StringBuffer();
+        buf.append("");
         for(String interest: interests){
-            if(s.equals("")){
-                s = s + interest;
+            if(buf.toString().equals("")){
+                buf.append(interest);
             } else {
-                s = s + "," + interest;
+                buf.append("," + interest);
             }
         }
-        return s;
+        return buf.toString();
     }
 }

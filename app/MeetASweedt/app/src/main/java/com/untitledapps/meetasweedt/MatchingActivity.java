@@ -354,7 +354,7 @@ public class MatchingActivity extends AppCompatActivity implements OnMapReadyCal
 
         //getting coordinates of current location
 
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        //LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude()); Never used
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f", location.getLatitude(), location.getLongitude()));
         System.out.println(DateFormat.getTimeInstance().format(new Date()));

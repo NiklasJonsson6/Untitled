@@ -13,7 +13,7 @@ public class ResponseGetMessages extends Response {
     public static class Message implements Serializable
     {
         public Message(Timestamp time_stamp, String body,String from_id) {
-            this.time_stamp = time_stamp;
+            this.time_stamp = (Timestamp) time_stamp.clone();
             this.body = body;
             this.from_id = from_id;
         }

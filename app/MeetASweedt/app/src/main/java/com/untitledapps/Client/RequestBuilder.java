@@ -25,11 +25,9 @@ public class RequestBuilder extends AsyncTask<Void,Void,Void>{
         void PostExecute();
     }
     private Action action;
-    Context context;
     public RequestBuilder(Context context, Action action)
     {
         this.action = action;
-        this.context = context;
         if(context!=null)
             dialog = new ProgressDialog(context);
     }

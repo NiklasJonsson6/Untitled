@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 public class SignUp2Activity extends AppCompatActivity {
 
-    public static MultiSpinner multisp;
+    public MultiSpinner multisp;
     public Button buttonSIGNUPNOW;
 
     Context context;

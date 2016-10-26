@@ -3,7 +3,6 @@ package com.example.NetworkShared;
 
 public abstract class SecureRequest<T extends Response> extends Request<T>
 {
-    public MessageType type;
     public SecureRequest(MessageType type, int user_id, String password)
     {
         super(type);

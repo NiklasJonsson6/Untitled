@@ -23,7 +23,6 @@ public class MatchingProfileListFragment extends Fragment {
     public static final String ARG_INTREST = "ARG_INTREST";
     public static final String ARG_OWN_INTREST = "ARG_OWN_INTREST";
 
-    private int mPage;
     private ArrayList<String> mIntrests;
     private ArrayList<String> mOwnIntrests;
 
@@ -41,7 +40,6 @@ public class MatchingProfileListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("Was in on create");
-        mPage = getArguments().getInt(ARG_PAGE);
         mIntrests = new ArrayList<String>(Arrays.asList(getArguments().getString(ARG_INTREST).split("/")));
         mOwnIntrests = new ArrayList<String>(Arrays.asList(getArguments().getString(ARG_OWN_INTREST).split("/")));
     }

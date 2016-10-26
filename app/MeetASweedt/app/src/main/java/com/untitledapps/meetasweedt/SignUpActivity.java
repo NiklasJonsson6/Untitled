@@ -27,7 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etAge;
     private EditText etCountry;
     private Button buttonRegister;
-    public static Spinner spCountry;
+    public Spinner spCountry;
     private RatingBar sweLvl;
     private TextView valueLvl;
 
@@ -40,9 +40,6 @@ public class SignUpActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etAge = (EditText) findViewById(R.id.etAge);
-
-        final TextView titleSignUp = (TextView) findViewById(R.id.textSingUp);
-        final TextView titleMeet = (TextView) findViewById(R.id.textTitle);
 
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -109,12 +106,12 @@ public class SignUpActivity extends AppCompatActivity {
                         etPassword.getText().toString()
                 );
 
-        RequestBuilder builder = new RequestBuilder(this, new RequestBuilder.Action() {
+        /*RequestBuilder builder = new RequestBuilder(this, new RequestBuilder.Action() {
             @Override
             public void PostExecute() {
                 System.out.println(req.was_successfull()?"successfully created account":"could not create");
             }
-        });
+        });  Never used should maybe be but isn't*/
 
         //builder.addRequest(req);
 //        builder.execute();

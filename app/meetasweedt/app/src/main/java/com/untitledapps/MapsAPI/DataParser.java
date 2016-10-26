@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class DataParser {
     public List<HashMap<String, String>> parse(String jsonData) {
-        JSONArray jsonArray = null;
+        JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject;
 
         try {

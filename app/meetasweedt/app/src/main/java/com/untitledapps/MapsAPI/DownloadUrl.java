@@ -26,8 +26,28 @@ public class DownloadUrl {
 
     public String readUrl(String strUrl) throws IOException {
         String data = "";
-        InputStream iStream = null;
-        HttpURLConnection urlConnection = null;
+        InputStream iStream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return 0;
+            }
+        };
+        HttpURLConnection urlConnection = new HttpURLConnection(new URL("")) {
+            @Override
+            public void disconnect() {
+
+            }
+
+            @Override
+            public boolean usingProxy() {
+                return false;
+            }
+
+            @Override
+            public void connect() throws IOException {
+
+            }
+        };
         try {
             URL url = new URL(strUrl);
 
@@ -55,10 +75,9 @@ public class DownloadUrl {
 
         } catch (Exception e) {
             Log.d("Exception", e.toString());
-        } finally {
-            iStream.close();
-            urlConnection.disconnect();
         }
+        iStream.close();
+        urlConnection.disconnect();
         return data;
     }
 }
